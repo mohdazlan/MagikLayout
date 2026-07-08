@@ -1,0 +1,811 @@
+/* ————————————————————————————————————————————————————————————————
+   Challenges — scoped styles. Every selector is .ch- prefixed or nested
+   under a .ch- ancestor; global tokens are consumed, never modified.
+   ———————————————————————————————————————————————————————————————— */
+
+.ch-player {
+  /* semantic colors local to the challenge modes (grading feedback needs
+     pass/fail hues the calm playground never did) */
+  --ch-err: #b42318;
+  --ch-err-tint: rgba(180, 35, 24, 0.08);
+  --ch-pass: #1f7a3d;
+  --ch-pass-tint: rgba(31, 122, 61, 0.09);
+  --ch-warn: #9a6700;
+  --ch-warn-tint: rgba(154, 103, 0, 0.09);
+
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 460px;
+}
+
+/* ————— breadcrumb in the shared header ————— */
+.ch-breadcrumb {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-2);
+  min-width: 0;
+}
+
+.ch-crumb {
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+a.ch-crumb:hover {
+  color: var(--accent-deep);
+}
+
+.ch-crumb-current {
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ch-header-link {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink); /* anchors don't inherit the button color reset */
+}
+
+/* ————— challenge list ————— */
+.ch-list-page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 40px 32px 64px;
+}
+
+.ch-list-intro {
+  max-width: 560px;
+  margin: 0 auto 28px;
+  text-align: center;
+  color: var(--ink-2);
+  font-size: 14px;
+}
+
+.ch-unknown {
+  max-width: 560px;
+  margin: 0 auto 16px;
+  text-align: center;
+  color: var(--ch-err, #b42318);
+  font-size: 14px;
+}
+
+.ch-unknown code {
+  font-family: var(--mono);
+}
+
+.ch-cards {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 880px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.ch-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--hairline-soft);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+
+.ch-card:hover {
+  border-color: var(--hairline);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+}
+
+.ch-card-type {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.ch-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ch-card-prompt {
+  font-size: 13px;
+  color: var(--ink-2);
+  flex: 1;
+}
+
+.ch-diff {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid var(--hairline);
+  border-radius: 5px;
+  padding: 1px 7px;
+  color: var(--ink-2);
+}
+
+/* ————— player stage ————— */
+.ch-stage {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px 28px 32px;
+  background: var(--bg);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.ch-prompt {
+  margin: 0;
+  max-width: 640px;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.ch-canvases {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.ch-target,
+.ch-live {
+  margin: 0;
+}
+
+.ch-canvas-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
+  margin-bottom: 8px;
+}
+
+/* ————— notices & verdicts ————— */
+.ch-notices {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ch-notice {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-2);
+  max-width: 640px;
+}
+
+/* The Swing-trap explanations are the lesson — a card, not a whisper. */
+.ch-notice-warn {
+  color: var(--ink);
+  background: var(--ch-warn-tint);
+  border: 1px solid rgba(154, 103, 0, 0.3);
+  border-radius: 8px;
+  padding: 9px 12px;
+}
+
+.ch-notice code {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.ch-notice strong {
+  color: var(--accent-deep);
+}
+
+.ch-notice-error {
+  color: var(--ch-err);
+}
+
+.ch-verdict {
+  max-width: 640px;
+  font-size: 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.ch-verdict-pass {
+  background: var(--ch-pass-tint);
+  border-color: rgba(31, 122, 61, 0.25);
+  color: var(--ch-pass);
+  font-weight: 500;
+}
+
+.ch-verdict-fail {
+  background: var(--ch-err-tint);
+  border-color: rgba(180, 35, 24, 0.22);
+  color: var(--ch-err);
+  font-weight: 500;
+}
+
+/* ————— program pane (parsons) ————— */
+.ch-program-pane {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow-y: auto;
+  padding: 16px;
+  background: var(--surface);
+  border-left: 1px solid var(--hairline-soft);
+}
+
+.ch-pane-block > .pane-title {
+  margin: 0 2px 8px;
+}
+
+.ch-count {
+  font-weight: 500;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.ch-build {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 72px;
+  border: 1px dashed var(--hairline);
+  border-radius: 10px;
+}
+
+.ch-build-empty,
+.ch-tray-empty {
+  font-size: 12.5px;
+  color: var(--ink-2);
+  padding: 12px 8px;
+}
+
+.ch-slot {
+  position: relative;
+}
+
+.ch-slot-before::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+.ch-slot-tail {
+  height: 2px;
+}
+
+/* ————— code magnets —————
+   Tactile structural blocks: one brightness step off the pane, a 2px base
+   edge, and a press that physically sinks. Tint is reserved for semantic
+   state (error / warn / diverged) — never decoration. */
+.ch-magnet {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 8px;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-bottom-width: 2px;
+  border-radius: 8px;
+  cursor: grab;
+  text-align: left;
+  touch-action: none;
+  transition:
+    box-shadow var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+button.ch-magnet {
+  font: inherit;
+}
+
+.ch-magnet:hover {
+  border-color: color-mix(in srgb, var(--hairline) 55%, var(--ink-2));
+}
+
+/* brighten on hover only when no semantic tint is present */
+.ch-magnet:not(.ch-magnet-error):not(.ch-magnet-warn):hover {
+  background: var(--surface);
+}
+
+.ch-magnet:active {
+  cursor: grabbing;
+  /* the block sinks into its own base edge */
+  transform: translateY(1px);
+  border-bottom-width: 1px;
+  margin-bottom: 1px;
+}
+
+.ch-magnet-lifted {
+  opacity: 0.35;
+}
+
+.ch-magnet .chip-x {
+  width: 24px;
+  height: 24px;
+}
+
+.ch-java {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-break: break-word;
+  flex: 1;
+}
+
+.ch-ln {
+  flex: none;
+  width: 16px;
+  text-align: right;
+  font-size: 11px;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+.ch-status {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.ch-status.ok {
+  background: var(--hairline);
+}
+
+.ch-status.err {
+  background: var(--ch-err);
+}
+
+.ch-status.warn {
+  background: var(--ch-warn);
+}
+
+.ch-magnet-error {
+  border-color: rgba(180, 35, 24, 0.45);
+  background: var(--ch-err-tint);
+}
+
+.ch-magnet-warn {
+  border-color: rgba(154, 103, 0, 0.45);
+  background: var(--ch-warn-tint);
+}
+
+.ch-magnet-diverged {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-tint-strong);
+}
+
+.ch-error-msg {
+  margin: 3px 2px 2px 32px;
+  font-size: 12px;
+  color: var(--ch-err);
+}
+
+.ch-warn-msg {
+  margin: 3px 2px 2px 32px;
+  font-size: 12px;
+  color: var(--ch-warn);
+}
+
+.ch-diverge-msg {
+  margin: 3px 2px 2px 32px;
+  font-size: 12px;
+  color: var(--accent-deep);
+  font-weight: 500;
+}
+
+.ch-tray {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ch-ghost-chip code {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* ————— actions ————— */
+.ch-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.ch-actions-stage {
+  margin-top: 0;
+}
+
+.ch-submit {
+  border: none;
+  background: var(--accent-deep);
+  color: #fff;
+  border-radius: 7px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease-out);
+}
+
+.ch-submit:hover:not(:disabled) {
+  background: var(--accent);
+}
+
+.ch-submit:disabled {
+  /* neutral, not dimmed orange — the accent is reserved for interactive states */
+  background: var(--hairline-soft);
+  color: var(--ink-2);
+  cursor: default;
+}
+
+.ch-submit-hint {
+  margin: 6px 2px 0;
+  font-size: 12px;
+  color: var(--ink-2);
+  text-align: right;
+}
+
+.ch-kbd-hint {
+  margin: -4px 2px 8px;
+  font-size: 11.5px;
+  color: var(--ink-2);
+}
+
+.ch-stmt-link {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ch-next-link {
+  display: block;
+  margin-top: 6px;
+  font-weight: 600;
+  color: inherit;
+}
+
+.ch-build:focus {
+  outline: none;
+}
+
+.ch-program-pane .ch-verdict {
+  margin-bottom: 10px;
+}
+
+/* ————— reflow mode ————— */
+.ch-reflow {
+  /* the reveal is the lesson — it gets its own, slower clock than hover chrome */
+  --ch-reveal-dur: 480ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ch-reflow {
+    --ch-reveal-dur: 0ms;
+  }
+}
+
+/* the frame itself resizes — chrome and content pane animate together */
+.ch-reflow-frame {
+  transition: width var(--ch-reveal-dur) var(--ease-out);
+}
+
+.ch-reflow-frame .jframe-content {
+  transition: width var(--ch-reveal-dur) var(--ease-out), height var(--ch-reveal-dur) var(--ease-out);
+}
+
+.ch-reflow-frame .sw {
+  transition-duration: var(--ch-reveal-dur), var(--ch-reveal-dur), var(--ch-reveal-dur);
+}
+
+/* Unclipped layer over the frame's content pane: guides, ghost, and truth may
+   legitimately overhang the window (the future edge is a fact of the stage). */
+.ch-frame-wrap {
+  position: relative;
+  align-self: flex-start;
+}
+
+.ch-frame-overlay {
+  position: absolute;
+  left: 1px; /* frame border */
+  top: 31px; /* titlebar 30px + border */
+  pointer-events: none;
+  z-index: var(--z-overlay);
+}
+
+.ch-resize-guide {
+  position: absolute;
+  top: 0;
+  width: 0;
+  border-left: 1px dashed var(--accent);
+  opacity: 0.55;
+}
+
+.ch-resize-guide-label,
+.ch-ghost-tag {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--accent-deep);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-radius: 4px;
+  padding: 0 5px;
+  white-space: nowrap;
+}
+
+.ch-resize-guide-label {
+  /* bottom gutter — clear of the component band on both grow and shrink seeds */
+  bottom: 6px;
+  transform: translateX(calc(-100% - 6px));
+}
+
+/* the strip the window edge will sweep across — added or removed space */
+.ch-resize-zone {
+  position: absolute;
+  top: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent 0 6px,
+    rgba(0, 0, 0, 0.045) 6px 12px
+  );
+}
+
+/* Ghost: full-opacity dashed outline and tag (contrast), translucent body only. */
+.ch-ghost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  outline: 2px dashed var(--accent);
+  outline-offset: 1px;
+  cursor: grab;
+  touch-action: none;
+  z-index: var(--z-chrome);
+  /* the student decides this position, not the engine — no easing while dragging */
+  transition: none;
+}
+
+.ch-ghost:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.ch-ghost:active {
+  cursor: grabbing;
+}
+
+.ch-ghost-body {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.55;
+}
+
+.ch-ghost-locked {
+  pointer-events: none;
+  cursor: default;
+}
+
+.ch-ghost-locked .ch-ghost-body {
+  opacity: 0.3;
+}
+
+.ch-ghost-tag {
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 4px);
+}
+
+.ch-truth {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 2px solid var(--ch-pass, #1f7a3d);
+  border-radius: 4px;
+  background: var(--ch-pass-tint, rgba(31, 122, 61, 0.09));
+}
+
+.ch-truth-label {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -4px);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--ch-pass, #1f7a3d);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-radius: 4px;
+  padding: 0 5px;
+  white-space: nowrap;
+}
+
+/* ————— reverse mode (rebuild the target) ————— */
+/* Named areas so the Playground's own .palette (grid-area: palette) lands correctly. */
+.ch-reverse {
+  /* 340px grade pane keeps target + build side-by-side on 1366px lab screens */
+  grid-template-columns: 212px minmax(0, 1fr) 340px;
+  grid-template-areas: 'palette stage grade';
+}
+
+.ch-reverse-stage {
+  grid-area: stage;
+}
+
+.ch-grade-pane {
+  grid-area: grade;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  padding: 16px;
+  background: var(--surface);
+  border-left: 1px solid var(--hairline-soft);
+}
+
+.ch-grade-explain {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.ch-findings {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.ch-ai-note {
+  margin: auto 2px 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline-soft);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+/* Registry-style preview well on rebuild-the-target cards: the true engine
+   render, framed inset — never a screenshot. */
+.ch-card-preview {
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  background: var(--bg);
+  border: 1px solid var(--hairline-soft);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ch-card-preview-scale {
+  display: block;
+  overflow: hidden;
+}
+
+.ch-card-preview-scale > .jframe {
+  transform: scale(0.45);
+  transform-origin: 0 0;
+}
+
+/* Reverse target: scaled for co-visibility with the build at lab resolutions
+   (1366×768) — grading is structural, so the reduction costs nothing true. */
+.ch-target-scale {
+  overflow: hidden;
+}
+
+.ch-target-scale > .jframe {
+  transform: scale(0.7);
+  transform-origin: 0 0;
+}
+
+/* the build's manager controls belong to the build, not the target */
+.ch-reverse .ch-live .controls {
+  border: 1px solid var(--hairline-soft);
+  border-radius: 9px;
+  margin-bottom: 10px;
+}
+
+/* build figure flexes into the remaining row so the controls wrap inside it
+   instead of inflating the figure to max-content (breaks 1366 co-visibility) */
+.ch-reverse .ch-target {
+  flex: none;
+}
+
+.ch-reverse .ch-live {
+  /* explicit basis: wrap decisions must not use the controls' max-content width */
+  flex: 1 1 360px;
+  min-width: 0;
+}
+
+/* quiet on-stage pass acknowledgment: the thing you built gets the green */
+.ch-pass-glow .jframe {
+  outline: 2px solid var(--ch-pass);
+  outline-offset: 3px;
+}
+
+/* findings list in ink — only the verdict headline carries the semantic red */
+.ch-verdict .ch-findings {
+  color: var(--ink);
+  font-weight: 400;
+}
+
+/* CodePanel wrapper: recreates the named grid area .code-pane expects. */
+.ch-code-wrap {
+  display: grid;
+  grid-template-areas: 'code';
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  min-height: 0;
+}
+
+/* ————— responsive ————— */
+@media (max-width: 1180px) {
+  .ch-player {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(200px, 42vh);
+  }
+
+  .ch-program-pane,
+  .ch-code-wrap {
+    border-left: none;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .ch-reverse {
+    grid-template-columns: 200px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(180px, 36vh);
+    grid-template-areas:
+      'palette stage'
+      'grade grade';
+  }
+
+  .ch-grade-pane {
+    border-left: none;
+    border-top: 1px solid var(--hairline);
+  }
+}
