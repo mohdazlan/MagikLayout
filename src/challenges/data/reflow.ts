@@ -54,4 +54,27 @@ export const REFLOW_CHALLENGES: ReflowChallenge[] = [
     targetId: 'deleteButton',
     tolerance: 24,
   },
+  {
+    id: 'reflow-canteen-south',
+    type: 'reflow',
+    title: 'The button row holds the floor',
+    prompt:
+      'The canteen operator widens the receipt window from 420 to 600 px — drag the ghost of the Clear button to where it will land.',
+    difficulty: 'Apply',
+    root: {
+      id: 'frame',
+      type: 'JPanel',
+      text: '',
+      layout: { kind: 'border', hgap: 0, vgap: 0 },
+      children: [
+        { node: { id: 'titleLabel', type: 'JLabel', text: 'Mukah Airport Canteen Receipt' }, constraint: 'NORTH' },
+        { node: { id: 'totalField', type: 'JTextField', text: '', columns: 10 }, constraint: 'CENTER' },
+        { node: { id: 'clearButton', type: 'JButton', text: 'Clear' }, constraint: 'SOUTH' },
+      ],
+    },
+    startSize: { width: 420, height: 260 },
+    endSize: { width: 600, height: 260 },
+    targetId: 'clearButton',
+    tolerance: 24,
+  },
 ]

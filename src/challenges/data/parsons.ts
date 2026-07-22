@@ -115,4 +115,70 @@ export const PARSONS_CHALLENGES: ParsonsChallenge[] = [
     ],
     trayOrder: [3, 8, 1, 5, 0, 7, 2, 6, 4],
   },
+  {
+    id: 'parsons-canteen-form',
+    type: 'parsons',
+    title: 'Canteen entry form (grid pairing)',
+    prompt:
+      'Build the Mukah Airport canteen entry form: a 2 × 2 grid holding Price and Points-to-redeem, each label followed by its field. GridLayout fills row by row, so the add order is what keeps every label beside the right field.',
+    difficulty: 'Apply',
+    frameSize: { width: 440, height: 240 },
+    magnets: [
+      {
+        id: 'declare-formPanel',
+        java: 'JPanel formPanel = new JPanel(new GridLayout(2, 2));',
+        stmt: {
+          kind: 'declare',
+          varName: 'formPanel',
+          component: { type: 'JPanel', text: '', layout: { kind: 'grid', rows: 2, cols: 2, hgap: 0, vgap: 0 } },
+        },
+      },
+      {
+        id: 'declare-priceLabel',
+        java: 'JLabel priceLabel = new JLabel("Price (RM)");',
+        stmt: { kind: 'declare', varName: 'priceLabel', component: { type: 'JLabel', text: 'Price (RM)' } },
+      },
+      {
+        id: 'add-priceLabel',
+        java: 'formPanel.add(priceLabel);',
+        stmt: { kind: 'add', target: 'formPanel', child: 'priceLabel' },
+      },
+      {
+        id: 'declare-priceField',
+        java: 'JTextField priceField = new JTextField(8);',
+        stmt: { kind: 'declare', varName: 'priceField', component: { type: 'JTextField', text: '', columns: 8 } },
+      },
+      {
+        id: 'add-priceField',
+        java: 'formPanel.add(priceField);',
+        stmt: { kind: 'add', target: 'formPanel', child: 'priceField' },
+      },
+      {
+        id: 'declare-pointsLabel',
+        java: 'JLabel pointsLabel = new JLabel("Points to redeem");',
+        stmt: { kind: 'declare', varName: 'pointsLabel', component: { type: 'JLabel', text: 'Points to redeem' } },
+      },
+      {
+        id: 'add-pointsLabel',
+        java: 'formPanel.add(pointsLabel);',
+        stmt: { kind: 'add', target: 'formPanel', child: 'pointsLabel' },
+      },
+      {
+        id: 'declare-pointsField',
+        java: 'JTextField pointsField = new JTextField(8);',
+        stmt: { kind: 'declare', varName: 'pointsField', component: { type: 'JTextField', text: '', columns: 8 } },
+      },
+      {
+        id: 'add-pointsField',
+        java: 'formPanel.add(pointsField);',
+        stmt: { kind: 'add', target: 'formPanel', child: 'pointsField' },
+      },
+      {
+        id: 'add-formPanel',
+        java: 'frame.add(formPanel, BorderLayout.CENTER);',
+        stmt: { kind: 'add', target: 'frame', child: 'formPanel', constraint: 'CENTER' },
+      },
+    ],
+    trayOrder: [4, 9, 1, 6, 0, 8, 3, 2, 7, 5],
+  },
 ]

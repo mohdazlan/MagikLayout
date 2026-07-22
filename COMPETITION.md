@@ -35,7 +35,7 @@ LayoutLab has **two surfaces driven by one engine**: a free-exploration **Playgr
 
 ### Code Generation
 - **Java source formatter** producing deterministic, compilable `javax.swing` / `java.awt` code
-- Deterministic variable naming (`btn`, `lbl_1`, `pnl_2`, etc.)
+- Deterministic variable naming by type + counter (`button1`, `label1`, `panel1`, etc.)
 - Zero LLM-generated code; all output is algorithmic and verifiable
 
 ### Challenges Engine
@@ -53,8 +53,8 @@ LayoutLab has **two surfaces driven by one engine**: a free-exploration **Playgr
   to Phase 1
 
 ### Styling & Theming
-- **CSS 3** with CSS Custom Properties (tokens)
-- **OKLCH color space** throughout (future-proof, perceptually uniform)
+- **CSS 3** with CSS Custom Properties as design tokens (colors, spacing, motion durations)
+- **Hex color tokens** from a committed brand palette (Duke Orange accent + Apple-calm neutrals)
 - **System font stack** (SF Pro / Segoe UI on Windows)
 - **Monospace stack** for code display (SF Mono / JetBrains Mono fallback)
 
@@ -271,15 +271,19 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 ## 7. Performance
 
 ### Runtime
-- **Instant layout computation**: <10ms for typical component counts (<50 nodes)
-- **Sub-200ms reflow animation**: ease-out curve, eases to rest naturally
-- **Lazy measurement**: text metrics computed only when layout changes, cached per frame
-- **React optimization**: useMemo on layout tree, useRef for drag state to avoid re-renders
+- **Synchronous layout computation**: the whole tree lays out in a single pass on each
+  action; component counts in this domain are small (tens of nodes), so reflow is
+  perceptually instant
+- **Reflow animation**: 150–200ms ease-out, so students *watch* components move to rest
+- **Memoized layout & measurement**: `useMemo` recomputes the layout tree only when the
+  tree or size changes; text metrics use a shared canvas measurer
+- **Render discipline**: drag state lives in `useRef` to avoid per-move re-renders
 
-### Build
-- **Vite dev server**: HMR reload <100ms
-- **Production build**: <200KB gzipped (React included)
-- **No external dependencies** except React and React-DOM (minimal attack surface, fast install)
+### Build (measured, production `vite build`)
+- **JS**: 259 kB raw / **79 kB gzipped** (React + React-DOM included)
+- **CSS**: 22 kB raw / **5 kB gzipped**
+- **Total**: ~281 kB raw / **~85 kB gzipped** — 44 modules, builds in well under a second
+- **No dependencies beyond React + React-DOM** — no UI kit, state library, or CSS-in-JS
 
 ---
 
@@ -434,7 +438,7 @@ MagikLayout/
 | WCAG AA Contrast | 4.5:1 body / 3:1 large | All verified ✓ |
 | Keyboard Coverage | 100% UI operable | 100% ✓ |
 | Reduced Motion | Full coverage | 100% ✓ |
-| Bundle Size | <300KB gzipped | ~200KB ✓ |
+| Bundle Size | Lean (no UI/state deps) | ~85KB gzipped ✓ |
 | Desktop UX | Mobile viewport fails | 375px verified ✓ |
 
 ---

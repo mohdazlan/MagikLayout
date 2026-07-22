@@ -4,11 +4,13 @@ import { containerAt, layoutTree } from '../engine/layoutTree'
 import { createCanvasMeasurer } from '../engine/metrics'
 import { generateJava } from '../codegen/javaCode'
 import { activeContainer, addChild, firstFreeRegion, findNode, findParent, initialState, makeNode, reducer } from '../state/playground'
+import { challengeHref } from '../router'
 import { regionAtPoint } from './dropGeometry'
 import { Palette } from './Palette'
 import { LayoutControls } from './LayoutControls'
 import { Canvas, type DragTarget } from './Canvas'
 import { CodePanel } from './CodePanel'
+import { SurfaceNav } from './SurfaceNav'
 
 interface DragState {
   type: ComponentType
@@ -183,11 +185,9 @@ export function Playground() {
         <h1 className="wordmark">
           Layout<em>Lab</em>
         </h1>
+        <SurfaceNav current="playground" />
         <p className="tagline">Why did Swing put it there? Drag, resize, and read the code.</p>
         <div className="header-actions">
-          <a href="#/challenges" className="ghost-btn ch-header-link">
-            Challenges
-          </a>
           <button
             type="button"
             className="ghost-btn icon-btn"
@@ -290,6 +290,9 @@ export function Playground() {
                     )
                   })}
                 </div>
+                <a className="hidden-practice" href={challengeHref('parsons-confirm-bar')}>
+                  Practice this rule: Name prompt with a button row →
+                </a>
               </div>
             ) : tipFlash || !(selectedNode && selectedNode.id !== 'root') ? (
               <span>{tip}</span>

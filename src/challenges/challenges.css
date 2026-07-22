@@ -81,6 +81,21 @@ a.ch-crumb:hover {
   font-family: var(--mono);
 }
 
+/* One section per mode on the index — Parsons / Reflow / Reverse. */
+.ch-mode-group {
+  max-width: 880px;
+  margin: 0 auto 32px;
+}
+
+.ch-mode-heading {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
 .ch-cards {
   list-style: none;
   margin: 0 auto;
@@ -760,6 +775,65 @@ button.ch-magnet {
   /* explicit basis: wrap decisions must not use the controls' max-content width */
   flex: 1 1 360px;
   min-width: 0;
+}
+
+/* ————— congratulation + what the target taught ————— */
+.ch-congrats {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ch-congrats-sub {
+  margin: 4px 0 0;
+}
+
+.ch-notes-title {
+  margin: 12px 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.ch-notes {
+  margin: 0;
+  padding-left: 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.ch-notes li::marker {
+  color: var(--ch-pass);
+}
+
+/* ————— the build's own generated Java, inside the grade pane ————— */
+/* never shrink below the code pane's own height — the grade pane scrolls instead */
+.ch-code-block {
+  flex: none;
+}
+
+.ch-code-block .code-pane {
+  border-left: none;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 9px;
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.ch-code-block .code-header {
+  padding: 8px 12px;
+}
+
+.ch-code-block .code-line {
+  font-size: 11.5px;
+  padding-right: 12px;
 }
 
 /* quiet on-stage pass acknowledgment: the thing you built gets the green */

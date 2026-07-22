@@ -80,6 +80,12 @@ export interface ReverseChallenge extends ChallengeMeta {
    * editable; JTextField compares by columns; JComboBox only at its defaults).
    */
   target: SwingNode
+  /**
+   * Shown with the congratulation once the rebuild matches — the layout rules
+   * this particular target was built to teach. Deterministic prose, not an
+   * LLM's; each line names something the student can see in their own code.
+   */
+  notes?: string[]
 }
 
 export type Challenge = ParsonsChallenge | ReflowChallenge | ReverseChallenge

@@ -24,6 +24,7 @@ import { regionAtPoint } from '../components/dropGeometry'
 import { Palette } from '../components/Palette'
 import { LayoutControls } from '../components/LayoutControls'
 import { Canvas, type DragTarget } from '../components/Canvas'
+import { CodePanel } from '../components/CodePanel'
 import { challengeHref } from '../router'
 import { CHALLENGES } from './data'
 import { gradeReverse, type ReverseGrade } from './grade'
@@ -55,7 +56,11 @@ export function ReversePlayer({ challenge }: { challenge: ReverseChallenge }) {
 
   const canvasSize = transientSize ?? state.frameSize
   const layout = useMemo(() => layoutTree(state.root, canvasSize, measure), [state.root, canvasSize, measure])
-  const { varNames } = useMemo(() => generateJava(state.root, state.frameSize), [state.root, state.frameSize])
+  const { code, varNames } = useMemo(
+    () => generateJava(state.root, state.frameSize),
+    [state.root, state.frameSize],
+  )
+  const selectedVar = state.selectedId === 'root' ? null : (varNames.get(state.selectedId) ?? null)
 
   // Any edit invalidates the last verdict.
   useEffect(() => setGrade(null), [state.root])
@@ -245,10 +250,27 @@ export function ReversePlayer({ challenge }: { challenge: ReverseChallenge }) {
             <div className={`ch-verdict ${grade.pass ? 'ch-verdict-pass' : 'ch-verdict-fail'}`} role="alert">
               {grade.pass ? (
                 <>
-                  Structurally equivalent — Swing would build the same tree from your canvas.
-                  {nextChallenge && (
+                  <strong className="ch-congrats">Congratulations — you rebuilt the target.</strong>
+                  <p className="ch-congrats-sub">
+                    Structurally equivalent: Swing would build the same tree from your canvas.
+                  </p>
+                  {challenge.notes && challenge.notes.length > 0 && (
+                    <>
+                      <p className="ch-notes-title">What this layout just taught you</p>
+                      <ul className="ch-notes">
+                        {challenge.notes.map((note) => (
+                          <li key={note}>{note}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                  {nextChallenge ? (
                     <a className="ch-next-link" href={challengeHref(nextChallenge.id)}>
                       Next challenge: {nextChallenge.title} →
+                    </a>
+                  ) : (
+                    <a className="ch-next-link" href={challengeHref()}>
+                      Back to all challenges →
                     </a>
                   )}
                 </>
@@ -292,6 +314,15 @@ export function ReversePlayer({ challenge }: { challenge: ReverseChallenge }) {
             </button>
           </div>
         </div>
+        <div className="ch-pane-block ch-code-block">
+          <h2 className="pane-title">Your code</h2>
+          <p className="ch-grade-explain">
+            The Java your canvas describes, regenerated on every edit — the same deterministic codegen the
+            Playground uses. Compare it against the target as you build.
+          </p>
+          <CodePanel code={code} selectedVar={selectedVar} />
+        </div>
+
         <p className="ch-ai-note">
           AI coach feedback — qualitative advice on <em>how</em> you got there — arrives in a later release.
           The verdict above is the same deterministic engine check every mode here uses.

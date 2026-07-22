@@ -120,7 +120,8 @@ export function CodePanel({ code, selectedVar }: CodePanelProps) {
         <span className="code-filename">LayoutDemo.java</span>
         <button
           type="button"
-          className="ghost-btn"
+          className={`ghost-btn copy-btn${copied ? ' copied' : ''}`}
+          aria-live="polite"
           onClick={async () => {
             await navigator.clipboard.writeText(code)
             setCopied(true)

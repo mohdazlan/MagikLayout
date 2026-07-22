@@ -89,6 +89,30 @@ button {
   color: var(--ink-2);
 }
 
+/* The one control that moves between surfaces — text-weight links, not a tab bar. */
+.surface-nav {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-size: 13px;
+}
+
+.surface-link {
+  color: var(--ink-2);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--dur) var(--ease-out);
+}
+
+.surface-link:hover {
+  color: var(--accent-deep);
+}
+
+.surface-link[aria-current='page'] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .header-actions {
   margin-left: auto;
   display: flex;
@@ -696,6 +720,18 @@ button {
   color: var(--ink-2);
 }
 
+/* Optional bridge to the challenge that drills this exact rule — never auto-navigates. */
+.hidden-practice {
+  color: var(--accent-deep);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hidden-practice:hover {
+  text-decoration: underline;
+}
+
 .chip-x {
   display: inline-flex;
   align-items: center;
@@ -743,6 +779,20 @@ button {
   font-family: var(--mono);
   font-size: 12px;
   color: var(--ink-2);
+}
+
+/* Copy was shipping but going unseen — raise its weight with the accent tint
+   already used for armed actions (no new colors, icons, shadows, or cards). */
+.copy-btn {
+  color: var(--accent-deep);
+  border-color: rgba(232, 89, 12, 0.3);
+  background: var(--accent-tint);
+  font-weight: 600;
+}
+
+.copy-btn:hover,
+.copy-btn.copied {
+  background: var(--accent-tint-strong);
 }
 
 .code-scroll {

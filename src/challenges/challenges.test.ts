@@ -108,6 +108,24 @@ describe('parsons grading', () => {
     expect(grade.firstDivergence).toBe(2)
   })
 
+  it('canteen form: the canonical magnet order passes and its tray is a real shuffle', () => {
+    const form = PARSONS_CHALLENGES.find((c) => c.id === 'parsons-canteen-form')!
+    expect(gradeParsons(form, canonical(form.magnets.length)).pass).toBe(true)
+    // trayOrder must be a permutation of every magnet index — a dropped or
+    // repeated index would strand a statement in the tray forever.
+    expect([...form.trayOrder].sort((a, b) => a - b)).toEqual(canonical(form.magnets.length))
+  })
+
+  it('canteen form: swapping a label past its field breaks the grid pairing', () => {
+    const form = PARSONS_CHALLENGES.find((c) => c.id === 'parsons-canteen-form')!
+    // add-priceField (4) placed before add-priceLabel (2): the field takes the
+    // first cell, so every later pair shifts one cell left.
+    const order = [0, 1, 3, 4, 2, 5, 6, 7, 8, 9]
+    const grade = gradeParsons(form, order)
+    expect(grade.pass).toBe(false)
+    expect(grade.firstDivergence).toBeGreaterThanOrEqual(0)
+  })
+
   it('treats border-region occupancy as order-free but within-region order as meaningful', () => {
     const a = targetExec(confirmBar).root
     // NORTH added after SOUTH — same resolved tree.
@@ -131,6 +149,22 @@ describe('reflow grading', () => {
   it('EAST stays pinned to the right edge at the new width', () => {
     const truth = layoutTree(pinnedEast.root, pinnedEast.endSize, testMeasurer).abs.get('sendButton')!
     expect(truth.x + truth.width).toBe(pinnedEast.endSize.width)
+  })
+
+  it('canteen SOUTH: the button stretches to the new full width, so its centre moves', () => {
+    const canteen = REFLOW_CHALLENGES.find((c) => c.id === 'reflow-canteen-south')!
+    const at = (w: number) => layoutTree(canteen.root, { ...canteen.startSize, width: w }, testMeasurer).abs.get('clearButton')!
+    const before = at(canteen.startSize.width)
+    const after = at(canteen.endSize.width)
+    // SOUTH keeps its preferred height but spans the frame
+    expect(before.width).toBe(canteen.startSize.width)
+    expect(after.width).toBe(canteen.endSize.width)
+    expect(after.height).toBe(before.height)
+    // …which drags the centre right by half the width gain — well past tolerance,
+    // so "it stays put" is a graded-wrong prediction, which is the lesson.
+    const dx = after.x + after.width / 2 - (before.x + before.width / 2)
+    expect(dx).toBe((canteen.endSize.width - canteen.startSize.width) / 2)
+    expect(dx).toBeGreaterThan(canteen.tolerance)
   })
 
   it('the Delete button wraps to a second row at 300px', () => {
@@ -238,6 +272,98 @@ describe('reverse grading', () => {
     const grade = gradeReverse(searchBar.target, root)
     expect(grade.pass).toBe(false)
     expect(grade.findings[0]).toMatch(/different layout manager/)
+  })
+
+  it('ohms calculator: a palette-built rebuild grades as equivalent', () => {
+    const ohms = REVERSE_CHALLENGES.find((c) => c.id === 'reverse-ohms-calculator')!
+    let root: SwingNode = {
+      id: 'root',
+      type: 'JPanel',
+      text: '',
+      layout: { kind: 'border', hgap: 0, vgap: 0 },
+      children: [],
+    }
+    // header block NORTH: formula over prompt, 2 × 1 grid
+    root = addChild(
+      root,
+      'root',
+      { id: 'h', type: 'JPanel', text: '', layout: { kind: 'grid', rows: 2, cols: 1, hgap: 0, vgap: 0 }, children: [] },
+      'NORTH',
+    )
+    root = addChild(root, 'h', { id: 'h1', type: 'JLabel', text: 'R = V / I' })
+    root = addChild(root, 'h', { id: 'h2', type: 'JLabel', text: 'Select variable to solve for:' })
+    // selector rows CENTER: 3 × 2 grid, filled row by row
+    root = addChild(
+      root,
+      'root',
+      { id: 'g', type: 'JPanel', text: '', layout: { kind: 'grid', rows: 3, cols: 2, hgap: 0, vgap: 0 }, children: [] },
+      'CENTER',
+    )
+    for (const [box, field] of [
+      ['Resistance (R)', 'r'],
+      ['Voltage (V)', 'v'],
+      ['Amperage (I)', 'i'],
+    ] as const) {
+      root = addChild(root, 'g', { id: `c-${field}`, type: 'JCheckBox', text: box })
+      root = addChild(root, 'g', { id: `t-${field}`, type: 'JTextField', text: '', columns: 10 })
+    }
+    expect(gradeReverse(ohms.target, root)).toEqual({ pass: true, findings: [] })
+  })
+
+  it('ohms calculator: swapping a grid row order is caught, not silently passed', () => {
+    const ohms = REVERSE_CHALLENGES.find((c) => c.id === 'reverse-ohms-calculator')!
+    // Same parts, but the field placed before its checkbox in the first row.
+    const wrong: SwingNode = JSON.parse(JSON.stringify(ohms.target))
+    const grid = wrong.children!.find((c) => c.constraint === 'CENTER')!.node
+    ;[grid.children![0], grid.children![1]] = [grid.children![1], grid.children![0]]
+    const grade = gradeReverse(ohms.target, wrong)
+    expect(grade.pass).toBe(false)
+    expect(grade.findings[0]).toMatch(/wrong arrangement/)
+  })
+
+  it('canteen receipt: a palette-built rebuild grades as equivalent', () => {
+    const canteen = REVERSE_CHALLENGES.find((c) => c.id === 'reverse-canteen-receipt')!
+    let root: SwingNode = {
+      id: 'root',
+      type: 'JPanel',
+      text: '',
+      layout: { kind: 'border', hgap: 0, vgap: 0 },
+      children: [],
+    }
+    root = addChild(root, 'root', { id: 'ttl', type: 'JLabel', text: 'Mukah Airport Canteen Receipt' }, 'NORTH')
+    root = addChild(
+      root,
+      'root',
+      { id: 'form', type: 'JPanel', text: '', layout: { kind: 'grid', rows: 5, cols: 2, hgap: 0, vgap: 0 }, children: [] },
+      'CENTER',
+    )
+    for (const [label, id] of [
+      ['Item Name', 'item'],
+      ['Price (RM)', 'price'],
+      ['Quantity', 'qty'],
+      ['Points Balance', 'bal'],
+    ] as const) {
+      root = addChild(root, 'form', { id: `l-${id}`, type: 'JLabel', text: label })
+      root = addChild(root, 'form', { id: `f-${id}`, type: 'JTextField', text: '', columns: 10 })
+    }
+    root = addChild(root, 'form', { id: 'l-redeem', type: 'JLabel', text: 'Redeem' })
+    root = addChild(root, 'form', { id: 'c-redeem', type: 'JCheckBox', text: 'Use my points' })
+    root = addChild(
+      root,
+      'root',
+      { id: 'btns', type: 'JPanel', text: '', layout: { kind: 'flow', align: 'CENTER', hgap: 5, vgap: 5 }, children: [] },
+      'SOUTH',
+    )
+    root = addChild(root, 'btns', { id: 'b-calc', type: 'JButton', text: 'Calculate' })
+    root = addChild(root, 'btns', { id: 'b-clear', type: 'JButton', text: 'Clear' })
+
+    expect(gradeReverse(canteen.target, root)).toEqual({ pass: true, findings: [] })
+  })
+
+  it('every reverse challenge ships notes for the completion message', () => {
+    for (const c of REVERSE_CHALLENGES) {
+      expect(c.notes && c.notes.length).toBeGreaterThan(0)
+    }
   })
 
   it('reverse: a structurally equivalent rebuild lays out to identical geometry (shared engine)', () => {
