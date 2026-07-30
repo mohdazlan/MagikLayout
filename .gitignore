@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-ssr
+
+# Local env — the coach backend URL lives here; never commit it
+.env
+.env.local
+.env.*.local
+
+# Editor / OS
+.DS_Store
+*.log

@@ -813,6 +813,92 @@ button.ch-magnet {
   color: var(--ch-pass);
 }
 
+/* ————— AI coach: explains the engine's findings, never grades ————— */
+.ch-coach {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline-soft);
+}
+
+.ch-coach-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.ch-coach-ask {
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  border-radius: 7px;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease-out);
+}
+
+.ch-coach-ask:hover:not(:disabled) {
+  background: var(--bg);
+}
+
+.ch-coach-ask:disabled {
+  color: var(--ink-2);
+  opacity: 0.6;
+  cursor: default;
+}
+
+.ch-coach-lang {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.ch-coach-lang-btn {
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  padding: 4px 9px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ch-coach-lang-btn:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.ch-coach-lang-btn:last-child {
+  border-radius: 0 6px 6px 0;
+  border-left: none;
+}
+
+.ch-coach-lang-btn.active {
+  background: var(--accent-tint);
+  color: var(--accent-deep);
+  border-color: rgba(232, 89, 12, 0.3);
+}
+
+.ch-coach-hint {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  background: var(--accent-tint);
+  border-radius: 8px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.ch-coach-note {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  color: var(--ink-2);
+}
+
+.ch-coach-integrity {
+  margin: 8px 0 0;
+  font-size: 11.5px;
+  color: var(--ink-2);
+}
+
 /* ————— the build's own generated Java, inside the grade pane ————— */
 /* never shrink below the code pane's own height — the grade pane scrolls instead */
 .ch-code-block {

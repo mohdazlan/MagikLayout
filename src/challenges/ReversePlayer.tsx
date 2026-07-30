@@ -27,6 +27,8 @@ import { Canvas, type DragTarget } from '../components/Canvas'
 import { CodePanel } from '../components/CodePanel'
 import { challengeHref } from '../router'
 import { CHALLENGES } from './data'
+import { coachConfigured } from './coach'
+import { CoachPanel } from './CoachPanel'
 import { gradeReverse, type ReverseGrade } from './grade'
 import { SwingFrame, useMeasurer } from './SwingFrame'
 import type { ReverseChallenge } from './types'
@@ -62,7 +64,7 @@ export function ReversePlayer({ challenge }: { challenge: ReverseChallenge }) {
   )
   const selectedVar = state.selectedId === 'root' ? null : (varNames.get(state.selectedId) ?? null)
 
-  // Any edit invalidates the last verdict.
+  // Any edit invalidates the last verdict (the CoachPanel unmounts with it).
   useEffect(() => setGrade(null), [state.root])
 
   // ————— drag from palette (the Playground's own interaction, rewired) —————
@@ -282,6 +284,14 @@ export function ReversePlayer({ challenge }: { challenge: ReverseChallenge }) {
                       <li key={f}>{f}</li>
                     ))}
                   </ul>
+                  <CoachPanel
+                    key={grade.findings.join('¦')}
+                    mode="reverse"
+                    challengeTitle={challenge.title}
+                    prompt={challenge.prompt}
+                    findings={grade.findings}
+                    studentCode={code}
+                  />
                 </>
               )}
             </div>
@@ -324,8 +334,9 @@ export function ReversePlayer({ challenge }: { challenge: ReverseChallenge }) {
         </div>
 
         <p className="ch-ai-note">
-          AI coach feedback — qualitative advice on <em>how</em> you got there — arrives in a later release.
-          The verdict above is the same deterministic engine check every mode here uses.
+          {coachConfigured()
+            ? 'When a check fails, the AI coach can explain the engine’s findings in plain language — it never grades or gives the answer.'
+            : 'The verdict above is the same deterministic engine check every mode uses. An optional AI coach can explain a failed check in plain language when configured.'}
         </p>
       </section>
 

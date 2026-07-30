@@ -8,7 +8,7 @@ Unlike drag-and-drop builders that hide the why, LayoutLab shows why. It's a ref
 
 LayoutLab has **two surfaces driven by one engine**: a free-exploration **Playground** and a **Challenges** area with three graded exercise modes (Parsons, Reflow, Reverse). The same layout engine that renders the Playground also grades every challenge—deterministically, with no screenshots and no LLM anywhere in the layout or grading path.
 
-**Status:** Phase 1 shipped on 2026-07-04. Playground surface scored **36/40 (Excellent)** in final impeccable design review (no P0/P1 issues, clean detector, WCAG AA compliant, full keyboard accessibility, reduced-motion support). The Challenges system is implemented with 6 shipped exercises and its own deterministic graders.
+**Status:** Phase 1 shipped on 2026-07-04. Playground surface scored **36/40 (Excellent)** in final impeccable design review (no P0/P1 issues, clean detector, WCAG AA compliant, full keyboard accessibility, reduced-motion support). The Challenges system is implemented with 10 shipped exercises and its own deterministic graders.
 
 ---
 
@@ -22,7 +22,7 @@ LayoutLab has **two surfaces driven by one engine**: a free-exploration **Playgr
 
 ### Build & Tooling
 - **Vite 8.1.3** (HMR dev server, optimized builds)
-- **Vitest 4.1.9** (~43 passing tests across engine, codegen, and challenges)
+- **Vitest 4.1.9** (56 passing tests across engine, codegen, and challenges)
 - **TypeScript 6.0** (strict mode, zero compilation errors)
 
 ### Layout Engine
@@ -115,8 +115,7 @@ LayoutLab has **two surfaces driven by one engine**: a free-exploration **Playgr
 ### Challenges — Three Graded Practice Modes (`#/challenges`)
 The Challenges area turns the engine into an assessment tool. Every mode is graded
 deterministically against trees or engine-computed rectangles — never pixels, never
-AI. Exercises are tagged by **Bloom difficulty** (Recall → Apply → Analyze). Six
-challenges ship in Phase 1 (2 per mode).
+AI. Exercises are tagged by **Bloom difficulty** (Recall → Apply → Analyze). Ten challenges ship (3 Parsons, 3 Reflow, 4 Reverse).
 
 1. **Parsons ("order the code")** — arrange a tray of shuffled Java code magnets into
    the correct order to build a target UI. The executor applies true Swing semantics
@@ -248,7 +247,7 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 ## 6. Quality Assurance
 
 ### Testing
-- **~43 passing tests** (Vitest) covering:
+- **56 passing tests** (Vitest) covering:
   - Layout engine: BorderLayout region resolution, FlowLayout row wrapping, GridLayout cell sizing
   - Java code generation determinism
   - Challenges: statement execution semantics and deterministic grading (Parsons/Reflow/Reverse)
@@ -343,13 +342,13 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 ### Phase 1: Complete
 - **Ship date**: 2026-07-04
 - **Final design score**: 36/40 (Excellent, no P0/P1 issues)
-- **Quality gates**: TS clean, ~43 tests pass, detector clean, WCAG AA verified
+- **Quality gates**: TS clean, 56 tests pass, detector clean, WCAG AA verified
 - **Surface tested**: desktop (1280px+), tablet (768px), mobile (375px)
 
 ### What's Shipped
 - **Playground**: BorderLayout, FlowLayout, GridLayout; drag-and-drop + click-to-add;
   live code generation; undo/redo (50-step history); nestable JPanels
-- **Challenges**: Parsons, Reflow, and Reverse modes with deterministic graders (6 exercises)
+- **Challenges**: Parsons, Reflow, and Reverse modes with deterministic graders (10 exercises: 3 Parsons, 3 Reflow, 4 Reverse)
 - Full keyboard accessibility, reduced-motion support, WCAG AA contrast and focus
 
 ### Remaining (future phases)
@@ -388,7 +387,7 @@ Output: optimized static bundle in `dist/`.
 npm run test
 ```
 
-All ~43 tests run under Vitest.
+All 56 tests run under Vitest.
 
 ---
 
@@ -433,7 +432,7 @@ MagikLayout/
 | Metric | Target | Actual |
 |--------|--------|--------|
 | Design Score | ≥32/40 | **36/40** ✓ |
-| Tests | Engine + codegen + grading covered | ~43 passing ✓ |
+| Tests | Engine + codegen + grading covered | 56 passing ✓ |
 | TS Errors | 0 | 0 ✓ |
 | WCAG AA Contrast | 4.5:1 body / 3:1 large | All verified ✓ |
 | Keyboard Coverage | 100% UI operable | 100% ✓ |

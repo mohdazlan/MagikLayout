@@ -16,9 +16,24 @@ import type { Rect } from '../engine/types'
 import { CodePanel } from '../components/CodePanel'
 import { challengeHref } from '../router'
 import { CHALLENGES } from './data'
+import { CoachPanel } from './CoachPanel'
 import { gradeReflow, type ReflowGrade } from './grade'
 import { SwingFrame, useMeasurer } from './SwingFrame'
 import type { ReflowChallenge } from './types'
+
+/** Turn a missed reflow prediction into plain-language findings for the coach —
+ *  the resize, the manager/region that governs the target, and how far off the
+ *  guess was. The engine already computed all of it; the truth is already shown. */
+function reflowFindings(challenge: ReflowChallenge, grade: ReflowGrade, targetVar: string): string[] {
+  const kind = challenge.root.layout!.kind
+  const manager = kind === 'flow' ? 'FlowLayout' : kind === 'grid' ? 'GridLayout' : 'BorderLayout'
+  const region = challenge.root.children?.find((c) => c.node.id === challenge.targetId)?.constraint ?? 'CENTER'
+  return [
+    `The frame was resized from ${challenge.startSize.width}×${challenge.startSize.height} to ${challenge.endSize.width}×${challenge.endSize.height} pixels.`,
+    `${targetVar} is laid out by the frame's ${manager}${manager === 'BorderLayout' ? ` in the ${region} region` : ''}.`,
+    `The student's predicted centre was ${Math.round(grade.dx)}px off horizontally and ${Math.round(grade.dy)}px off vertically (tolerance is ±${challenge.tolerance}px on each axis).`,
+  ]
+}
 
 type Phase = 'predict' | 'revealed'
 
@@ -266,6 +281,14 @@ export function ReflowPlayer({ challenge }: { challenge: ReflowChallenge }) {
                     ? 'the horizontal axis exceeds'
                     : 'the vertical axis exceeds'}{' '}
                 the ±{challenge.tolerance}px tolerance. {reflowLesson(challenge)}
+                <CoachPanel
+                  key={`${Math.round(grade.dx)}:${Math.round(grade.dy)}`}
+                  mode="reflow"
+                  challengeTitle={challenge.title}
+                  prompt={challenge.prompt}
+                  findings={reflowFindings(challenge, grade, targetVar)}
+                  studentCode={code}
+                />
               </>
             )}
           </div>

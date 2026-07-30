@@ -8,10 +8,40 @@ import { useEffect, useMemo, useRef, useState, type JSX } from 'react'
 import { layoutTree } from '../engine/layoutTree'
 import { challengeHref } from '../router'
 import { CHALLENGES } from './data'
-import { executeStatements } from './execute'
+import { executeStatements, type ExecResult } from './execute'
 import { gradeParsons, targetExec, type ParsonsGrade } from './grade'
+import { CoachPanel } from './CoachPanel'
 import { SwingFrame, useMeasurer } from './SwingFrame'
 import type { ParsonsChallenge } from './types'
+
+/** Turn a failed Parsons grade into plain-language findings for the AI coach.
+ *  Everything here is already computed by the engine — the first divergence,
+ *  compile errors, and setLayout-timing (unmanaged) issues. */
+function parsonsFindings(
+  challenge: ParsonsChallenge,
+  placed: number[],
+  exec: ExecResult,
+  result: ParsonsGrade,
+): string[] {
+  const out: string[] = []
+  const fd = result.firstDivergence
+  if (fd >= 0 && fd < placed.length) {
+    out.push(
+      `Statement ${fd + 1} — \`${challenge.magnets[placed[fd]].java}\` — is the first statement after which this order can no longer reach the target.`,
+    )
+  }
+  exec.results.forEach((r, i) => {
+    if (!r.ok && r.error) {
+      out.push(`Line ${i + 1} (\`${challenge.magnets[placed[i]].java}\`) does not compile: ${r.error}.`)
+    }
+  })
+  for (const u of exec.unmanaged) {
+    out.push(
+      `${u.varName} was added to ${u.containerVar} before its BorderLayout was installed, so Swing never registers it — it stays invisible.`,
+    )
+  }
+  return out
+}
 
 interface DragState {
   magnetIdx: number
@@ -300,6 +330,14 @@ export function ParsonsPlayer({ challenge }: { challenge: ParsonsChallenge }) {
                   </button>{' '}
                   diverges — from there this order can’t reach the target. The canvas shows what Swing builds
                   instead.
+                  <CoachPanel
+                    key={`${result.firstDivergence}:${placed.join(',')}`}
+                    mode="parsons"
+                    challengeTitle={challenge.title}
+                    prompt={challenge.prompt}
+                    findings={parsonsFindings(challenge, placed, exec, result)}
+                    studentCode={placed.map((i) => challenge.magnets[i].java).join('\n')}
+                  />
                 </>
               )}
             </div>
