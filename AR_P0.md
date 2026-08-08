@@ -34,6 +34,8 @@ The mission state is converted into the same deterministic Swing component tree 
 
 The assessed answers are no longer submitted through a conventional quiz button grid. Touch coordinates in the camera view are raycast against the tracked Three.js meshes, and only hits on the mission-relevant 3D object advance the deterministic mission state machine. This makes image tracking, spatial anchoring, 3D graphics, touch interaction, animation, and structural feedback necessary to complete the assessed flow.
 
+Mission 3 uses a forgiving invisible interaction surface across SOUTH and the visible yellow repair control. This preserves the spatial learning intent while making the touch target reliable on an iPhone screen. On completion, a dedicated action expands and scrolls to the generated Java evidence for NOSS demonstration and recording.
+
 ## iPhone 13 acceptance test
 
 The production deployment must use HTTPS; iOS blocks camera access on an insecure remote origin.

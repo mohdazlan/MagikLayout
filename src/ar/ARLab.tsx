@@ -23,6 +23,7 @@ const COPY = {
     targetHelp: 'Open this target on a second screen or print it on A4 paper. Your iPhone camera anchors the virtual JFrame to it.',
     targetOpen: 'Open target card',
     completeNote: 'You constructed, tested, and diagnosed a BorderLayout prototype.',
+    evidenceAction: 'Show generated Java evidence',
     arAction: 'Required AR action',
     hints: {
       place: 'Tap a region on the tracked 3D model to place the title.',
@@ -48,6 +49,7 @@ const COPY = {
     targetHelp: 'Buka sasaran ini pada skrin kedua atau cetak pada kertas A4. Kamera iPhone akan menambat JFrame maya kepadanya.',
     targetOpen: 'Buka kad sasaran',
     completeNote: 'Anda telah membina, menguji dan mendiagnosis prototaip BorderLayout.',
+    evidenceAction: 'Tunjukkan bukti kod Java yang dijana',
     arAction: 'Tindakan AR diperlukan',
     hints: {
       place: 'Sentuh kawasan pada model 3D yang dijejak untuk meletakkan tajuk.',
@@ -86,7 +88,9 @@ export function ARLab() {
   const [feedback, setFeedback] = useState<string | null>(null)
   const [missionPassed, setMissionPassed] = useState(false)
   const [completed, setCompleted] = useState<Set<MissionId>>(() => new Set())
+  const [codeOpen, setCodeOpen] = useState(false)
   const missionPanelRef = useRef<HTMLElement>(null)
+  const codeRef = useRef<HTMLDetailsElement>(null)
   const copy = COPY[language]
   const task = MISSION_COPY[language][mission]
   const interactionHint = mission === 1
@@ -112,6 +116,7 @@ export function ARLab() {
   }
 
   const handleARInteraction = (interaction: ARInteraction) => {
+    if (missionPassed) return
     const result = applyARInteraction(visual, interaction)
     setVisual(result.visual)
     if (result.status === 'passed') {
@@ -142,6 +147,12 @@ export function ARLab() {
     setVisual({ mission: next })
     setMissionPassed(false)
     setFeedback(null)
+    setCodeOpen(false)
+  }
+
+  const revealEvidence = () => {
+    setCodeOpen(true)
+    requestAnimationFrame(() => codeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
   }
 
   if (!started) {
@@ -195,8 +206,8 @@ export function ARLab() {
         <div className={`ar-required-action ${targetFound ? 'ready' : ''}`}><strong>{copy.arAction}</strong><span>{interactionHint}</span></div>
         {feedback && <div className={`ar-feedback ${missionPassed ? 'pass' : ''}`}>{feedback}</div>}
         {missionPassed && mission < 3 && <button type="button" className="ar-primary ar-next" onClick={nextMission}>{copy.next}</button>}
-        {missionPassed && mission === 3 && <div className="ar-complete"><strong>{copy.complete}: 3/3</strong><p>{copy.completeNote}</p></div>}
-        <details className="ar-code"><summary>Java evidence — generated from this AR state</summary><CodePanel code={code} selectedVar={null} /></details>
+        {missionPassed && mission === 3 && <div className="ar-complete"><strong>{copy.complete}: 3/3</strong><p>{copy.completeNote}</p><button type="button" onClick={revealEvidence}>{copy.evidenceAction}</button></div>}
+        <details ref={codeRef} open={codeOpen} onToggle={(event) => setCodeOpen(event.currentTarget.open)} className="ar-code"><summary>Java evidence — generated from this AR state</summary><CodePanel code={code} selectedVar={null} /></details>
       </section>
     </div>
   )

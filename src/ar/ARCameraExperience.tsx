@@ -76,10 +76,24 @@ function actionPlate(label: string): THREE.Mesh {
     opacity: 0.96,
     side: THREE.DoubleSide,
   })
-  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.085), material)
-  mesh.position.set(0, -0.335, 0.095)
+  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.78, 0.115), material)
+  mesh.position.set(0, -0.315, 0.125)
   mesh.userData.interaction = { kind: 'repair-panel' } satisfies ARInteraction
   mesh.userData.pulseAction = true
+  return mesh
+}
+
+/** Forgiving touch surface spanning SOUTH and the visible repair control. */
+function repairHitArea(): THREE.Mesh {
+  const material = new THREE.MeshBasicMaterial({
+    transparent: true,
+    opacity: 0.001,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  })
+  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.96, 0.3), material)
+  mesh.position.set(0, -0.255, 0.115)
+  mesh.userData.interaction = { kind: 'repair-panel' } satisfies ARInteraction
   return mesh
 }
 
@@ -125,9 +139,11 @@ function rebuildScene(group: THREE.Group, visual: ARVisualState): THREE.Mesh[] {
     group.add(save)
     const cancel = labelledPlate('SOUTH', visual.collisionFixed ? 'JPanel: Save + Cancel' : 'Cancel', 1)
     cancel.position.z = visual.collisionFixed ? 0.09 : 0.085
-    cancel.userData.interaction = visual.collisionRevealed
-      ? ({ kind: 'region', region: 'SOUTH' } satisfies ARInteraction)
-      : ({ kind: 'reveal-collision' } satisfies ARInteraction)
+    if (!visual.collisionFixed) {
+      cancel.userData.interaction = visual.collisionRevealed
+        ? ({ kind: 'repair-panel' } satisfies ARInteraction)
+        : ({ kind: 'reveal-collision' } satisfies ARInteraction)
+    }
     if (visual.collisionRevealed && !visual.collisionFixed) {
       save.position.x -= 0.05
       save.material = (save.material as THREE.MeshBasicMaterial).clone()
@@ -135,7 +151,8 @@ function rebuildScene(group: THREE.Group, visual: ARVisualState): THREE.Mesh[] {
     }
     group.add(cancel)
     if (visual.collisionRevealed && !visual.collisionFixed) {
-      const repair = actionPlate('TAP: BUILD NESTED JPanel')
+      const repair = actionPlate('TAP SOUTH: BUILD JPanel')
+      group.add(repairHitArea())
       group.add(repair)
       animated.push(repair)
     }
