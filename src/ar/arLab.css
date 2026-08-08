@@ -30,8 +30,9 @@
 .ar-session-header div span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 12px; color: #bbb; }
 .ar-score { text-align: right; font-variant-numeric: tabular-nums; }
 .ar-camera-shell { position: relative; height: 48dvh; min-height: 300px; overflow: hidden; background: #000; }
-.ar-camera { position: absolute; inset: 0; }
+.ar-camera { position: absolute; inset: 0; touch-action: manipulation; cursor: crosshair; }
 .ar-camera > video, .ar-camera > canvas { width: 100% !important; height: 100% !important; object-fit: cover; }
+.ar-touch-cue { position: absolute; z-index: 4; top: 10px; left: 50%; width: max-content; max-width: calc(100% - 28px); transform: translateX(-50%); padding: 7px 11px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; color: #fff; background: rgba(8,12,18,.78); box-shadow: 0 4px 18px rgba(0,0,0,.3); font-size: 12px; font-weight: 650; text-align: center; pointer-events: none; backdrop-filter: blur(8px); }
 .ar-camera-start { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 14px; padding: 28px; text-align: center; color: #fff; background: radial-gradient(circle, rgba(35,35,35,.72), rgba(0,0,0,.94)); }
 .ar-camera-start p { max-width: 390px; line-height: 1.5; }
 .ar-mission-panel { box-sizing: border-box; height: calc(52dvh - 58px - env(safe-area-inset-top)); overflow-y: auto; overscroll-behavior: contain; scroll-padding-top: 12px; padding: 12px 16px calc(24px + env(safe-area-inset-bottom)); background: var(--surface); border-radius: 18px 18px 0 0; }
@@ -42,6 +43,10 @@
 .ar-mission-title h2 { margin: 2px 0 0; font-size: 21px; }
 .ar-mission-title button { flex: none; min-height: 36px; border: 1px solid var(--hairline); border-radius: 8px; background: var(--bg); }
 .ar-mission-panel > p { margin: 10px 0; color: var(--ink-2); line-height: 1.45; }
+.ar-required-action { display: grid; gap: 3px; padding: 10px 12px; border: 1px solid #f0b68e; border-radius: 10px; color: #7a2e0e; background: #fff1e8; }
+.ar-required-action strong { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+.ar-required-action span { line-height: 1.4; }
+.ar-required-action.ready { border-color: #7bc593; color: #14532d; background: #eaf7ee; }
 .ar-answer-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
 .ar-answer-grid button, .ar-answer-stack button { min-height: 44px; border: 1px solid var(--hairline); border-radius: 9px; background: var(--bg); color: var(--ink); font-weight: 600; }
 .ar-answer-stack { display: grid; gap: 7px; }

@@ -6,9 +6,61 @@ export type MissionId = 1 | 2 | 3
 export interface ARVisualState {
   mission: MissionId
   placedRegion?: BorderRegion
+  selectedRegion?: BorderRegion
   resizeRevealed?: boolean
   collisionRevealed?: boolean
   collisionFixed?: boolean
+}
+
+export type ARInteraction =
+  | { kind: 'region'; region: BorderRegion }
+  | { kind: 'reveal-collision' }
+  | { kind: 'repair-panel' }
+
+export interface ARInteractionResult {
+  visual: ARVisualState
+  status: 'incorrect' | 'progress' | 'passed'
+}
+
+/** Deterministic mission state machine driven only by taps on tracked 3D objects. */
+export function applyARInteraction(visual: ARVisualState, interaction: ARInteraction): ARInteractionResult {
+  if (visual.mission === 1) {
+    if (interaction.kind !== 'region') return { visual, status: 'incorrect' }
+    const passed = interaction.region === 'NORTH'
+    return {
+      visual: { mission: 1, placedRegion: interaction.region, selectedRegion: interaction.region },
+      status: passed ? 'passed' : 'incorrect',
+    }
+  }
+
+  if (visual.mission === 2) {
+    if (interaction.kind !== 'region') return { visual, status: 'incorrect' }
+    const passed = interaction.region === 'CENTER'
+    return {
+      visual: { mission: 2, selectedRegion: interaction.region, resizeRevealed: passed },
+      status: passed ? 'passed' : 'incorrect',
+    }
+  }
+
+  if (!visual.collisionRevealed) {
+    const revealsCollision = interaction.kind === 'reveal-collision'
+      || (interaction.kind === 'region' && interaction.region === 'SOUTH')
+    return {
+      visual: revealsCollision
+        ? { mission: 3, selectedRegion: 'SOUTH', collisionRevealed: true }
+        : { ...visual, selectedRegion: interaction.kind === 'region' ? interaction.region : visual.selectedRegion },
+      status: revealsCollision ? 'progress' : 'incorrect',
+    }
+  }
+
+  if (interaction.kind === 'repair-panel') {
+    return {
+      visual: { mission: 3, selectedRegion: 'SOUTH', collisionRevealed: true, collisionFixed: true },
+      status: 'passed',
+    }
+  }
+
+  return { visual, status: 'incorrect' }
 }
 
 export function buildMissionTree(visual: ARVisualState): SwingNode {

@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { BorderRegion } from '../engine/types'
 import { generateJava } from '../codegen/javaCode'
 import { CodePanel } from '../components/CodePanel'
 import { SurfaceNav } from '../components/SurfaceNav'
 import { ARCameraExperience } from './ARCameraExperience'
-import { buildMissionTree, type ARVisualState, type LabLanguage, type MissionId } from './arLabModel'
+import { applyARInteraction, buildMissionTree, type ARInteraction, type ARVisualState, type LabLanguage, type MissionId } from './arLabModel'
 import './arLab.css'
 
 const COPY = {
@@ -24,8 +23,14 @@ const COPY = {
     targetHelp: 'Open this target on a second screen or print it on A4 paper. Your iPhone camera anchors the virtual JFrame to it.',
     targetOpen: 'Open target card',
     completeNote: 'You constructed, tested, and diagnosed a BorderLayout prototype.',
-    diagnosis: ['The frame is too small', 'Both components occupy SOUTH', 'JButton is unsupported'],
-    fixes: ['Make the frame wider', 'Put both buttons in a nested JPanel', 'Use absolute coordinates'],
+    arAction: 'Required AR action',
+    hints: {
+      place: 'Tap a region on the tracked 3D model to place the title.',
+      resize: 'Tap the 3D region that should absorb the extra width.',
+      reveal: 'Tap SOUTH in the 3D model to activate X-ray mode.',
+      repair: 'Tap the glowing yellow repair control in AR.',
+      complete: 'AR repair complete.',
+    },
   },
   ms: {
     title: 'Makmal Prototaip AR BorderLayout',
@@ -43,8 +48,14 @@ const COPY = {
     targetHelp: 'Buka sasaran ini pada skrin kedua atau cetak pada kertas A4. Kamera iPhone akan menambat JFrame maya kepadanya.',
     targetOpen: 'Buka kad sasaran',
     completeNote: 'Anda telah membina, menguji dan mendiagnosis prototaip BorderLayout.',
-    diagnosis: ['Bingkai terlalu kecil', 'Kedua-dua komponen menggunakan SOUTH', 'JButton tidak disokong'],
-    fixes: ['Lebarkan bingkai', 'Letakkan kedua-dua butang dalam JPanel bersarang', 'Gunakan koordinat mutlak'],
+    arAction: 'Tindakan AR diperlukan',
+    hints: {
+      place: 'Sentuh kawasan pada model 3D yang dijejak untuk meletakkan tajuk.',
+      resize: 'Sentuh kawasan 3D yang patut menyerap lebar tambahan.',
+      reveal: 'Sentuh SOUTH pada model 3D untuk mengaktifkan mod X-ray.',
+      repair: 'Sentuh kawalan pembaikan kuning yang bercahaya dalam AR.',
+      complete: 'Pembaikan AR selesai.',
+    },
   },
 } as const
 
@@ -78,6 +89,15 @@ export function ARLab() {
   const missionPanelRef = useRef<HTMLElement>(null)
   const copy = COPY[language]
   const task = MISSION_COPY[language][mission]
+  const interactionHint = mission === 1
+    ? copy.hints.place
+    : mission === 2
+      ? copy.hints.resize
+      : visual.collisionFixed
+        ? copy.hints.complete
+        : visual.collisionRevealed
+          ? copy.hints.repair
+          : copy.hints.reveal
   const code = useMemo(() => generateJava(buildMissionTree(visual), { width: 480, height: 340 }).code, [visual])
 
   useEffect(() => {
@@ -91,34 +111,28 @@ export function ARLab() {
     speechSynthesis.speak(utterance)
   }
 
-  const chooseRegion = (region: BorderRegion) => {
-    setVisual({ mission: 1, placedRegion: region })
-    const pass = region === 'NORTH'
-    setMissionPassed(pass)
-    if (pass) setCompleted((current) => new Set(current).add(1))
-    setFeedback(pass ? task.lesson : language === 'ms' ? 'Belum tepat. Fikirkan kawasan yang merentasi bahagian atas.' : 'Not yet. Think about the region spanning the top edge.')
-  }
-
-  const chooseResize = (region: BorderRegion) => {
-    const pass = region === 'CENTER'
-    setMissionPassed(pass)
-    if (pass) setCompleted((current) => new Set(current).add(2))
-    setVisual({ mission: 2, resizeRevealed: pass })
-    setFeedback(pass ? task.lesson : language === 'ms' ? 'Cuba lagi. Kawasan tepi menerima saiz pilihan dahulu.' : 'Try again. The edge regions receive their preferred sizes first.')
-  }
-
-  const diagnose = (answer: 'size' | 'collision' | 'unsupported') => {
-    const pass = answer === 'collision'
-    setVisual({ mission: 3, collisionRevealed: pass })
-    setFeedback(pass ? (language === 'ms' ? 'Betul. Mod X-ray menunjukkan butang Save di bawah Cancel. Sekarang pilih pembetulan.' : 'Correct. X-ray mode shows Save beneath Cancel. Now choose the structural fix.') : language === 'ms' ? 'Bukan saiz atau jenis komponen. Periksa kawasan yang digunakan.' : 'It is not component size or type. Check the occupied region.')
-  }
-
-  const fixCollision = (answer: 'panel' | 'resize' | 'absolute') => {
-    const pass = answer === 'panel'
-    setMissionPassed(pass)
-    if (pass) setCompleted((current) => new Set(current).add(3))
-    setVisual({ mission: 3, collisionRevealed: true, collisionFixed: pass })
-    setFeedback(pass ? task.lesson : language === 'ms' ? 'Perubahan saiz atau koordinat mutlak tidak menyelesaikan konflik kawasan.' : 'Resizing or absolute coordinates do not resolve a region collision.')
+  const handleARInteraction = (interaction: ARInteraction) => {
+    const result = applyARInteraction(visual, interaction)
+    setVisual(result.visual)
+    if (result.status === 'passed') {
+      setMissionPassed(true)
+      setCompleted((current) => new Set(current).add(mission))
+      setFeedback(task.lesson)
+      return
+    }
+    setMissionPassed(false)
+    if (result.status === 'progress') {
+      setFeedback(language === 'ms'
+        ? 'Betul. Mod X-ray mendedahkan butang Save di bawah Cancel. Sekarang sentuh kawalan pembaikan kuning.'
+        : 'Correct. X-ray mode reveals Save beneath Cancel. Now tap the glowing yellow repair control.')
+      return
+    }
+    const incorrect = mission === 1
+      ? language === 'ms' ? 'Belum tepat. Sentuh kawasan yang merentasi bahagian atas.' : 'Not yet. Tap the region spanning the top edge.'
+      : mission === 2
+        ? language === 'ms' ? 'Cuba lagi. Kawasan tepi menerima saiz pilihan dahulu.' : 'Try again. The edge regions receive their preferred sizes first.'
+        : language === 'ms' ? 'Ikut petunjuk AR dan sentuh objek yang diserlahkan.' : 'Follow the AR cue and tap the highlighted object.'
+    setFeedback(incorrect)
   }
 
   const nextMission = () => {
@@ -173,15 +187,12 @@ export function ARLab() {
         <div><strong>{copy.mission} {mission}/3</strong><span>{task.title}</span></div>
         <span className="ar-score">{completed.size}/3</span>
       </header>
-      <ARCameraExperience visual={visual} onTargetState={setTargetFound} />
+      <ARCameraExperience visual={visual} onTargetState={setTargetFound} onInteraction={handleARInteraction} interactionHint={interactionHint} />
       <section ref={missionPanelRef} className="ar-mission-panel" aria-live="polite">
         <div className={`ar-tracking ${targetFound ? 'found' : ''}`}>{targetFound ? copy.targetFound : copy.targetLost}</div>
         <div className="ar-mission-title"><div><span>{copy.mission} {mission}</span><h2>{task.title}</h2></div><button type="button" onClick={say}>🔊 {copy.speak}</button></div>
         <p>{task.prompt}</p>
-        {mission === 1 && <div className="ar-answer-grid">{(['NORTH', 'SOUTH', 'EAST', 'WEST', 'CENTER'] as BorderRegion[]).map((region) => <button key={region} onClick={() => chooseRegion(region)}>{region}</button>)}</div>}
-        {mission === 2 && <div className="ar-answer-grid">{(['NORTH', 'SOUTH', 'EAST', 'WEST', 'CENTER'] as BorderRegion[]).map((region) => <button key={region} onClick={() => chooseResize(region)}>{region}</button>)}</div>}
-        {mission === 3 && !visual.collisionRevealed && <div className="ar-answer-stack"><button onClick={() => diagnose('size')}>{copy.diagnosis[0]}</button><button onClick={() => diagnose('collision')}>{copy.diagnosis[1]}</button><button onClick={() => diagnose('unsupported')}>{copy.diagnosis[2]}</button></div>}
-        {mission === 3 && visual.collisionRevealed && !visual.collisionFixed && <div className="ar-answer-stack"><button onClick={() => fixCollision('resize')}>{copy.fixes[0]}</button><button onClick={() => fixCollision('panel')}>{copy.fixes[1]}</button><button onClick={() => fixCollision('absolute')}>{copy.fixes[2]}</button></div>}
+        <div className={`ar-required-action ${targetFound ? 'ready' : ''}`}><strong>{copy.arAction}</strong><span>{interactionHint}</span></div>
         {feedback && <div className={`ar-feedback ${missionPassed ? 'pass' : ''}`}>{feedback}</div>}
         {missionPassed && mission < 3 && <button type="button" className="ar-primary ar-next" onClick={nextMission}>{copy.next}</button>}
         {missionPassed && mission === 3 && <div className="ar-complete"><strong>{copy.complete}: 3/3</strong><p>{copy.completeNote}</p></div>}

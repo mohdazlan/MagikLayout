@@ -24,11 +24,15 @@ The module includes more than the required three elements:
 
 ## Three assessed missions
 
-1. Place a title in the correct `BorderLayout` region.
-2. Predict which region absorbs space when the `JFrame` becomes wider.
-3. Diagnose two buttons competing for SOUTH and fix the structure with a nested `JPanel`.
+1. Tap a tracked 3D region to place a title in the correct `BorderLayout` region.
+2. Tap the region that should absorb space and observe the virtual `JFrame` resize.
+3. Tap SOUTH to reveal two colliding buttons in X-ray mode, then activate the glowing AR repair control to construct a nested `JPanel`.
 
 The mission state is converted into the same deterministic Swing component tree used by the existing Java generator. Generative AI is not used for AR grading.
+
+## P2 AR-essential interaction
+
+The assessed answers are no longer submitted through a conventional quiz button grid. Touch coordinates in the camera view are raycast against the tracked Three.js meshes, and only hits on the mission-relevant 3D object advance the deterministic mission state machine. This makes image tracking, spatial anchoring, 3D graphics, touch interaction, animation, and structural feedback necessary to complete the assessed flow.
 
 ## iPhone 13 acceptance test
 
