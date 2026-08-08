@@ -46,6 +46,13 @@ The production deployment must use HTTPS; iOS blocks camera access on an insecur
 
 Record the iOS version, Safari version, permission result, tracking time, mission completion, audio result, and any thermal or performance issue in the competition device matrix.
 
-## Current asset note
+## Original tracking target
 
-`public/ar/layoutlab-target.png` and `public/ar/layoutlab-target.mind` are temporary image-tracking fixtures from the MIT-licensed MindAR example set. Replace both with a compiled, original LayoutLab tracking target before the final competition submission, then record the replacement in the asset register.
+`public/ar/layoutlab-target.png` is an original LayoutLab-branded tracking card with dense, asymmetric detail across the complete frame. It was compiled with the official MindAR 1.2.5 image-target compiler into `public/ar/layoutlab-target.mind`.
+
+Compilation acceptance evidence:
+
+- Resolution: 1448 × 1086 (4:3)
+- Scale keyframes: 12
+- Detected feature points: 4,656 (3,496 maxima and 1,160 minima)
+- Previous P0 target retained under `brand/ar-target-legacy.*` for local rollback

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { BorderRegion } from '../engine/types'
 import { generateJava } from '../codegen/javaCode'
 import { CodePanel } from '../components/CodePanel'
@@ -75,9 +75,14 @@ export function ARLab() {
   const [feedback, setFeedback] = useState<string | null>(null)
   const [missionPassed, setMissionPassed] = useState(false)
   const [completed, setCompleted] = useState<Set<MissionId>>(() => new Set())
+  const missionPanelRef = useRef<HTMLElement>(null)
   const copy = COPY[language]
   const task = MISSION_COPY[language][mission]
   const code = useMemo(() => generateJava(buildMissionTree(visual), { width: 480, height: 340 }).code, [visual])
+
+  useEffect(() => {
+    missionPanelRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [mission])
 
   const say = () => {
     speechSynthesis.cancel()
@@ -169,7 +174,7 @@ export function ARLab() {
         <span className="ar-score">{completed.size}/3</span>
       </header>
       <ARCameraExperience visual={visual} onTargetState={setTargetFound} />
-      <section className="ar-mission-panel" aria-live="polite">
+      <section ref={missionPanelRef} className="ar-mission-panel" aria-live="polite">
         <div className={`ar-tracking ${targetFound ? 'found' : ''}`}>{targetFound ? copy.targetFound : copy.targetLost}</div>
         <div className="ar-mission-title"><div><span>{copy.mission} {mission}</span><h2>{task.title}</h2></div><button type="button" onClick={say}>🔊 {copy.speak}</button></div>
         <p>{task.prompt}</p>
