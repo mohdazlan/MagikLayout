@@ -1,3 +1,23 @@
+/* ————— AR: "View in AR" button + lazy-load fallback ————— */
+.ar-btn {
+  background: var(--accent-tint);
+  color: var(--accent-deep);
+  border-color: rgba(232, 89, 12, 0.3);
+}
+.ar-btn:hover {
+  background: var(--accent-tint-strong);
+}
+.ar-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+}
+
 /* ————— Tokens (DESIGN.md is the source of truth) ————— */
 :root {
   --bg: #fbfbfd;

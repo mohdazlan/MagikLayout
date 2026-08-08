@@ -179,6 +179,9 @@ export function Playground() {
   const selectedVar = state.selectedId === 'root' ? null : (varNames.get(state.selectedId) ?? null)
   const selectedNode = findNode(state.root, state.selectedId)
 
+  // Bridge a populated BorderLayout exploration into the focused assessed AR module.
+  const canViewInAR = state.root.layout?.kind === 'border' && !!state.root.children?.length
+
   return (
     <>
       <header className="app-header">
@@ -212,6 +215,7 @@ export function Playground() {
           >
             {resetArmed ? 'Clear all?' : 'Reset'}
           </button>
+          {canViewInAR && <a className="ghost-btn ar-btn" href="#/ar-lab">Open AR Lab</a>}
           <div id="shortcuts-pop" popover="auto" className="shortcuts-pop" aria-label="Keyboard shortcuts">
             <h2>Shortcuts</h2>
             <dl>

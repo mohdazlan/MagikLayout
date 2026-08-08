@@ -21,6 +21,11 @@ describe('router', () => {
     expect(parseRoute('#/nonsense')).toEqual({ view: 'playground' })
   })
 
+  it('routes the NOSS-aligned AR learning module', () => {
+    expect(parseRoute('#/ar-lab')).toEqual({ view: 'ar-lab' })
+    expect(parseRoute('#/ar-lab/')).toEqual({ view: 'ar-lab' })
+  })
+
   it('every shipped challenge id round-trips href → parseRoute (index rows navigate)', () => {
     for (const c of CHALLENGES) {
       expect(parseRoute(challengeHref(c.id))).toEqual({ view: 'challenges', challengeId: c.id })
