@@ -1,0 +1,150 @@
+--- a
++++ b
+@@ -1,98 +1,71 @@
+-Submission Requirements
+-Authors are required to prepare and submit the extended abstract in accordance with the following requirements:
+-The extended abstract shall not exceed four (4) pages, including figures, tables and references. 
+-The manuscript shall be prepared on A4-sized paper using single-line spacing. 
+-The manuscript shall be typed in Times New Roman font. 
+-The page margins shall be set at 2.54 cm (1 inch) on all sides. 
+-The manuscript shall be submitted in Portable Document Format (PDF). 
+-Figures, tables and illustrations shall be clearly numbered, captioned and referred to within the text. 
+-Authors who use Artificial Intelligence (AI) tools during the development of the innovation or preparation of the manuscript shall disclose the AI tools used and describe how the outputs were verified and validated by the authors.
+-The submitted extended abstract must be the original work of the author(s) and must not infringe any copyright or intellectual property rights.
+-Failure to comply with these submission requirements may result in the extended abstract being rejected or returned for correction.
+-Format Extended Abstract:
+-YOUR INNOVATION TITLE STARTS HERE
+-(Title: Please provide a descriptive title of the paper. The title should be concise and not span more than 2 lines. Use Times New Roman with a font size of 14 pts and in boldface for the title.)
+-Author Onea*, Author Twoa, and Author Threeb
+-a Department of XXXXXX
+-Pusat Latihan Pengajar dan Kemahiran Lanjutan (CIAST), Shah Alam, Malaysia
+-b Department of XXXXXX 
+-Kolej Teknologi Termaju  XXXXXX, Johor, Malaysia
+-*Corresponding Author 
+-E-mail: XXXX@XXXX.XXX.XX
+-(Authors and Affiliations: Include the first name, middle initial and surnames of all the authors. The name of the corresponding author should be asterisk (*). The affiliations of all the authors should be included. The e-mail of the corresponding author should be shown.)
++LAYOUTLAB AR: A NOSS-ALIGNED TRAINER FOR JAVA SWING PROTOTYPING
++Mohd Azlan bin Ab Aziz1*, Hasnah binti Ngah2
++1 Department of Information and Communication Technology, Politeknik Mukah, Sarawak, Malaysia
++2 Department of Commerce, Politeknik Mukah, Sarawak, Malaysia
++*Corresponding Author | E-mail: [insert official e-mail]
+ Extended Abstract
+-(Extended Abstract: Use Times New Roman font with a font size of 11 pts for the abstract. The main text should be justified on both sides.)
+-Keywords: xxx, xxx, xxx, xxx, xxx, xxx
+-(Keywords: Provide three (3) to six (6) keywords, separated by comma, arranged in alphabetical order and avoid repeating words already used in the title.)
++Java Swing layout rules are difficult for novice diploma students because their behaviour remains invisible until code is compiled. LayoutLab AR is a browser-based teaching aid aligned to NOSS IT-010-3:2016-C01, Application Prototype Development. Using an iPhone and an original tracked target, learners manipulate a virtual JFrame through three BorderLayout missions: place a title in NORTH, test CENTER during resizing, and diagnose two buttons competing for SOUTH before repairing the structure with a nested JPanel. Progress requires touches on tracked 3D regions, while the final state generates deterministic Java evidence. The module integrates text, 3D graphics, animation, bilingual audio, spatial interaction and source code. Formative evaluations of the wider browser platform (n=11 and n=6) informed the design but do not prove AR effectiveness. iPhone 13 acceptance verified tracking, interaction, all missions, audio and Java evidence; 75 automated tests protect the technical path. AR is therefore the method of competency practice and assessment, not a decorative overlay.
++Keywords: assessment integrity, BorderLayout, immersive teaching aid, spatial interaction, TVET
+ 1. Background / Problem Statement
+-Briefly describe the real problem, institutional or industry context, target users, and why the issue requires an innovative intervention. Include evidence of need where possible. Clearly explain the gap between current practice and the proposed innovation.
++Students may reproduce Swing syntax without predicting resizing, region collisions or nested panels (Qian & Lehman, 2017). In the first evaluation, 81.9% of 11 Semester 5 students reported layout difficulty. Slides state the rules, while GUI builders often conceal them. The gap is an intervention that makes behaviour observable and requires learners to test and repair a prototype.
+ 2. Innovation Objective
+-State the main objective and specific objectives of the innovation. Objectives should be measurable and aligned with the problem statement.
++The objective is to enable learners to construct, functionally test, diagnose and repair a BorderLayout prototype in AR, then produce verifiable Java evidence aligned to the specified NOSS work activities.
+ 3. Description of Innovation
+-Explain the product/innovation, method, process, model, module, application, teaching aid, system, log prompt or service developed. 
++The camera recognises an original LayoutLab target and anchors a colour-coded 3D JFrame. Mission 1 requires a touch on NORTH to place the title. Mission 2 requires a prediction and touch on CENTER before the resize animation. Mission 3 exposes the SOUTH collision in X-ray mode and requires activation of the nested-JPanel repair. Touch coordinates are raycast against mission-relevant meshes, so conventional answer buttons cannot complete the assessment. Figure 1 records the tracked model, mission progress, repair and generated code. FlowLayout and GridLayout remain enrichment in the wider Playground; BorderLayout is the focused assessed competency.
++Figure 1. LayoutLab AR evidence sequence: tracking, construction, functionality testing and structural repair.
+ 4. Methodology / Development Process
+-Describe how the innovation was developed. Explain the development process, methods, tools, technologies or platforms used, and how the innovation was tested or validated. Include user feedback, pilot implementation, or evaluation results where relevant. You may also include a simple workflow, conceptual framework, system architecture, or process diagram to support the explanation.
++Development followed problem identification, needs analysis, design, implementation and validation. Feedback from 11 students prioritised visualisation, Java export and guidance; a second evaluation (n=6) informed onboarding and resizing feedback. The AR module uses React, Three.js and MindAR, connects to LayoutLab’s deterministic state and code-generation engines, and was tested through automated checks and iPhone 13 acceptance. The target uses an original asymmetric image. Generative AI is excluded from grading.
+ 5. Innovation Value Proposition
++Table 1. Innovation value proposition
+ Component
+ Description
+ Novelty
+-Explain what is new, improved, differentiated, or more efficient compared with existing practice.
++Tracked 3D prototype serves as model, touch surface and deterministic assessment.
+ Usefulness
+-Explain how the innovation solves the problem and supports users or stakeholders.
++Connects a layout rule to visible behaviour, repair and compilable Java evidence.
+ Replicability
+-Explain whether the innovation can be adopted by other courses, departments, institutions, communities, or industries.
++Adaptable to other layout managers, courses and institutional challenge sets.
+ Cost Effectiveness
+-Explain cost saving, time saving, productivity gain, or resource optimization.
++Secure browser delivery avoids native installation and licence costs.
+ Sustainability
+-Explain long-term usability, maintenance, digital scalability, environmental or social value.
++Reusable deterministic engine and automated tests support maintenance.
+ Scalability
+-Explain the potential for wider deployment across institutions, industries or countries
++Potential expansion across polytechnics through additional NOSS-aligned modules.
+ 6. Findings, Validation and Evidence of Effectiveness (Where Applicable)
+-Present key findings from testing, survey, observation, performance comparison, expert validation, user acceptance, or implementation data. Use concise quantitative or qualitative evidence, such as mean score, percentage improvement, reliability value, user satisfaction, or productivity outcome. Tables and figures should be readable, properly labelled and referred to in the text. Insert figure(s) only when necessary to support the innovation. Quantitative evidence is encouraged wherever possible.
+-Table 1. Suggested Evidence Table
++Evidence is separated into formative platform feedback and AR technical acceptance to avoid overstating effectiveness. Table 2 summarises the current position.
++Table 2. Formative and technical evidence
+ Evidence Item
+ Before / Baseline
+ After / Result
+ Interpretation
+-[e.g., User score]
+-[Insert data]
+-[Insert result]
+-[State implication]
+-[e.g., User score]
+-[Insert data]
+-[Insert result]
+-[State implication]
+-[e.g., User score]
+-[Insert data]
+-[Insert result]
+-[State implication]
+-Note: Authors may modify or expand the table according to the nature of the innovation.
+-Figure 1. Example of a General Innovation Workflow 
+-Note: Authors may adapt this workflow according to the nature of the innovation category, namely AI DigiTeach, Short Video Instructor, Future Training Space Ideation or Immersive Digital Teaching Aid.
++Learning need
++81.9% reported layout difficulty (n=11).
++Three AR missions address placement, resize and nesting.
++Strong need; AR learning gain not yet measured.
++Visual understanding
++81.8% valued visual clarification (n=11).
++All six later users reported placement or resizing ‘aha’ moments.
++Supports the visual method, not causal AR impact.
++Technical quality
++Browser engine and prototype baseline.
++75 automated tests and strict production build pass.
++Reproducible grading and code generation.
++Device acceptance
++AR required mobile production validation.
++iPhone 13 verified HTTPS camera, tracking, touch, audio and 3/3 completion.
++Ready for competition demonstration.
+ 7. Impact of Innovation
+-Summarize the impact on students, lecturers, institution, industry, community, sustainability, policy, operational efficiency, or commercialization. Focus on measurable and strategic impact.
+-Academic / Learning Impact
+-Describe improvement in knowledge, skills, engagement, performance, or assessment readiness.
+-Operational / Institutional Impact
+-Describe efficiency, standardization, cost saving, scalability, or quality enhancement.
+-Community / Industry / Market Impact
+-Describe adoption potential, target market, social value, or partnership relevance.
+-Commercialization Potential
+-Describe IP status, packaging, pricing potential, market readiness, or future business model.
+-Policy / TVET Ecosystem Impact
+-Explain contribution to TVET transformation, national agenda or policy implementation.
++Learners receive a construct-test-diagnose-repair sequence with code evidence. Lecturers gain a repeatable browser demonstrator without native installation. The immediate market is Malaysian polytechnic and vocational Java courses; institutional challenge packs offer future commercialisation potential. NOSS alignment supports competency-based TVET, while the architecture can scale to other layout managers and prototype tasks.
+ 8. Conclusion
+-Conclude with the overall significance of the innovation, its contribution, readiness for wider implementation, and future enhancement. Keep this section concise and outcome-driven. Do not introduce new findings in this section.
+-Acknowledgements (Optional): The authors would like to express appreciation for the support of the sponsors.
+-(Acknowledgements: Any acknowledgements can be included at the end of the main body of the extended abstract but before the references. This section is optional.)
++LayoutLab AR makes an invisible programming rule spatial, touchable and assessable. Its contribution is the complete evidence chain from AR action to tested behaviour, structural repair and deterministic Java. The module is technically ready for demonstration; the next step is a documented classroom pilot measuring completion time, errors and learning performance.
+ Declaration
+-The authors declare that: 
+-The work is original; 
+-All authors have contributed substantially;
+-No plagiarism has occurred; 
+-AI-generated content, if used, has been reviewed and validated by the authors.
+-All data presented are accurate and can be verified upon request.
+-References 
+-In-text citations shall follow the author–year citation format (e.g., Author, 2006; Author & Author, 2007; Author et al., 2008). 
+-References shall be listed alphabetically at the end of the manuscript. 
+-Authors are encouraged to use the APA (7th Edition) referencing style consistently throughout the manuscript.
++The authors declare that:
++The work is original and all authors have contributed substantially;
++No plagiarism has occurred; and
++All data are accurate and can be verified upon request.
++AI-use disclosure
++OpenAI Codex was used to assist software development and manuscript editing. The authors verified outputs against the source code, automated tests, device recordings, NOSS mapping and official template. AI does not determine learner scores or generate assessed Java output.
++References
++Keuning, H., Jeuring, J., & Heeren, B. (2018). A systematic literature review of automated feedback generation for programming exercises. ACM Transactions on Computing Education, 19(1), Article 3. https://doi.org/10.1145/3231711
++Politeknik Mukah. (2026). LayoutLab surveys, AR acceptance records and technical documentation [Unpublished internal evidence pack].
++Qian, Y., & Lehman, J. (2017). Students’ misconceptions and other difficulties in introductory programming: A literature review. ACM Transactions on Computing Education, 18(1), Article 1. https://doi.org/10.1145/3077618

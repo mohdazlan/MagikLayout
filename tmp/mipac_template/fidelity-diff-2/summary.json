@@ -1,0 +1,13 @@
+{
+  "a_docx": "/Users/macintosh/Downloads/Template Eng - Extended Abstract MIPACTVET 2026.docx",
+  "b_docx": "/Users/macintosh/IdeaProjects/bulan/MagikLayout/output/docx/LayoutLab_AR_MIPACTVET_2026_Template_Compliant.docx",
+  "pages_a": 4,
+  "pages_b": 3,
+  "changed_pages": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "num_changed_pages": 4
+}
