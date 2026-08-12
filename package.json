@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "eval:rag": "esbuild scripts/rag-eval.ts --bundle --platform=node --format=esm --log-level=error | node --input-type=module"
   },
   "dependencies": {
     "node-fetch": "^2.7.0",
