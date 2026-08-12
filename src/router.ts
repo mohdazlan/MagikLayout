@@ -9,9 +9,13 @@ export type Route =
   | { view: 'playground' }
   | { view: 'ar-lab' }
   | { view: 'challenges'; challengeId: string | null }
+  | { view: 'classroom'; sessionCode: string | null }
 
 export function parseRoute(hash: string): Route {
   if (/^#\/ar-lab\/?$/.test(hash)) return { view: 'ar-lab' }
+  // #/classroom, or #/classroom/<CODE> from a teacher's join link.
+  const classroom = /^#\/classroom(?:\/([^/]+))?\/?$/.exec(hash)
+  if (classroom) return { view: 'classroom', sessionCode: classroom[1] ? decodeURIComponent(classroom[1]) : null }
   const m = /^#\/challenges(?:\/([^/]+))?\/?$/.exec(hash)
   if (m) return { view: 'challenges', challengeId: m[1] ? decodeURIComponent(m[1]) : null }
   return { view: 'playground' }

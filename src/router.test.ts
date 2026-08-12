@@ -26,6 +26,12 @@ describe('router', () => {
     expect(parseRoute('#/ar-lab/')).toEqual({ view: 'ar-lab' })
   })
 
+  it('routes the Classroom surface, with or without a class code', () => {
+    expect(parseRoute('#/classroom')).toEqual({ view: 'classroom', sessionCode: null })
+    expect(parseRoute('#/classroom/')).toEqual({ view: 'classroom', sessionCode: null })
+    expect(parseRoute('#/classroom/QRTUVW')).toEqual({ view: 'classroom', sessionCode: 'QRTUVW' })
+  })
+
   it('every shipped challenge id round-trips href → parseRoute (index rows navigate)', () => {
     for (const c of CHALLENGES) {
       expect(parseRoute(challengeHref(c.id))).toEqual({ view: 'challenges', challengeId: c.id })

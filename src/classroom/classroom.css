@@ -1,0 +1,738 @@
+/*
+ * Classroom surface styles.
+ *
+ * Every selector is prefixed `cl-` and lives only in this file, which is
+ * imported by ClassroomRoute alone. Nothing here can reach the Playground,
+ * Challenges or AR Lab. Tokens come from styles/app.css — no new colours, no new
+ * type scale, so the add-on reads as part of the product rather than beside it.
+ */
+
+.cl-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px 96px;
+}
+
+.cl-intro {
+  margin-bottom: 28px;
+}
+
+.cl-page-title {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.cl-page-sub {
+  margin: 0;
+  max-width: 68ch;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+/* ————— Tabs ————— */
+
+.cl-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--hairline-soft);
+  margin-bottom: 28px;
+}
+
+.cl-tab {
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink-2);
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--dur) var(--ease-out);
+}
+
+.cl-tab:hover {
+  color: var(--accent-deep);
+}
+
+.cl-tab.is-current {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+/* ————— Shared blocks ————— */
+
+.cl-h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cl-h4 {
+  margin: 14px 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cl-list {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-2);
+  line-height: 1.65;
+}
+
+.cl-list li + li {
+  margin-top: 4px;
+}
+
+.cl-ms {
+  color: var(--ink-2);
+  font-style: italic;
+}
+
+.cl-card {
+  background: var(--surface);
+  border: 1px solid var(--hairline-soft);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.cl-empty {
+  margin: 20px 0 0;
+  padding: 18px;
+  border: 1px dashed var(--hairline);
+  border-radius: 10px;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.cl-error {
+  margin: 8px 0 0;
+  color: var(--accent-deep);
+  font-size: 14px;
+}
+
+.cl-btn {
+  appearance: none;
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
+}
+
+.cl-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+.cl-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.cl-btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.cl-btn-primary:hover:not(:disabled) {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: #fff;
+}
+
+.cl-btn-quiet {
+  border-color: transparent;
+  color: var(--ink-2);
+}
+
+.cl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cl-field-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+}
+
+.cl-input,
+.cl-select {
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  min-width: 220px;
+}
+
+.cl-input-code {
+  font-family: var(--mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.cl-check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 14px 0;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.cl-check-note {
+  display: block;
+  font-style: normal;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.cl-toggle {
+  display: inline-flex;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  overflow: hidden;
+  width: max-content;
+}
+
+.cl-toggle-btn {
+  appearance: none;
+  border: 0;
+  background: var(--surface);
+  font: inherit;
+  font-size: 13px;
+  padding: 8px 14px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.cl-toggle-btn.is-on {
+  background: var(--accent-tint);
+  color: var(--accent-deep);
+  font-weight: 600;
+}
+
+.cl-badge {
+  display: inline-block;
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--accent-tint);
+  color: var(--accent-deep);
+  width: max-content;
+}
+
+/* ————— Lesson pack ————— */
+
+.cl-pack-head {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+
+.cl-pack-meta {
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+}
+
+.cl-pack-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.cl-pack-title-ms {
+  margin: 4px 0 0;
+  color: var(--ink-2);
+  font-style: italic;
+}
+
+.cl-pack-section {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+
+.cl-pack-section:last-child {
+  border-bottom: 0;
+}
+
+.cl-outcome {
+  margin: 0 0 6px;
+  line-height: 1.65;
+  color: var(--ink);
+  max-width: 70ch;
+}
+
+.cl-pack-note {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+.cl-hook {
+  margin: 0 0 12px;
+  padding: 14px 18px;
+  background: var(--accent-tint);
+  border: 1px solid var(--hairline-soft);
+  border-radius: 8px;
+}
+
+.cl-hook p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.cl-hook p + p {
+  margin-top: 6px;
+}
+
+.cl-phases {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: phase;
+}
+
+.cl-phase {
+  padding: 14px 0;
+  border-top: 1px solid var(--hairline-soft);
+}
+
+.cl-phase:first-child {
+  border-top: 0;
+}
+
+.cl-phase-head {
+  margin: 0 0 8px;
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.cl-phase-time {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent-deep);
+  background: var(--accent-tint);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.cl-phase-name {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cl-phase-body {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 4px 14px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.cl-phase-body dt {
+  color: var(--ink-2);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: 3px;
+}
+
+.cl-phase-body dd {
+  margin: 0;
+  color: var(--ink);
+}
+
+.cl-exit {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.cl-exit-item {
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.cl-exit-item p {
+  margin: 0 0 4px;
+}
+
+.cl-exit-look {
+  margin-top: 8px !important;
+  font-size: 13px;
+  color: var(--ink-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cl-two-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.cl-challenge-links {
+  margin: 0 0 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cl-challenge-link {
+  font-size: 14px;
+  padding: 5px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.cl-challenge-link:hover {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+/* ————— Coach Lab ————— */
+
+.cl-controls {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.cl-evidence {
+  padding: 18px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.cl-situation {
+  margin: 0 0 12px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.cl-code-line {
+  margin: 0 0 10px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.cl-code-chip {
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: var(--accent-tint-strong);
+  color: var(--accent-deep);
+}
+
+.cl-code-note {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.cl-findings {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.cl-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+
+.cl-ladder-state {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+.cl-history {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cl-turn {
+  padding: 16px 0;
+  border-top: 1px solid var(--hairline-soft);
+}
+
+.cl-turn-head {
+  margin: 0 0 8px;
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.cl-level {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-deep);
+}
+
+.cl-level-withheld {
+  color: var(--ink-2);
+}
+
+.cl-source,
+.cl-latency,
+.cl-turn-note {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.cl-turn-note {
+  margin: 8px 0 0;
+  line-height: 1.55;
+}
+
+.cl-hint {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  max-width: 68ch;
+}
+
+.cl-hint-withheld {
+  color: var(--ink-2);
+  font-style: italic;
+}
+
+.cl-sources {
+  margin: 8px 0 0;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cl-sources-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-2);
+}
+
+.cl-source-chip {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 2px 8px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  color: var(--ink-2);
+  cursor: help;
+}
+
+.cl-violations {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: var(--accent-deep);
+  background: var(--accent-tint);
+  padding: 10px 14px;
+  border-radius: 8px;
+  line-height: 1.55;
+}
+
+/* ————— Class session ————— */
+
+.cl-new {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.cl-session-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+
+.cl-session-label {
+  margin: 0;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+}
+
+.cl-session-code {
+  margin: 4px 0;
+  font-family: var(--mono);
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+}
+
+.cl-session-link {
+  margin: 0;
+  font-size: 13px;
+}
+
+.cl-session-link a {
+  color: var(--ink-2);
+}
+
+.cl-session-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.cl-privacy {
+  margin: 16px 0 0;
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+.cl-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cl-metric {
+  border: 1px solid var(--hairline-soft);
+  border-radius: 10px;
+  padding: 14px;
+  background: var(--surface);
+}
+
+.cl-metric-value {
+  display: block;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.cl-metric-label {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-2);
+}
+
+.cl-table-wrap {
+  overflow-x: auto;
+}
+
+.cl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.cl-table-caption {
+  text-align: left;
+  font-size: 13px;
+  color: var(--ink-2);
+  padding-bottom: 8px;
+}
+
+.cl-table th,
+.cl-table td {
+  text-align: left;
+  padding: 9px 12px 9px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.cl-table thead th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+.cl-table tbody th {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.cl-table code {
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .cl-page {
+    padding: 24px 16px 72px;
+  }
+
+  .cl-session-code {
+    font-size: 32px;
+  }
+
+  .cl-phase-body {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .cl-phase-body dt {
+    padding-top: 8px;
+  }
+}

@@ -252,7 +252,9 @@ export function diagnoseReverse(target: SwingNode, student: SwingNode): Diagnosi
         'high',
         [
           `${hiddenCount + 1} components are added directly to BorderLayout.${region} of the frame.`,
-          `Swing lays out only the last component added to ${region}; the other ${hiddenCount === 1 ? 'one is' : `${hiddenCount} are`} never sized and stay invisible.`,
+          hiddenCount === 1
+            ? `Swing lays out only the last component added to ${region}; the other one is never sized and stays invisible.`
+            : `Swing lays out only the last component added to ${region}; the other ${hiddenCount} are never sized and stay invisible.`,
         ],
         region,
       ),

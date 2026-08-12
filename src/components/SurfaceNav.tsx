@@ -4,7 +4,7 @@
  * which surface you happen to be on. Text-weight links (not a tab bar); the
  * current surface carries aria-current="page".
  */
-type Surface = 'playground' | 'ar' | 'challenges'
+type Surface = 'playground' | 'ar' | 'challenges' | 'classroom'
 
 export function SurfaceNav({ current }: { current: Surface }) {
   return (
@@ -21,6 +21,13 @@ export function SurfaceNav({ current }: { current: Surface }) {
         aria-current={current === 'challenges' ? 'page' : undefined}
       >
         Challenges
+      </a>
+      <a
+        href="#/classroom"
+        className="surface-link"
+        aria-current={current === 'classroom' ? 'page' : undefined}
+      >
+        Classroom
       </a>
     </nav>
   )

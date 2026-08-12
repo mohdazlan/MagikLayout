@@ -102,11 +102,16 @@ export function deterministicHint(
 ): DeterministicHint {
   const result = retrieval ?? retrieve({ code: diagnosis.code, language, hintLevel: level, evidence: diagnosis.evidence, limit: 1 })
 
-  if (result.hits.length > 0) {
+  // Serve the single best passage, not every passage retrieved. Retrieval hands
+  // the composer more than one so a model has room to ground itself, but a
+  // student reading two overlapping explanations of the same rule is worse off
+  // than a student reading the better one — and a nudge stops being a nudge.
+  const best = result.hits[0]
+  if (best) {
     return {
-      text: result.hits.map((hit) => hit.chunk.text).join(' '),
-      level: result.servedLevel ?? level,
-      chunkIds: result.chunkIds,
+      text: best.chunk.text,
+      level: best.chunk.hintLevel,
+      chunkIds: [best.chunk.chunkId],
       source: 'corpus',
     }
   }
