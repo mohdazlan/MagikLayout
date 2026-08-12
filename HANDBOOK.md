@@ -20,16 +20,18 @@ Everything the student sees on screen is what Swing actually does — pixel for
 pixel — and the Java panel shows the deterministic, compilable code that expresses
 it.
 
-**Two surfaces, one engine:**
+**Three surfaces, one engine:**
 
 | Surface | Route | What it's for |
 |---|---|---|
 | **Playground** | `#/` | Free exploration — drag, resize, switch managers, read the code. |
-| **Challenges** | `#/challenges` | Graded practice — three exercise modes, all scored by the same engine. |
+| **Challenges** | `#/challenges` | Graded practice — three exercise modes, all scored by the same engine, with an opt-in bilingual **AI Coach**. |
+| **AR Lab** | `#/ar-lab` | NOSS-aligned image-tracking AR — three assessed missions on a `BorderLayout` prototype, working on iPhone/Safari. |
 
 The engine that lays out the Playground is the *same* engine that grades every
-challenge. There is no second source of truth, no screenshots, and no LLM anywhere
-in the layout or grading path.
+challenge **and generates the AR Lab's Java evidence**. There is no second source of
+truth, no screenshots, and no LLM anywhere in the layout, grading, or AR-assessment
+path — the AI Coach only *explains* what the deterministic engine already decided.
 
 ---
 
@@ -175,6 +177,50 @@ the pedagogical payoff of the single-source-of-truth architecture.
 
 ---
 
+## Part III+ — The AI Coach and the AR Lab
+
+### The AI Layout Coach (inside Challenges)
+When a challenge check **fails**, an **Ask the AI coach for a hint** button appears
+under the engine's findings, with an **EN / BM** language toggle. The coach receives
+*only* the deterministic grader's structured findings plus the student's generated
+Java, and returns one short, Socratic hint. Its founding rule is **"the engine
+judges, the AI explains"**: it never grades, never reveals the answer, and never
+writes Java. The provider key lives in a small backend (a Supabase Edge Function, or
+a runtime-supplied key), never in the shipped bundle; with no backend configured the
+coach simply reports itself unavailable and nothing else changes. This is genuine AI
+pedagogy that structurally cannot teach *wrong* Swing behaviour.
+
+### The AR Lab (`#/ar-lab`)
+A NOSS-aligned immersive module mapped to **IT-010-3:2016-C01** (Application
+Prototype Development). It uses **MindAR image tracking + three.js**, so it runs in
+**iOS Safari** (where WebXR does not). A printable target card
+(`public/ar/layoutlab-target.png`) anchors a virtual `JFrame` and its five regions to
+the real world.
+
+**Flow:** *Begin AR module* → *Start AR camera* (grant camera access) → point at the
+target until **Target found** → complete three missions → expand **Java evidence**.
+
+**The three assessed missions** (each advanced only by tapping the mission-relevant
+tracked 3D object — image tracking, anchoring, animation and touch are *necessary*,
+not decorative):
+1. Place the title in the correct region (**NORTH**).
+2. Tap the region that absorbs space (**CENTER**) and watch the frame resize.
+3. Reveal the **SOUTH** two-button collision (X-ray), then activate the repair
+   control to construct a nested `JPanel` holding both buttons.
+
+**Media/learning elements** (five, exceeding the required three): text, tracked 3D
+graphics, animation, user-triggered **bilingual spoken instruction** (device speech,
+`ms-MY` / `en-MY`), and interactive assessment with a **/3 score** and retries. The
+mission state is converted into the same Swing tree the Java generator uses, so the
+**Java evidence** the student records is deterministic — **no generative AI in the AR
+grading path**.
+
+**Delivery:** three.js and the MindAR runtime are **code-split** onto this route
+only, so the Playground/Challenges bundle is unaffected. The on-device acceptance
+test (iPhone 13 / Safari) is documented in `AR_P0.md`.
+
+---
+
 ## Part IV — How It's Built (Structure)
 
 ### Stack
@@ -308,5 +354,5 @@ be poured into a foundation that already tells the truth about Swing."
 
 ---
 
-*Handbook last updated: 2026-07-05 · Covers Phase 1 (Playground) + Challenges.
+*Handbook last updated: covers all three surfaces — Playground, Challenges (with the AI Coach), and the AR Lab. 75 automated tests pass; live at https://magik-layout.mhdazlan.cc.*
 Engine, codegen, and grading are all first-party, deterministic, and LLM-free.*

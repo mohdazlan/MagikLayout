@@ -6,9 +6,9 @@
 
 Unlike drag-and-drop builders that hide the why, LayoutLab shows why. It's a reference companion, not a tool that hides mechanics: students resolve layout confusion faster by understanding the rules, not by copy-pasting.
 
-LayoutLab has **two surfaces driven by one engine**: a free-exploration **Playground** and a **Challenges** area with three graded exercise modes (Parsons, Reflow, Reverse). The same layout engine that renders the Playground also grades every challenge—deterministically, with no screenshots and no LLM anywhere in the layout or grading path.
+LayoutLab has **three surfaces driven by one engine**: a free-exploration **Playground** (`#/`), a **Challenges** area (`#/challenges`) with three graded exercise modes (Parsons, Reflow, Reverse) plus an opt-in bilingual **AI Layout Coach**, and a NOSS-aligned **AR Lab** (`#/ar-lab`) — an image-tracking augmented-reality module that runs on iPhone/Safari. The same layout engine that renders the Playground also grades every challenge *and* generates the AR Lab's Java evidence — deterministically, with no screenshots and no LLM anywhere in the layout, grading, or AR-assessment path.
 
-**Status:** Phase 1 shipped on 2026-07-04. Playground surface scored **36/40 (Excellent)** in final impeccable design review (no P0/P1 issues, clean detector, WCAG AA compliant, full keyboard accessibility, reduced-motion support). The Challenges system is implemented with 10 shipped exercises and its own deterministic graders.
+**Status:** All three surfaces are built and deployed at **https://magik-layout.mhdazlan.cc**. The Playground scored **36/40 (Excellent)** in impeccable design review (WCAG AA, full keyboard, reduced-motion). Challenges ships **10 exercises** with deterministic graders; the AI Coach is integrated across all three modes ("the engine judges, the AI explains"). The AR Lab implements the **IT-010-3:2016** competency (Application Prototype Development) with three assessed missions on a `BorderLayout` prototype. **75 automated tests pass**; type-check and build are clean.
 
 ---
 
@@ -22,7 +22,7 @@ LayoutLab has **two surfaces driven by one engine**: a free-exploration **Playgr
 
 ### Build & Tooling
 - **Vite 8.1.3** (HMR dev server, optimized builds)
-- **Vitest 4.1.9** (56 passing tests across engine, codegen, and challenges)
+- **Vitest 4.1.9** (75 passing tests across engine, codegen, challenges, the AI coach builder, and the AR mission model)
 - **TypeScript 6.0** (strict mode, zero compilation errors)
 
 ### Layout Engine
@@ -49,8 +49,9 @@ LayoutLab has **two surfaces driven by one engine**: a free-exploration **Playgr
 
 ### Routing
 - **Dependency-free hash router** (`useSyncExternalStore` over `hashchange`) — flat IA
-  (`#/` Playground, `#/challenges/:id`) that keeps the Playground bundle byte-identical
-  to Phase 1
+  across three surfaces (`#/` Playground, `#/challenges/:id`, `#/ar-lab`). The AR Lab
+  and its heavy libraries (three.js, MindAR) are **lazy-loaded/code-split**, so the
+  Playground + Challenges bundle stays ~84 KB gzipped
 
 ### Styling & Theming
 - **CSS 3** with CSS Custom Properties as design tokens (colors, spacing, motion durations)
@@ -142,6 +143,33 @@ AI. Exercises are tagged by **Bloom difficulty** (Recall → Apply → Analyze).
 delta.
 
 ---
+
+### AI Layout Coach (opt-in, bilingual) — integrated in all three challenge modes
+- **"The engine judges, the AI explains."** On a failed check, the student can ask
+  the coach for a hint. The coach receives *only* the deterministic grader's
+  structured findings (plus the student's generated Java) and returns one Socratic,
+  plain-language nudge — it never grades, never reveals the answer, and never
+  produces Java. Grading stays 100% deterministic.
+- **Bilingual** (Bahasa Malaysia / English) via a language toggle.
+- **Key stays server-side**: the Anthropic Messages API is called through a Supabase
+  Edge Function (or a runtime-supplied key), never embedded in the shipped bundle. If
+  no backend is configured, the coach reports itself unavailable and the app is
+  otherwise unchanged.
+
+### AR Lab — NOSS-aligned immersive module (`#/ar-lab`)
+- **Image-tracking AR that runs on iPhone/Safari** (MindAR + three.js) — a printable
+  target card anchors a virtual `JFrame` and its five `BorderLayout` regions to the
+  real world. Maps to **NOSS IT-010-3:2016-C01** (Application Prototype Development).
+- **Three assessed missions**, each advanced only by tapping the mission-relevant
+  tracked 3D object: place a title in `NORTH`; tap `CENTER` to resize; reveal a
+  `SOUTH` two-button collision (X-ray) and repair it into a nested `JPanel`.
+- **Five media/learning elements**: text, tracked 3D graphics, animation, bilingual
+  spoken instruction (device speech, `ms-MY` / `en-MY`), and interactive assessment
+  with scoring/retries.
+- **Deterministic Java evidence**: mission state → the same Swing tree → generated
+  Java the student can expand and record. No generative AI in the AR grading path.
+- **Code-split**: three.js (~115 KB gz) and the MindAR runtime (~357 KB gz) load only
+  on this route, so the core Playground/Challenges bundle stays ~84 KB gzipped.
 
 ## 3. Design & Brand
 
@@ -247,7 +275,7 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 ## 6. Quality Assurance
 
 ### Testing
-- **56 passing tests** (Vitest) covering:
+- **75 passing tests** (Vitest) covering:
   - Layout engine: BorderLayout region resolution, FlowLayout row wrapping, GridLayout cell sizing
   - Java code generation determinism
   - Challenges: statement execution semantics and deterministic grading (Parsons/Reflow/Reverse)
@@ -342,7 +370,7 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 ### Phase 1: Complete
 - **Ship date**: 2026-07-04
 - **Final design score**: 36/40 (Excellent, no P0/P1 issues)
-- **Quality gates**: TS clean, 56 tests pass, detector clean, WCAG AA verified
+- **Quality gates**: TS clean, 75 tests pass, detector clean, WCAG AA verified
 - **Surface tested**: desktop (1280px+), tablet (768px), mobile (375px)
 
 ### What's Shipped
@@ -387,7 +415,7 @@ Output: optimized static bundle in `dist/`.
 npm run test
 ```
 
-All 56 tests run under Vitest.
+All 75 tests run under Vitest.
 
 ---
 
@@ -432,7 +460,7 @@ MagikLayout/
 | Metric | Target | Actual |
 |--------|--------|--------|
 | Design Score | ≥32/40 | **36/40** ✓ |
-| Tests | Engine + codegen + grading covered | 56 passing ✓ |
+| Tests | Engine + codegen + grading covered | 75 passing ✓ |
 | TS Errors | 0 | 0 ✓ |
 | WCAG AA Contrast | 4.5:1 body / 3:1 large | All verified ✓ |
 | Keyboard Coverage | 100% UI operable | 100% ✓ |
