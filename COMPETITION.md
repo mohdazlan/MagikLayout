@@ -1,14 +1,14 @@
-# LayoutLab — Competition Entry Document
+# MagikLayout — Competition Entry Document
 
 ## Executive Summary
 
-**LayoutLab** is a pedagogical sandbox for learning Java Swing layout managers. It lets first and second-year polytechnic students drag Swing components onto a live canvas, switch between BorderLayout, FlowLayout, and GridLayout, and watch the real JDK layout algorithms compute in real time—alongside deterministic, compilable Java code that updates with every action.
+**MagikLayout** is a pedagogical sandbox for learning Java Swing layout managers. It lets first and second-year polytechnic students drag Swing components onto a live canvas, switch between BorderLayout, FlowLayout, and GridLayout, and watch the real JDK layout algorithms compute in real time—alongside deterministic, compilable Java code that updates with every action.
 
-Unlike drag-and-drop builders that hide the why, LayoutLab shows why. It's a reference companion, not a tool that hides mechanics: students resolve layout confusion faster by understanding the rules, not by copy-pasting.
+Unlike drag-and-drop builders that hide the why, MagikLayout shows why. It's a reference companion, not a tool that hides mechanics: students resolve layout confusion faster by understanding the rules, not by copy-pasting.
 
-LayoutLab has **three surfaces driven by one engine**: a free-exploration **Playground** (`#/`), a **Challenges** area (`#/challenges`) with three graded exercise modes (Parsons, Reflow, Reverse) plus an opt-in bilingual **AI Layout Coach**, and a NOSS-aligned **AR Lab** (`#/ar-lab`) — an image-tracking augmented-reality module that runs on iPhone/Safari. The same layout engine that renders the Playground also grades every challenge *and* generates the AR Lab's Java evidence — deterministically, with no screenshots and no LLM anywhere in the layout, grading, or AR-assessment path.
+MagikLayout has **four surfaces driven by one engine**: a free-exploration **Playground** (`#/`), a **Challenges** area (`#/challenges`) with three graded exercise modes (Parsons, Reflow, Reverse) plus an opt-in bilingual **AI Layout Coach**, a NOSS-aligned **AR Lab** (`#/ar-lab`) — an image-tracking augmented-reality module that runs on iPhone/Safari — and a **Classroom** (`#/classroom`) holding the teacher lesson pack, the retrieval-grounded coach, and privacy-safe cohort evidence. The same layout engine that renders the Playground also grades every challenge *and* generates the AR Lab's Java evidence — deterministically, with no screenshots and no LLM anywhere in the layout, grading, or AR-assessment path.
 
-**Status:** All three surfaces are built and deployed at **https://magik-layout.mhdazlan.cc**. The Playground scored **36/40 (Excellent)** in impeccable design review (WCAG AA, full keyboard, reduced-motion). Challenges ships **10 exercises** with deterministic graders; the AI Coach is integrated across all three modes ("the engine judges, the AI explains"). The AR Lab implements the **IT-010-3:2016** competency (Application Prototype Development) with three assessed missions on a `BorderLayout` prototype. **75 automated tests pass**; type-check and build are clean.
+**Status:** All four surfaces are built; the first three are deployed at **https://magik-layout.mhdazlan.cc**. The Playground scored **36/40 (Excellent)** in impeccable design review (WCAG AA, full keyboard, reduced-motion). Challenges ships **10 exercises** with deterministic graders; the AI Coach is integrated across all three modes ("the engine judges, the AI explains"). The AR Lab implements the **IT-010-3:2016** competency (Application Prototype Development) with three assessed missions on a `BorderLayout` prototype. **192 automated tests pass**; type-check and build are clean. Claim discipline for the two coach paths — which one performs retrieval, and what may be said about each — is recorded in [RAG.md](RAG.md).
 
 ---
 
@@ -22,7 +22,7 @@ LayoutLab has **three surfaces driven by one engine**: a free-exploration **Play
 
 ### Build & Tooling
 - **Vite 8.1.3** (HMR dev server, optimized builds)
-- **Vitest 4.1.9** (75 passing tests across engine, codegen, challenges, the AI coach builder, and the AR mission model)
+- **Vitest 4.1.9** (192 passing tests across engine, codegen, challenges, the AI coach builder, the AR mission model, the RAG coach pipeline, and the Classroom)
 - **TypeScript 6.0** (strict mode, zero compilation errors)
 
 ### Layout Engine
@@ -49,7 +49,7 @@ LayoutLab has **three surfaces driven by one engine**: a free-exploration **Play
 
 ### Routing
 - **Dependency-free hash router** (`useSyncExternalStore` over `hashchange`) — flat IA
-  across three surfaces (`#/` Playground, `#/challenges/:id`, `#/ar-lab`). The AR Lab
+  across four surfaces (`#/` Playground, `#/challenges/:id`, `#/ar-lab`, `#/classroom`). The AR Lab
   and its heavy libraries (three.js, MindAR) are **lazy-loaded/code-split**, so the
   Playground + Challenges bundle stays ~84 KB gzipped
 
@@ -203,7 +203,7 @@ delta.
 ## 4. Architecture & Engineering Excellence
 
 ### Faithful Layout Algorithms
-The core thesis: **CSS approximations teach a lie.** Students who learn layout on flexbox/grid will be surprised when their real Swing code behaves differently. LayoutLab uses faithful JDK ports so students learn the actual rules.
+The core thesis: **CSS approximations teach a lie.** Students who learn layout on flexbox/grid will be surprised when their real Swing code behaves differently. MagikLayout uses faithful JDK ports so students learn the actual rules.
 
 **BorderLayout implementation:**
 - 5-region specification (NORTH, SOUTH, EAST, WEST, CENTER)
@@ -275,7 +275,7 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 ## 6. Quality Assurance
 
 ### Testing
-- **75 passing tests** (Vitest) covering:
+- **192 passing tests** (Vitest) covering:
   - Layout engine: BorderLayout region resolution, FlowLayout row wrapping, GridLayout cell sizing
   - Java code generation determinism
   - Challenges: statement execution semantics and deterministic grading (Parsons/Reflow/Reverse)
@@ -324,12 +324,12 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 - Pain point: "Why did my component end up there?" — confusion about layout manager rules
 
 ### Secondary Users
-**Lecturers** who integrate LayoutLab into a scaffolded curriculum
+**Lecturers** who integrate MagikLayout into a scaffolded curriculum
 - Need: tool that teaches the why without contradicting their labs
 - Want: no sign-up, no API keys, no vendor lock-in (instant classroom deployment)
 
 ### Impact Metric
-**Success = faster confusion resolution.** A student who would spend 20 minutes trial-compiling + debugging resolves their layout confusion in <2 minutes on LayoutLab, then applies that understanding to their own code.
+**Success = faster confusion resolution.** A student who would spend 20 minutes trial-compiling + debugging resolves their layout confusion in <2 minutes on MagikLayout, then applies that understanding to their own code.
 
 ---
 
@@ -337,7 +337,7 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 
 1. **Faithful JDK algorithms, not approximations**
    - Other tools (Figma, web-based layout editors) use CSS flexbox/grid, which teach a mental model that doesn't apply to real Swing.
-   - LayoutLab computes *exactly* the way the real JDK does, pixel for pixel.
+   - MagikLayout computes *exactly* the way the real JDK does, pixel for pixel.
 
 2. **Deterministic, compilable code**
    - Students copy the generated Java code and it compiles on the first try — no surprises, no "close enough."
@@ -370,7 +370,7 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 ### Phase 1: Complete
 - **Ship date**: 2026-07-04
 - **Final design score**: 36/40 (Excellent, no P0/P1 issues)
-- **Quality gates**: TS clean, 75 tests pass, detector clean, WCAG AA verified
+- **Quality gates**: TS clean, 192 tests pass, detector clean, WCAG AA verified
 - **Surface tested**: desktop (1280px+), tablet (768px), mobile (375px)
 
 ### What's Shipped
@@ -415,7 +415,7 @@ Output: optimized static bundle in `dist/`.
 npm run test
 ```
 
-All 75 tests run under Vitest.
+All 192 tests run under Vitest.
 
 ---
 
@@ -460,7 +460,7 @@ MagikLayout/
 | Metric | Target | Actual |
 |--------|--------|--------|
 | Design Score | ≥32/40 | **36/40** ✓ |
-| Tests | Engine + codegen + grading covered | 75 passing ✓ |
+| Tests | Engine + codegen + grading covered | 192 passing ✓ |
 | TS Errors | 0 | 0 ✓ |
 | WCAG AA Contrast | 4.5:1 body / 3:1 large | All verified ✓ |
 | Keyboard Coverage | 100% UI operable | 100% ✓ |
@@ -476,7 +476,7 @@ Java Swing is still taught in 1000+ polytechnics and universities worldwide. It'
 
 **The problem**: Swing's layout system is non-obvious. Components don't position themselves; layout managers compute their positions algorithmically. Most students learn by trial-and-compile, which is slow and doesn't build conceptual understanding.
 
-**The solution**: LayoutLab makes the invisible visible. In under 30 seconds, a student understands why BorderLayout hides the second component added to a region, or why GridLayout ignores preferred sizes. They watch it happen live, they read the code that expresses it, and they build mental models that stick when they write real code.
+**The solution**: MagikLayout makes the invisible visible. In under 30 seconds, a student understands why BorderLayout hides the second component added to a region, or why GridLayout ignores preferred sizes. They watch it happen live, they read the code that expresses it, and they build mental models that stick when they write real code.
 
 **This tool exists to correct a gap in software education.** It's not a builder that ships fast; it's a tutor that builds understanding.
 
@@ -494,7 +494,7 @@ Built with:
 
 ## Contact
 
-For more information about LayoutLab, its pedagogy, or integration into curricula, contact:
+For more information about MagikLayout, its pedagogy, or integration into curricula, contact:
 
 **Project Owner**: [Name/Email]  
 **Repository**: `/Users/macintosh/IdeaProjects/bulan/MagikLayout`  

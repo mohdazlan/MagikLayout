@@ -159,7 +159,7 @@ export function ARLab() {
     return (
       <div className="ar-lab ar-lab-intro">
         <header className="app-header">
-          <h1 className="wordmark">Layout<em>Lab</em> <span>AR</span></h1>
+          <h1 className="wordmark">Magik<em>Layout</em> <span>AR</span></h1>
           <SurfaceNav current="ar" />
           <div className="ar-lang" role="group" aria-label="Language">
             <button className={language === 'en' ? 'active' : ''} onClick={() => setLanguage('en')}>EN</button>

@@ -1,14 +1,14 @@
-# LayoutLab — Companion Handbook
+# MagikLayout — Companion Handbook
 
-> A pocket guide to what LayoutLab is, how every part of it works, how it's put
+> A pocket guide to what MagikLayout is, how every part of it works, how it's put
 > together, and where it can go next. Written to sit beside the tool while you
 > learn, teach, or extend it.
 
 ---
 
-## Part I — What LayoutLab Is
+## Part I — What MagikLayout Is
 
-LayoutLab is a browser-based sandbox for learning **Java Swing layout managers**.
+MagikLayout is a browser-based sandbox for learning **Java Swing layout managers**.
 It exists to answer one question faster than trial-compiling can: *"Why did Swing
 put my component **there**?"*
 
@@ -95,7 +95,7 @@ A context-aware line beneath the canvas that does three jobs:
    ("Drag the frame edge — NORTH and SOUTH keep their height, CENTER absorbs
    everything else").
 2. **Selection feedback** — what you can do with the selected component.
-3. **The vanish explanation** — LayoutLab's single most important teaching moment.
+3. **The vanish explanation** — MagikLayout's single most important teaching moment.
    When you add a second component to an occupied BorderLayout region, Swing makes
    the first one invisible. Instead of a silent mystery, the strip leads with the
    *rule* — "BorderLayout shows only the **last** component added to each region —
@@ -296,7 +296,7 @@ ambient shadows. Type is one system-sans family, hierarchy from weight and track
 
 ## Part VI — Potential & Roadmap
 
-LayoutLab's architecture is deliberately shaped so growth is **additive**: because
+MagikLayout's architecture is deliberately shaped so growth is **additive**: because
 the engine is the single source of truth, each new capability compounds across both
 the Playground and the Challenges.
 
@@ -354,5 +354,5 @@ be poured into a foundation that already tells the truth about Swing."
 
 ---
 
-*Handbook last updated: covers all three surfaces — Playground, Challenges (with the AI Coach), and the AR Lab. 75 automated tests pass; live at https://magik-layout.mhdazlan.cc.*
+*Handbook last updated: covers all four surfaces — Playground, Challenges (with the AI Coach), the AR Lab, and the Classroom (lesson pack, retrieval-grounded coach, cohort evidence — see [RAG.md](RAG.md)). 192 automated tests pass; live at https://magik-layout.mhdazlan.cc.*
 Engine, codegen, and grading are all first-party, deterministic, and LLM-free.*

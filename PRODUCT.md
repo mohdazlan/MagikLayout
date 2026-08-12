@@ -12,7 +12,7 @@ Design consequence: this is a *reference companion*, not a marketing site. Optim
 
 ## Product Purpose
 
-LayoutLab (working name; repo dir `MagikLayout/`) is the tool students open **before** they're ready for WindowBuilder: a sandbox that shows *why* a component lands where it lands, not a builder that hides the why to ship faster. Students drag Swing components onto a live canvas, switch layout managers, resize the frame, and watch real, compilable Java code update with every action. Success: a confused student resolves a layout question faster here than by trial-compiling.
+MagikLayout (the product name; `LayoutLab` survives only as a module and asset name — see [RAG.md](RAG.md)) is the tool students open **before** they're ready for WindowBuilder: a sandbox that shows *why* a component lands where it lands, not a builder that hides the why to ship faster. Students drag Swing components onto a live canvas, switch layout managers, resize the frame, and watch real, compilable Java code update with every action. Success: a confused student resolves a layout question faster here than by trial-compiling.
 
 The canvas is driven by faithful JS reimplementations of the real JDK layout algorithms (BorderLayout, FlowLayout, GridLayout in Phase 1) — never CSS flexbox/grid approximation, which would teach a mental model that contradicts what happens when students compile the real code. This is the single highest-leverage engineering decision in the project.
 

@@ -14,7 +14,7 @@ export function ChallengesRoute({ challengeId }: { challengeId: string | null })
     <>
       <header className="app-header">
         <h1 className="wordmark">
-          Layout<em>Lab</em>
+          Magik<em>Layout</em>
         </h1>
         <SurfaceNav current="challenges" />
         {challenge && (

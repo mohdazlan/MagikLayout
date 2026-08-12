@@ -1,4 +1,4 @@
-# LayoutLab — How to Use It (Walkthrough & Demo Script)
+# MagikLayout — How to Use It (Walkthrough & Demo Script)
 
 **Live:** https://magik-layout.mhdazlan.cc
 **Three surfaces, one engine:** Playground (`#/`) · Challenges (`#/challenges`) · AR Lab (`#/ar-lab`).
@@ -57,7 +57,7 @@ The index lists **ten exercises grouped by mode**. Pick one; each is graded by t
 > Cut between screen recordings. Keep the phone segment (AR) separate from the desktop segments.
 
 **[0:00–0:15 — Hook, on the Playground]**
-> "This is LayoutLab. Java beginners struggle with one invisible idea — you don't place components, *layout managers* do. LayoutLab makes that visible in the browser, with no install."
+> "This is MagikLayout. Java beginners struggle with one invisible idea — you don't place components, *layout managers* do. MagikLayout makes that visible in the browser, with no install."
 
 *(Drag a JButton and a JLabel onto the canvas.)*
 
@@ -68,7 +68,7 @@ The index lists **ten exercises grouped by mode**. Pick one; each is graded by t
 > "…CENTER absorbs the space while NORTH keeps its height. And if I add a second component to the same region —"
 
 *(Add a second component to an occupied region; it vanishes; point at the hint.)*
-> "— Swing hides the first one. Instead of a silent mystery, LayoutLab names the rule and lets you recover. That's the whole philosophy: show *why*, not just *what*."
+> "— Swing hides the first one. Instead of a silent mystery, MagikLayout names the rule and lets you recover. That's the whole philosophy: show *why*, not just *what*."
 
 **[0:45–1:20 — Challenges + AI Coach]**
 > "In Challenges, that same engine becomes a grader — ten exercises across three modes: order the code, predict the reflow, rebuild the target. Because the grader *is* the engine, feedback always matches real Swing."
@@ -95,7 +95,7 @@ The index lists **ten exercises grouped by mode**. Pick one; each is graded by t
 > "Three out of three — and the AR state generates real Swing code as evidence. No AI in the grading; it's the same deterministic engine, in augmented reality — and it runs on an ordinary iPhone."
 
 **[2:20–2:35 — Close]**
-> "One engine, three surfaces: a Playground that shows why, Challenges that grade like real Swing, an AI coach that explains without cheating, and an AR lab that makes it tangible. LayoutLab — live in any browser, offline, and accessible."
+> "One engine, four surfaces: a Playground that shows why, Challenges that grade like real Swing, a coach that retrieves the approved explanation instead of inventing one, an AR lab that makes it tangible, and a Classroom that hands the teacher the lesson and the evidence. MagikLayout — live in any browser, offline, and accessible."
 
 ---
 

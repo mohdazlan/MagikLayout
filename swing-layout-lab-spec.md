@@ -1,6 +1,6 @@
 # LayoutLab — Product & Build Spec
 *A companion playground for learning Java Swing layout managers by playing with them.*
-(Working name — swap freely; "LayoutLab" is a placeholder, not a decision.)
+(Historical spec. The name was later decided: the product is **MagikLayout**, and "LayoutLab" is kept only as a module and asset name.)
 
 ---
 

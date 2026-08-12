@@ -186,7 +186,7 @@ export function Playground() {
     <>
       <header className="app-header">
         <h1 className="wordmark">
-          Layout<em>Lab</em>
+          Magik<em>Layout</em>
         </h1>
         <SurfaceNav current="playground" />
         <p className="tagline">Why did Swing put it there? Drag, resize, and read the code.</p>
