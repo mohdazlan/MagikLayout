@@ -27,7 +27,7 @@ import type { ParsonsChallenge, ReflowChallenge } from '../challenges/types'
 
 export type MisconceptionFamily =
   | 'BL-REGION'
-  | 'BL-SIZING'
+  | 'RESIZE'
   | 'NESTING'
   | 'ORDER'
   | 'SETTINGS'
@@ -43,18 +43,18 @@ export type MisconceptionCode =
   | 'BL-WEST-COLLISION'
   | 'BL-CENTER-COLLISION'
   | 'BL-REGION-WRONG'
-  // BL-SIZING — which axis a region keeps at preferred size, and who absorbs slack.
+  // RESIZE — what each manager does with the extra pixels when the frame grows.
   | 'BL-CENTER-EXPANSION'
   | 'BL-EDGE-SIZING'
+  | 'FLOW-REWRAP'
+  | 'GRID-UNIFORM-CELLS'
   // NESTING — a nested panel is how one region carries more than one component.
   | 'NESTED-PANEL-MISSING'
   | 'NESTED-PANEL-EXTRA'
   | 'NESTED-PANEL-WRONG-MANAGER'
   // ORDER — under Flow and Grid, add order *is* position.
   | 'FLOW-ORDER'
-  | 'FLOW-REWRAP'
   | 'GRID-ORDER'
-  | 'GRID-UNIFORM-CELLS'
   // SETTINGS — same structure, different manager configuration.
   | 'GRID-DIMENSION'
   | 'FLOW-ALIGN-GAP'
@@ -87,15 +87,15 @@ export const MISCONCEPTIONS: Record<MisconceptionCode, MisconceptionSpec> = {
   'BL-WEST-COLLISION': { code: 'BL-WEST-COLLISION', family: 'BL-REGION', concept: 'BorderLayout region occupancy', curriculumTag: CU },
   'BL-CENTER-COLLISION': { code: 'BL-CENTER-COLLISION', family: 'BL-REGION', concept: 'BorderLayout region occupancy', curriculumTag: CU },
   'BL-REGION-WRONG': { code: 'BL-REGION-WRONG', family: 'BL-REGION', concept: 'BorderLayout region choice', curriculumTag: CU },
-  'BL-CENTER-EXPANSION': { code: 'BL-CENTER-EXPANSION', family: 'BL-SIZING', concept: 'BorderLayout CENTER absorbs slack', curriculumTag: CU },
-  'BL-EDGE-SIZING': { code: 'BL-EDGE-SIZING', family: 'BL-SIZING', concept: 'BorderLayout edge-region sizing', curriculumTag: CU },
+  'BL-CENTER-EXPANSION': { code: 'BL-CENTER-EXPANSION', family: 'RESIZE', concept: 'BorderLayout CENTER absorbs slack', curriculumTag: CU },
+  'BL-EDGE-SIZING': { code: 'BL-EDGE-SIZING', family: 'RESIZE', concept: 'BorderLayout edge-region sizing', curriculumTag: CU },
+  'FLOW-REWRAP': { code: 'FLOW-REWRAP', family: 'RESIZE', concept: 'FlowLayout re-wrapping on resize', curriculumTag: CU },
+  'GRID-UNIFORM-CELLS': { code: 'GRID-UNIFORM-CELLS', family: 'RESIZE', concept: 'GridLayout uniform cell sizing', curriculumTag: CU },
   'NESTED-PANEL-MISSING': { code: 'NESTED-PANEL-MISSING', family: 'NESTING', concept: 'Nested panels as containers', curriculumTag: CU },
   'NESTED-PANEL-EXTRA': { code: 'NESTED-PANEL-EXTRA', family: 'NESTING', concept: 'Nested panels as containers', curriculumTag: CU },
   'NESTED-PANEL-WRONG-MANAGER': { code: 'NESTED-PANEL-WRONG-MANAGER', family: 'NESTING', concept: 'Choosing a manager for a nested panel', curriculumTag: CU },
   'FLOW-ORDER': { code: 'FLOW-ORDER', family: 'ORDER', concept: 'FlowLayout add order', curriculumTag: CU },
-  'FLOW-REWRAP': { code: 'FLOW-REWRAP', family: 'ORDER', concept: 'FlowLayout re-wrapping on resize', curriculumTag: CU },
   'GRID-ORDER': { code: 'GRID-ORDER', family: 'ORDER', concept: 'GridLayout row-major fill', curriculumTag: CU },
-  'GRID-UNIFORM-CELLS': { code: 'GRID-UNIFORM-CELLS', family: 'ORDER', concept: 'GridLayout uniform cell sizing', curriculumTag: CU },
   'GRID-DIMENSION': { code: 'GRID-DIMENSION', family: 'SETTINGS', concept: 'GridLayout rows × cols', curriculumTag: CU },
   'FLOW-ALIGN-GAP': { code: 'FLOW-ALIGN-GAP', family: 'SETTINGS', concept: 'FlowLayout alignment and gaps', curriculumTag: CU },
   'SETLAYOUT-AFTER-ADD': { code: 'SETLAYOUT-AFTER-ADD', family: 'LIFECYCLE', concept: 'setLayout must precede add', curriculumTag: CU },
