@@ -33,7 +33,14 @@ const CORS = {
   'Access-Control-Allow-Headers': 'content-type',
 }
 
-const MODEL = 'claude-opus-4-8'
+// Haiku 4.5 is the right tier for this job: the task is composition from
+// supplied passages, not open-ended reasoning. It's ~5x cheaper than Opus
+// ($1/$5 vs $5/$25 per MTok) and lower-latency, which matters in a classroom
+// where a teacher may fire the coach many times in a lesson. The `effort`
+// parameter isn't supported on Haiku 4.5 (Sonnet 4.5 / Haiku 4.5 reject it),
+// so it's omitted below — a low-effort control isn't needed anyway since
+// Haiku is already the low-latency tier.
+const MODEL = 'claude-haiku-4-5'
 
 const SYSTEM = `You are the layout coach inside MagikLayout, which teaches Java Swing layout managers to Malaysian secondary vocational and TVET learners.
 
@@ -101,7 +108,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
     const msg = await client.messages.create({
       model: MODEL,
       max_tokens: 500,
-      output_config: { effort: 'low' }, // composition from supplied text — no deep reasoning needed
       system: SYSTEM,
       messages: [{ role: 'user', content: userContent }],
     })
