@@ -14,7 +14,7 @@ before any submission. Every number here is reproducible from this repository.
 
 | Claim | Status | Use in submission |
 | --- | --- | --- |
-| Four product surfaces are deployed (Playground, Challenges, AR Lab, Classroom) | Current fact | Yes — verify live before submitting |
+| Four product surfaces are built (Playground, Challenges, AR Lab, Classroom); the first three are deployed to the public URL | Current fact | Yes — "built", not "all deployed"; the Classroom's `coach-rag` backend is live on Supabase, but the Classroom surface is not yet on the public site |
 | 192 automated tests pass | Current fact | Yes — after rerunning `npm test` |
 | The Classroom coach performs runtime retrieval over a governed corpus, with source ids and logging | **Current fact** | **Yes** — the retrieval, citation and evaluation machinery is in `src/coach/` |
 | The Challenges coach is RAG | Not true | No — it is grounded contextual prompting. Say so plainly |
@@ -64,7 +64,7 @@ Observe → Diagnose → Retrieve → Compose → Guard → Log
 | Observe | `src/challenges/grade.ts`, `execute.ts` | The deterministic engine grades the attempt. Unchanged by this work. |
 | Diagnose | `src/coach/misconceptions.ts` | Maps the engine's verdict to one of **23 stable codes** in **8 families**. Decides nothing itself. |
 | Retrieve | `src/coach/retrieve.ts` | Metadata-first search over **112 chunks** (56 bilingual pairs, corpus **v1.0**). |
-| Compose | `supabase/functions/coach-rag/` | Optional. A model turns the retrieved passages into one hint and cites them. |
+| Compose | `supabase/functions/coach-rag/` | Optional. A model (`claude-haiku-4-5`) turns the retrieved passages into one hint and cites them. Deployed and smoke-tested; off by default per surface. |
 | Guard | `src/coach/guard.ts` | Citations, leakage, language, length, contradiction. A failure substitutes approved text silently. |
 | Log | `src/coach/log.ts` | One record per request: code, chunk ids, model, corpus version, latency, outcome. |
 
@@ -190,9 +190,11 @@ Honest gaps, in the order they block adoption:
 - **No classroom pilot has been run.** The evidence plan (8–15 learners,
   five-item pre/post, repair rate, time, hint level) is designed but not
   executed. Until it is, there is no learning-gain claim of any kind.
-- **No live-model evaluation.** The gate proves no model output can reach a
-  student unchecked; it does not measure how good a live model's phrasing is.
-  That needs a manual run with a key and a rubric.
+- **No live-model evaluation.** The `coach-rag` function is deployed and
+  smoke-tested (a handful of live calls, guard-passed), but that is not an
+  evaluation: the gate proves no model output can reach a student unchecked, and
+  it does not measure how good a live model's phrasing is across the corpus.
+  That needs a scored run with a key and a rubric.
 - **Teacher challenge authoring** does not exist. Teachers can run the lesson
   pack and export evidence, but cannot yet author their own challenges.
 - **Cohort data is per-device.** A learner who switches machines starts a new

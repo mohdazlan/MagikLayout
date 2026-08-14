@@ -10,6 +10,19 @@ browser. The client (`src/classroom/ragComposer.ts`) posts the retrieved
 passages plus the engine's findings; this function must compose only from what
 it was given and refuses outright if no passages are supplied.
 
+**Model:** `claude-haiku-4-5`. The job is composition from supplied passages
+plus one Socratic question, not open-ended reasoning — Haiku is the right tier
+(five times cheaper than Opus, lower latency in a classroom that fires the coach
+many times a lesson). Change `MODEL` in `index.ts` to `claude-sonnet-5` for
+richer phrasing at higher cost. `output_config.effort` is not passed: the
+Sonnet 4.5 / Haiku 4.5 line rejects it.
+
+**Current status:** deployed and smoke-tested against a live key. The function
+URL lives in the (gitignored) `.env` as `VITE_COACH_RAG_URL`, not in this repo —
+the endpoint runs with `--no-verify-jwt` (open), so publishing it here would let
+anyone spend the key. See "Locking it down" below before pointing a real class
+at it.
+
 ## Prerequisites
 
 - A Supabase project and the Supabase CLI. No install needed — `npx supabase`
@@ -63,7 +76,7 @@ curl -X POST "$VITE_COACH_RAG_URL" \
       { "chunkId": "ML-BLS-L2:en-MY", "text": "BorderLayout has exactly five slots, and SOUTH is one slot — not a row. When a second component is added to the same region, it replaces the first in that slot, and the earlier one is never given a size or a position." }
     ]
   }'
-# → {"hint":"...","citedChunkIds":["ML-BLS-L2:en-MY"],"model":"claude-opus-4-8"}
+# → {"hint":"...","citedChunkIds":["ML-BLS-L2:en-MY"],"model":"claude-haiku-4-5"}
 ```
 
 A request with `"passages": []` should return `400` — that refusal is
