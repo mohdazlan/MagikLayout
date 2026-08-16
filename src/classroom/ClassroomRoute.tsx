@@ -4,7 +4,7 @@
  *
  * Three tabs, in the order a teacher meets them:
  *   Lesson pack   what to teach, and how the 25 minutes run.
- *   Coach Lab     the retrieval pipeline, watchable rung by rung.
+ *   AI Debugging Studio  a visual repair workspace with a grounded coach.
  *   Class session the code to read out, and the evidence to export afterwards.
  *
  * A session is created on demand. Until one exists the Coach Lab still works
@@ -24,7 +24,7 @@ type Tab = 'lesson' | 'lab' | 'session'
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'lesson', label: 'Lesson pack' },
-  { id: 'lab', label: 'Coach Lab' },
+  { id: 'lab', label: 'AI Debugging Studio' },
   { id: 'session', label: 'Class session' },
 ]
 
@@ -65,13 +65,12 @@ export function ClassroomRoute({ sessionCode }: { sessionCode: string | null }) 
         <SurfaceNav current="classroom" />
       </header>
 
-      <main className="cl-page">
+      <main className={`cl-page${tab === 'lab' ? ' cl-page-studio' : ''}`}>
         <div className="cl-intro">
           <h2 className="cl-page-title">Classroom</h2>
           <p className="cl-page-sub">
-            The teacher's side of MagikLayout: a lesson to run, the retrieval-grounded coach to inspect, and cohort
-            evidence to take away. The engine judges, retrieval selects the approved explanation, and the AI only puts it
-            into words — you can switch the AI off and lose nothing but the phrasing.
+            Teach one visible problem from first prediction to verified repair. The layout engine establishes truth,
+            retrieval selects approved guidance, and AI helps the learner find the next useful question.
           </p>
         </div>
 

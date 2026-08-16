@@ -1,0 +1,767 @@
+MAGIKLAYOUT / MIPAC TVET 2026
+
+MAGIKLAYOUT
+
+Make the invisible rule visible.
+A child-clear, judge-convincing storyboard with word-for-word English narration
+
+THE MYSTERY
+
+THE REPAIR
+
+THE AI
+
+THE PROOF
+
+Two buttons enter SOUTH.
+Only one can be seen.
+
+A JPanel becomes a bench:
+one seat, two buttons.
+
+The engine judges.
+Haiku explains.
+
+The repair is recorded as
+classroom evidence.
+
+MASTER DURATION 3:45 | FORMAT 16:9 / 1080p | ONE CONCEPT BorderLayout SOUTH collision
+
+Design test: if a Year 5 learner can retell the story as ‘one chair, one bench, two buttons’, the film is clear enough. Technical names remain
+on screen so assessors still see NOSS accuracy and engineering depth.
+
+PRIMARY-SIMPLE STORYBOARD | 1
+
+MAGIKLAYOUT / MIPAC TVET 2026
+
+1. The new story rule
+More detail in the production plan; less cognitive load in the film.
+ONE QUESTION
+
+Why did Save disappear even though the code had no error?
+
+ONE ANALOGY
+
+A BorderLayout frame is a house with five named spaces. SOUTH is one seat, not a row.
+
+ONE REPAIR
+
+Put one JPanel in SOUTH. The panel acts like a bench and arranges Save + Cancel inside it.
+
+ONE AI JOB
+
+Claude Haiku never decides correctness. It turns approved evidence into a short question that helps the learner think.
+
+ONE ENDING
+
+The learner explains why the bench works. Understanding - not button placement - is the transformation.
+
+What must be removed from the old cut
+REMOVE
+
+REPLACE WITH
+
+WHY
+
+Four surfaces shown as equal features
+
+One SOUTH story; other screens appear only as evidence
+
+A child follows cause and effect, not a product tour
+
+Technical pipeline spoken as a list
+
+Referee -> library -> helper -> gatekeeper
+
+The picture carries the meaning; technical labels remain for judges
+
+Long mouse travel and setup
+
+Pre-positioned states and match cuts
+
+OBS records learning moments, not administration
+
+Claims before proof
+
+Show the engine verdict first, then show Haiku
+
+The sequence itself proves ethical AI
+
+PRIMARY-SIMPLE STORYBOARD | 2
+
+MAGIKLAYOUT / MIPAC TVET 2026
+
+2. Visual vocabulary: explain hard ideas without dumbing them down
+Use the friendly metaphor in narration; preserve the precise computing term as a small caption.
+SCREEN LABEL
+
+CHILD-CLEAR PICTURE
+
+JUDGE-LEVEL MEANING
+
+FRAME
+
+A small house
+
+The JFrame content pane
+
+NORTH / SOUTH / EAST / WEST / CENTER
+
+Five named spaces
+
+BorderLayout regions
+
+SOUTH
+
+One chair
+
+One direct component per region
+
+JPanel + FlowLayout
+
+A bench holding two friends
+
+A nested container arranges multiple children
+
+DETERMINISTIC ENGINE
+
+The referee
+
+Calculates layout and correctness without AI
+
+RETRIEVAL
+
+The approved library
+
+Selects reviewed bilingual passages by misconception and hint level
+
+CLAUDE HAIKU 4.5
+
+The helpful teacher's voice
+
+Composes a short Socratic hint from supplied evidence
+
+GUARD
+
+The gatekeeper
+
+Rejects invalid citations, leakage, contradictions, wrong language or length
+
+Language control
+No sentence should introduce more than one new idea. Prefer concrete verbs: enter, disappear, sit, carry, check, ask. Delay terms such as deterministic, retrieval and contradiction
+until the audience has already seen their visual equivalent.
+
+PRIMARY-SIMPLE STORYBOARD | 3
+
+MAGIKLAYOUT / MIPAC TVET 2026
+
+3. Storyboard A - mystery, meaning, mission
+Every row is a shooting instruction. Narration is spoken exactly; all other text is production guidance.
+SCENE / TIME
+
+WORD-FOR-WORD NARRATION
+
+BROWSER + VISUAL ACTION
+
+TEXT / AUDIO / PASS TEST
+
+01 - The magic trick
+0:00-0:15
+HOOK
+
+Two buttons enter the bottom of this window: Save,
+then Cancel. The code runs. No red error. But look
+closely - where did Save go?
+
+Action
+Start on a clean Playground already set to BorderLayout. Add or reveal
+Save in SOUTH. Add Cancel to SOUTH. Freeze the pointer beside the
+single visible button.
+
+On screen
+NO ERROR. ONE BUTTON MISSING.
+
+Frame
+Canvas and two generated frame.add(..., SOUTH) lines remain readable
+together.
+
+02 - One chair
+0:15-0:32
+PROBLEM
+
+03 - The mission
+0:32-0:49
+OUTCOME
+
+Imagine the window as a tiny house with five named
+spaces. SOUTH is the space at the bottom. But
+SOUTH has only one chair. Cancel arrived last, so
+Save lost its seat.
+
+Our mission is simple: keep both buttons visible, and
+explain why the repair works. This is a real TVET skill
+aligned to NOSS IT-010-3:2016-C01.
+
+Action
+Overlay a simple five-space diagram on the live frame. Highlight SOUTH
+orange. Animate one chair; place Save, then replace it with Cancel.
+Frame
+Keep the application visible beneath a 35% transparent overlay. Do not
+cut away to a full-screen cartoon.
+
+Action
+Match-cut to Classroom Lesson Pack. Hold the NOSS code, learning
+outcome, and BL-SOUTH-COLLISION in the same frame.
+Frame
+Use a subtle crop or zoom so the outcome is readable at 1080p.
+
+Sound
+Single soft click per add. Music stops for 0.5 s after the
+question.
+Pass
+A viewer can point to the missing button before any
+explanation begins.
+On screen
+SOUTH = ONE DIRECT COMPONENT
+Sound
+Warm explanatory tone. Land ‘one chair’ slowly.
+Pass
+A child can answer: Cancel is visible because it arrived last.
+On screen
+PREDICT -> TEST -> EXPLAIN -> REPAIR
+Sound
+Confident, not bureaucratic. Do not read the entire formal
+outcome.
+Pass
+The judge hears one measurable skill; the child hears one
+mission.
+
+PRIMARY-SIMPLE STORYBOARD | 4
+
+MAGIKLAYOUT / MIPAC TVET 2026
+
+4. Storyboard B - repair, prediction, referee
+Every row is a shooting instruction. Narration is spoken exactly; all other text is production guidance.
+SCENE / TIME
+
+WORD-FOR-WORD NARRATION
+
+BROWSER + VISUAL ACTION
+
+TEXT / AUDIO / PASS TEST
+
+04 - Build a bench
+0:49-1:17
+CONCEPT +
+EXAMPLE
+
+We do not need another chair. We need one bench. A
+JPanel becomes that bench. Put Save and Cancel
+inside the panel, then place the single panel in
+SOUTH. BorderLayout sees one component. We still
+see two buttons.
+
+Action
+Return to a prepared Playground state. Reveal JPanel in SOUTH. Reveal
+Save and Cancel inside it. Pointer traces button -> panel -> SOUTH. Avoid
+constructing from scratch on camera.
+
+On screen
+ONE REGION -> ONE CONTAINER -> TWO BUTTONS
+
+05 - Test the rule
+1:17-1:35
+ACTIVE LEARNING
+
+Now make a prediction. If the window becomes wider,
+will the buttons disappear again? Choose your answer
+before we resize.
+
+Frame
+Panel boundary pulses once. Show panel.add(Save), panel.add(Cancel),
+then frame.add(panel, SOUTH).
+
+Action
+Cut to the reflow challenge with prediction ready. Hold 2 s. Lock the
+prediction, then resize or reveal the target position.
+Frame
+Ghost position and final position must both be visible. Keep cursor still
+during the thinking pause.
+
+06 - The referee
+1:35-1:55
+DETERMINISTIC
+PROOF
+
+The layout engine checks the structure and the exact
+movement. It is our referee. It decides what happened
+from the same rules that draw the screen. No AI
+decides this score.
+
+Action
+Show the challenge verdict or Coach Lab engine finding for
+BL-SOUTH-COLLISION. Highlight the finding before any hint button is
+pressed.
+Frame
+Add a small ‘REFEREE’ label beside the engine finding. Do not display the
+AI pipeline yet.
+
+Sound
+Small music rise when both buttons become visible.
+Pass
+A child can retell: the bench fits in one seat and carries two
+buttons.
+On screen
+PAUSE. PREDICT FIRST.
+Sound
+Leave two full seconds of silence for viewer participation.
+Pass
+The viewer has time to form an answer before the app
+reveals one.
+On screen
+THE ENGINE JUDGES.
+Sound
+Firm, factual cadence. Drop the music under ‘No AI’.
+Pass
+Sequence proves the verdict existed before Haiku was
+called.
+
+PRIMARY-SIMPLE STORYBOARD | 5
+
+MAGIKLAYOUT / MIPAC TVET 2026
+
+5. Storyboard C - where Claude Haiku actually enters
+Every row is a shooting instruction. Narration is spoken exactly; all other text is production guidance.
+SCENE / TIME
+
+WORD-FOR-WORD NARRATION
+
+BROWSER + VISUAL ACTION
+
+TEXT / AUDIO / PASS TEST
+
+07 - Ask the library
+1:55-2:15
+RETRIEVAL
+
+Only after the referee speaks do we ask for help. First,
+MagikLayout visits an approved library. It selects two
+short notes for this exact mistake and this hint level.
+
+Action
+Open Coach Lab with ‘AI on - coach-rag’. Keep BL-SOUTH-COLLISION
+visible. Press Ask for a hint. Animate Engine -> Approved Library while the
+request is processing.
+
+On screen
+1. ENGINE -> 2. APPROVED LIBRARY
+
+Frame
+Retrieved source chips appear as the visual proof. Use their real IDs;
+never invent a citation.
+
+08 - Haiku finds the
+words
+2:15-2:42
+AI VALUE
+
+09 - The gatekeeper
+2:42-3:02
+ETHICAL AI
+
+Now Claude Haiku 4.5 enters - not as the referee, but
+as a helpful teacher's voice. It receives the finding and
+those approved notes. It writes one short question:
+enough to guide thinking, never enough to give away
+the repair.
+
+Before the hint reaches a learner, a gatekeeper
+checks it. Are the sources real? Is the language
+correct? Did it reveal the answer or disagree with the
+engine? Only a safe hint may pass.
+
+Action
+Reveal Haiku only at the Compose stage. Hold the generated Level 1 hint.
+Pointer does not move while the audience reads the first sentence.
+Frame
+Pipeline overlay: Engine -> Retrieve -> Haiku 4.5. Keep real hint visible
+behind it.
+
+Action
+Reveal ‘Model composed - guard passed’, then Retrieved and Cited IDs.
+Animate a gate opening only after all checks tick green.
+Frame
+Use five compact checks: source, language, length, no answer leak, no
+contradiction.
+
+Sound
+A quiet page-turn sound may mark retrieval; no
+science-fiction effects.
+Pass
+Viewer understands that approved information is selected
+before AI writes.
+On screen
+HAIKU EXPLAINS. IT DOES NOT GRADE.
+Sound
+Human, reassuring voice. Slow down on ‘not as the referee’.
+Pass
+A child can answer: Haiku helps with words; the engine
+decides correctness.
+On screen
+GUARD CHECKED. SAFE TO SERVE.
+Sound
+Five restrained ticks, then silence. Do not claim the model
+can never fail.
+Pass
+Judge sees explicit ethical controls; child understands a
+safety check happens.
+
+PRIMARY-SIMPLE STORYBOARD | 6
+
+MAGIKLAYOUT / MIPAC TVET 2026
+
+6. Storyboard D - access, evidence, reflection
+Every row is a shooting instruction. Narration is spoken exactly; all other text is production guidance.
+SCENE / TIME
+
+WORD-FOR-WORD NARRATION
+
+BROWSER + VISUAL ACTION
+
+TEXT / AUDIO / PASS TEST
+
+10 - Speak my
+language
+3:02-3:19
+ACCESS
+
+The same help can speak in Bahasa Malaysia. The
+rule stays true; only the explanation changes. And if
+the network fails, reviewed library text still answers.
+
+Action
+Toggle BM and show a fresh Level 1 hint. Briefly caption the safe fallback;
+do not simulate a network failure in the main take.
+
+On screen
+SAME RULE. THE LEARNER'S LANGUAGE.
+
+11 - Evidence, not
+applause
+3:19-3:34
+IMPACT
+
+12 - Return to the
+mystery
+3:34-3:45
+SUMMARY +
+REFLECTION
+
+Frame
+BM hint plus matching Retrieved/Cited IDs. Keep technical Swing terms in
+English.
+
+The teacher sees attempts, hints and successful
+repairs - without student names. The evidence comes
+from the layout engine, not from the model.
+
+Action
+Cut to Class Session. Show anonymous learner label, repair rate, hints
+served, and BL-SOUTH-COLLISION frequency. Refresh once only.
+Frame
+Crop to the cohort summary. Avoid claiming learning gains from an unrun
+classroom pilot.
+
+Save never needed magic. It needed the right
+structure. MagikLayout makes the hidden rule visible,
+then lets AI help without taking control. If two buttons
+must share SOUTH, what will you build - and why?
+
+Action
+Match-cut back to the repaired frame. Hold JPanel selected, both buttons
+visible, and Java proof readable for four seconds.
+Frame
+No cursor movement. Fade after the question, not before.
+
+Sound
+Warm and inclusive. No music swell.
+Pass
+Bilingual value is visible without opening a second storyline.
+On screen
+ANONYMOUS. MEASURABLE. TEACHER-READY.
+Sound
+Matter-of-fact close to the proof sequence.
+Pass
+Judge sees usable classroom evidence and privacy
+discipline.
+On screen
+MAKE THE INVISIBLE VISIBLE.
+Sound
+Music resolves, then stops beneath the final question.
+Four-second silence.
+Pass
+A child answers ‘a panel/bench, because SOUTH accepts
+one component’.
+
+PRIMARY-SIMPLE STORYBOARD | 7
+
+MAGIKLAYOUT / MIPAC TVET 2026
+
+7. Continuous English narration - clean recording copy
+Approx. 400 words. Read at 112-120 words per minute. Do not announce scene names. The pauses are part of the teaching.
+0:00 Two buttons enter the bottom of this window: Save, then Cancel. The code runs. No red error. But look closely - where did Save go? Imagine the window as a
+tiny house with five named spaces. SOUTH is the space at the bottom. But SOUTH has only one chair. Cancel arrived last, so Save lost its seat. Our mission is
+simple: keep both buttons visible, and explain why the repair works. This is a real TVET skill aligned to NOSS IT-010-3:2016-C01.
+
+0:49 We do not need another chair. We need one bench. A JPanel becomes that bench. Put Save and Cancel inside the panel, then place the single panel in
+SOUTH. BorderLayout sees one component. We still see two buttons. Now make a prediction. If the window becomes wider, will the buttons disappear again?
+Choose your answer before we resize. The layout engine checks the structure and the exact movement. It is our referee. It decides what happened from the same
+rules that draw the screen. No AI decides this score.
+
+1:55 Only after the referee speaks do we ask for help. First, MagikLayout visits an approved library. It selects two short notes for this exact mistake and this hint
+level. Now Claude Haiku 4.5 enters - not as the referee, but as a helpful teacher's voice. It receives the finding and those approved notes. It writes one short
+question: enough to guide thinking, never enough to give away the repair. Before the hint reaches a learner, a gatekeeper checks it. Are the sources real? Is the
+language correct? Did it reveal the answer or disagree with the engine? Only a safe hint may pass.
+
+3:02 The same help can speak in Bahasa Malaysia. The rule stays true; only the explanation changes. And if the network fails, reviewed library text still answers.
+The teacher sees attempts, hints and successful repairs - without student names. The evidence comes from the layout engine, not from the model. Save never
+needed magic. It needed the right structure. MagikLayout makes the hidden rule visible, then lets AI help without taking control. If two buttons must share SOUTH,
+what will you build - and why?
+
+Performance direction
+Start with wonder, not urgency. Become playful on ‘one chair’ and ‘one bench’. Become precise at the referee. Slow deliberately when naming Claude Haiku 4.5. Finish the reflection
+question as a teacher speaking to one learner, not as an advertisement.
+
+PRIMARY-SIMPLE STORYBOARD | 8
+
+MAGIKLAYOUT / MIPAC TVET 2026
+
+8. The judge-proof AI explanation
+This page is for rehearsal and Q&A.; The film uses the child-clear metaphor; the presenter must also command the exact architecture.
+STAGE
+
+FILM METAPHOR
+
+TECHNICAL AUTHORITY
+
+1. ENGINE
+
+Referee
+
+Deterministically diagnoses BL-SOUTH-COLLISION and emits factual findings.
+
+No
+
+2. RETRIEVE
+
+Approved library
+
+Selects reviewed bilingual passages for the misconception and permitted hint level.
+
+No
+
+3. HAIKU
+
+Helpful voice
+
+claude-haiku-4-5 composes one short Socratic hint and cites supplied chunk IDs.
+
+YES
+
+4. GUARD
+
+Gatekeeper
+
+Checks citation validity, language, length, answer leakage and contradiction.
+
+No
+
+5. SERVE + LOG
+
+Delivery record
+
+Serves only approved output; records retrieved IDs, cited IDs, model, latency and outcome.
+
+No
+
+SAFE JUDGE-FACING LINE
+
+AI?
+
+Claude Haiku 4.5 does not decide whether a learner is correct. It composes a bilingual Socratic hint from reviewed passages already
+selected by retrieval, and the hint is served only after a deterministic guard validates it.
+
+Rubric coverage inside the story
+20% PdP design
+
+One NOSS objective + induction + concept + prediction + repair +
+reflection
+
+20% AI integration
+
+Haiku adds explanation after deterministic truth
+
+10% innovation
+
+Faithful live layout engine and governed AI pipeline
+
+10% impact
+
+Anonymous attempts, hints and repair evidence
+
+5% ethics
+
+Subordinate AI, guard, citations, fallback and no model grading
+
+10% video
+
+One clear story, readable proof shots and timed reflection
+
+PRIMARY-SIMPLE STORYBOARD | 9
+
+MAGIKLAYOUT / MIPAC TVET 2026
+
+9. OBS and browser production plan
+The best take is prepared, not improvised. Record short clean states, then edit them into one continuous cause-and-effect story.
+PREP 1
+
+Set Chrome to 100% zoom; hide bookmarks; close notifications; use one 16:9 browser window.
+
+PREP 2
+
+Prepare four tabs/states only: collision, repaired Playground, Coach Lab reset, active Class Session.
+
+PREP 3
+
+Verify public badge reads AI on - coach-rag. Run one hidden preflight hint before recording.
+
+PREP 4
+
+OBS: 1920x1080 canvas/output, 30 or 60 fps, microphone peaking near -9 dB, desktop alerts disabled.
+
+PREP 5
+
+Record narration separately if possible. Browser motion should follow the voice, not force the voice to chase loading time.
+
+Autopilot pacing rules
+MOMENT
+
+HOLD
+
+RULE
+
+Button disappears
+
+2.0 s
+
+Freeze cursor; let the audience discover the contradiction
+
+Prediction question
+
+2.0 s
+
+No clicking during thinking time
+
+Engine verdict
+
+3.0 s
+
+Must appear before Ask for a hint
+
+Haiku hint
+
+5.0 s
+
+First sentence and Model composed - guard passed must be readable
+
+Retrieved + Cited
+
+3.0 s
+
+Real IDs in frame; no decorative fake citation
+
+Final repair
+
+4.0 s
+
+No cursor movement beneath the reflection question
+
+Editing bridges
+Use only three transitions: match cut (SOUTH to learning outcome), J-cut (voice begins before Coach Lab appears), and return cut (class evidence back to repaired SOUTH).
+Remove loading gaps, but never shorten proof holds. Avoid AR in this 3:45 master; it opens a second mental model and weakens the one-concept rubric focus.
+
+PRIMARY-SIMPLE STORYBOARD | 10
+
+MAGIKLAYOUT / MIPAC TVET 2026
+
+10. Final acceptance checklist
+Do not submit merely because the recording is smooth. Submit when every item below is visible or audible.
+[]
+
+CHILD CLARITY
+
+A viewer can explain the disappearance using ‘one chair’ and the repair using ‘one bench’.
+
+[]
+
+ONE OBJECTIVE
+
+The NOSS code and the single repair goal appear once, clearly, for at least three seconds.
+
+[]
+
+ACTIVE LEARNING
+
+The prediction question includes a real two-second thinking pause.
+
+[]
+
+ENGINE FIRST
+
+BL-SOUTH-COLLISION and factual findings are visible before any AI request.
+
+[]
+
+HAIKU PROOF
+
+AI on - coach-rag, Model composed - guard passed, Retrieved IDs and Cited IDs are visible.
+
+[]
+
+ETHICAL CLAIM
+
+Narration states that Haiku explains but does not grade; the guard is explained.
+
+[]
+
+BILINGUAL VALUE
+
+A BM hint appears without changing the underlying engine finding.
+
+[]
+
+CLASSROOM USE
+
+Anonymous attempts, hints and repair evidence appear; no names or invented pilot results.
+
+[]
+
+TECHNICAL QUALITY
+
+16:9, minimum 1080p, clean cursor path, clear captions, stable audio, 3-5 minutes.
+
+[]
+
+REFLECTION
+
+The film ends with: ‘If two buttons must share SOUTH, what will you build - and why?’
+
+THE TEST
+
+After watching once, ask a non-programmer: ‘Why did Save disappear, what fixed it, and what did Haiku do?’ A winning cut produces three
+answers: ‘one SOUTH seat’, ‘a JPanel bench’, and ‘Haiku explained the referee’s finding’. If any answer is missing, revise the film - not the
+learner.
+
+PRIMARY-SIMPLE STORYBOARD | 11
+
+
