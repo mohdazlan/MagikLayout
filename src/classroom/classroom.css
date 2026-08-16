@@ -436,6 +436,22 @@
   margin-bottom: 18px;
 }
 
+.cl-intro-studio {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.cl-intro-studio .cl-page-title {
+  margin-top: 3px;
+}
+
+.cl-intro-studio .cl-page-sub {
+  max-width: 62ch;
+  text-align: right;
+}
+
 .cl-page-studio .cl-page-sub {
   max-width: 82ch;
 }
@@ -463,6 +479,73 @@
   gap: 24px;
   border-bottom: 1px solid var(--hairline-soft);
   background: linear-gradient(110deg, var(--surface), var(--accent-tint));
+}
+
+.ds-mission-catalogue {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--hairline-soft);
+  background: color-mix(in srgb, var(--surface) 94%, var(--bg));
+  scrollbar-width: thin;
+}
+
+.ds-mission-catalogue button {
+  appearance: none;
+  flex: 0 0 154px;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  grid-template-areas: 'number title' 'number manager';
+  gap: 1px 7px;
+  align-items: center;
+  padding: 8px 9px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease-out), background var(--dur) var(--ease-out);
+}
+
+.ds-mission-catalogue button:hover,
+.ds-mission-catalogue button.is-current {
+  border-color: var(--accent);
+}
+
+.ds-mission-catalogue button.is-current {
+  background: var(--accent-tint);
+}
+
+.ds-mission-catalogue button > span {
+  grid-area: number;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--accent-deep);
+  font: 700 9px var(--mono);
+}
+
+.ds-mission-catalogue button.is-current > span {
+  background: var(--accent);
+  color: #fff;
+}
+
+.ds-mission-catalogue button strong {
+  grid-area: title;
+  overflow: hidden;
+  font-size: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ds-mission-catalogue button small {
+  grid-area: manager;
+  color: var(--ink-2);
+  font-size: 8px;
 }
 
 .ds-eyebrow,
@@ -763,6 +846,11 @@
   color: #fff;
   font: normal 700 9px var(--font);
   letter-spacing: .08em;
+}
+
+.ds-south-outline.ds-workspace-outline {
+  inset: 5px;
+  height: auto;
 }
 
 .ds-ghost-button {
@@ -1343,6 +1431,8 @@
 
 @media (max-width: 760px) {
   .cl-page-studio { padding-inline: 12px; }
+  .cl-intro-studio { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .cl-intro-studio .cl-page-sub { text-align: left; }
   .ds-mission-bar,
   .ds-mission-tools { align-items: flex-start; }
   .ds-mission-bar { flex-direction: column; }

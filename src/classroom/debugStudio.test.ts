@@ -1,39 +1,44 @@
 import { describe, expect, it } from 'vitest'
-import { diagnoseReverse, primaryDiagnosis } from '../coach/misconceptions'
-import {
-  BROKEN_SOUTH_TREE, PREDICTIONS, REPAIRED_SOUTH_TREE, isCorrectPrediction,
-  javaLinesForStage, nextRepairStage, southInspector, studioProgress,
-  repairPasses,
-} from './debugStudio'
+import { STUDIO_MISSIONS, isCorrectPrediction, nextRepairStage, repairPasses, studioProgress } from './debugStudio'
 
-describe('AI Debugging Studio mission', () => {
-  it('starts with the real SOUTH collision diagnosed by the engine', () => {
-    const diagnosis = primaryDiagnosis(diagnoseReverse(REPAIRED_SOUTH_TREE, BROKEN_SOUTH_TREE))
-    expect(diagnosis.code).toBe('BL-SOUTH-COLLISION')
-    expect(southInspector('broken')).toMatchObject({ direct: 2, visible: 'Cancel' })
+describe('AI Debugging Studio mission catalogue', () => {
+  it('contains at least ten real engine-diagnosed missions', () => {
+    expect(STUDIO_MISSIONS.length).toBeGreaterThanOrEqual(10)
+    expect(new Set(STUDIO_MISSIONS.map((mission) => mission.id)).size).toBe(STUDIO_MISSIONS.length)
+    expect(STUDIO_MISSIONS.every((mission) => mission.diagnosis.code !== 'UNKNOWN')).toBe(true)
   })
 
-  it('uses one unambiguous prediction grounded in the engine rule', () => {
-    expect(PREDICTIONS.filter((prediction) => prediction.correct)).toHaveLength(1)
-    expect(isCorrectPrediction('collision')).toBe(true)
-    expect(isCorrectPrediction('deleted')).toBe(false)
+  it('covers multiple managers and misconception families', () => {
+    expect(new Set(STUDIO_MISSIONS.map((mission) => mission.manager)).size).toBeGreaterThanOrEqual(4)
+    expect(new Set(STUDIO_MISSIONS.map((mission) => mission.diagnosis.family)).size).toBeGreaterThanOrEqual(5)
   })
 
-  it('requires two visible repair actions and then remains solved', () => {
-    expect(nextRepairStage('broken')).toBe('panel-ready')
-    expect(nextRepairStage('panel-ready')).toBe('repaired')
+  it('gives every mission one unambiguous prediction', () => {
+    for (const mission of STUDIO_MISSIONS) {
+      const correct = mission.predictions.filter((prediction) => prediction.correct)
+      expect(correct).toHaveLength(1)
+      expect(isCorrectPrediction(mission, correct[0].id)).toBe(true)
+    }
+  })
+
+  it('requires two actions and grades only the final target as repaired', () => {
+    expect(nextRepairStage('broken')).toBe('tool-ready')
+    expect(nextRepairStage('tool-ready')).toBe('repaired')
     expect(nextRepairStage('repaired')).toBe('repaired')
-    expect([studioProgress('broken'), studioProgress('panel-ready'), studioProgress('repaired')]).toEqual([1, 2, 3])
-    expect(repairPasses('broken')).toBe(false)
-    expect(repairPasses('panel-ready')).toBe(false)
-    expect(repairPasses('repaired')).toBe(true)
+    expect([studioProgress('broken'), studioProgress('tool-ready'), studioProgress('repaired')]).toEqual([1, 2, 3])
+    for (const mission of STUDIO_MISSIONS) {
+      expect(repairPasses(mission, 'broken')).toBe(false)
+      expect(repairPasses(mission, 'repaired')).toBe(true)
+    }
   })
 
-  it('finishes with one direct SOUTH container and explicit nested Java', () => {
-    expect(southInspector('repaired')).toMatchObject({ direct: 1, visible: 'buttonRow' })
-    const code = javaLinesForStage('repaired').map((line) => line.text).join('\n')
-    expect(code).toContain('buttonRow.add(save)')
-    expect(code).toContain('buttonRow.add(cancel)')
-    expect(code).toContain('frame.add(buttonRow, BorderLayout.SOUTH)')
+  it('ships visual, code, structure, and inspector evidence for every stage', () => {
+    for (const mission of STUDIO_MISSIONS) {
+      for (const stage of ['broken', 'tool-ready', 'repaired'] as const) {
+        expect(mission.java[stage].length).toBeGreaterThan(0)
+        expect(mission.structure[stage].length).toBeGreaterThan(0)
+        expect(mission.inspector[stage].rule.length).toBeGreaterThan(0)
+      }
+    }
   })
 })

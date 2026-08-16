@@ -7,19 +7,16 @@ import { SwingFrame, useMeasurer } from '../challenges/SwingFrame'
 import { chunkById, type CorpusLanguage } from '../coach/corpus'
 import type { LadderState } from '../coach/hintPolicy'
 import { runCoach, type CoachRunResult } from '../coach/pipeline'
-import { SCENARIOS } from './scenarios'
 import { ragComposer, ragComposerConfigured } from './ragComposer'
 import { coachLog } from './store'
 import {
-  PREDICTIONS,
+  STUDIO_MISSIONS,
   isCorrectPrediction,
-  javaLinesForStage,
+  missionById,
   nextRepairStage,
   repairPasses,
-  southInspector,
   studioProgress,
   treeForStage,
-  type PredictionId,
   type RepairStage,
 } from './debugStudio'
 
@@ -40,11 +37,12 @@ const OUTCOME_NOTE: Record<string, string> = {
 type Focus = 'conflict' | 'order' | 'code' | null
 
 export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; aiEnabled: boolean }) {
-  const scenario = SCENARIOS[0]
   const measure = useMeasurer()
+  const [missionId, setMissionId] = useState(STUDIO_MISSIONS[0].id)
+  const mission = missionById(missionId)
   const [language, setLanguage] = useState<CorpusLanguage>('en-MY')
   const [stage, setStage] = useState<RepairStage>('broken')
-  const [prediction, setPrediction] = useState<PredictionId | null>(null)
+  const [prediction, setPrediction] = useState<string | null>(null)
   const [ladder, setLadder] = useState<LadderState>({ attempts: 1, hintsServed: 0, solved: false, teacherUnlocked: false })
   const [history, setHistory] = useState<CoachRunResult[]>([])
   const [busy, setBusy] = useState(false)
@@ -54,13 +52,14 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
 
   const composer = props.aiEnabled ? ragComposer() : undefined
   const configured = props.aiEnabled && ragComposerConfigured()
-  const root = useMemo(() => treeForStage(stage), [stage])
-  const inspector = southInspector(stage)
+  const root = useMemo(() => treeForStage(mission, stage), [mission, stage])
+  const inspector = mission.inspector[stage]
   const latest = history.at(-1)
 
   const recordAttempt = () => setLadder((current) => ({ ...current, attempts: current.attempts + 1 }))
 
-  const reset = () => {
+  const reset = (nextMissionId = missionId) => {
+    setMissionId(nextMissionId)
     setStage('broken')
     setPrediction(null)
     setLadder({ attempts: 1, hintsServed: 0, solved: false, teacherUnlocked: false })
@@ -70,10 +69,10 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
     setEvidenceOpen(false)
   }
 
-  const choosePrediction = (id: PredictionId) => {
+  const choosePrediction = (id: string) => {
     setPrediction(id)
     recordAttempt()
-    setFocus(isCorrectPrediction(id) ? 'conflict' : 'order')
+    setFocus(isCorrectPrediction(mission, id) ? 'conflict' : 'order')
   }
 
   const advanceRepair = () => {
@@ -82,8 +81,8 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
     setStage(next)
     recordAttempt()
     setFocus(next === 'repaired' ? 'code' : 'conflict')
-    if (repairPasses(next)) {
-      coachLog().recordOutcome(scenario.id, true)
+    if (repairPasses(mission, next)) {
+      coachLog().recordOutcome(mission.id, true)
       setLadder((current) => ({ ...current, solved: true }))
     }
   }
@@ -91,11 +90,11 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
   const ask = async () => {
     setBusy(true)
     const result = await runCoach({
-      diagnosis: scenario.diagnosis,
+      diagnosis: mission.diagnosis,
       language,
       ladder,
-      challengeId: scenario.id,
-      challengeTitle: scenario.challengeTitle,
+      challengeId: mission.id,
+      challengeTitle: mission.title,
       sessionId: props.sessionId,
       learnerLabel: props.learnerLabel,
       compose: composer,
@@ -115,9 +114,9 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
     <section className="ds-studio" aria-label="AI Debugging Studio">
       <header className="ds-mission-bar">
         <div>
-          <p className="ds-eyebrow">Mission 1 · BorderLayout</p>
-          <h3 className="ds-title">Find the missing button</h3>
-          <p className="ds-mission-copy">Keep Save and Cancel visible in SOUTH, then explain why your repair works.</p>
+          <p className="ds-eyebrow">Mission {STUDIO_MISSIONS.findIndex((item) => item.id === mission.id) + 1} · {mission.manager} · {mission.difficulty}</p>
+          <h3 className="ds-title">{mission.title}</h3>
+          <p className="ds-mission-copy">{mission.goal}</p>
         </div>
         <div className="ds-mission-tools">
           <div className="ds-progress" aria-label={`Mission step ${studioProgress(stage)} of 3`}>
@@ -128,28 +127,36 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
             <button type="button" className={`cl-toggle-btn${language === 'en-MY' ? ' is-on' : ''}`} aria-pressed={language === 'en-MY'} onClick={() => setLanguage('en-MY')}>EN</button>
             <button type="button" className={`cl-toggle-btn${language === 'ms-MY' ? ' is-on' : ''}`} aria-pressed={language === 'ms-MY'} onClick={() => setLanguage('ms-MY')}>BM</button>
           </span>
-          <button type="button" className="cl-btn cl-btn-quiet" onClick={reset}>Reset</button>
+          <button type="button" className="cl-btn cl-btn-quiet" onClick={() => reset()}>Reset</button>
         </div>
       </header>
+
+      <nav className="ds-mission-catalogue" aria-label="Debugging missions">
+        {STUDIO_MISSIONS.map((item, index) => (
+          <button key={item.id} type="button" className={item.id === mission.id ? 'is-current' : ''} aria-current={item.id === mission.id ? 'page' : undefined} onClick={() => reset(item.id)}>
+            <span>{String(index + 1).padStart(2, '0')}</span><strong>{item.title}</strong><small>{item.manager}</small>
+          </button>
+        ))}
+      </nav>
 
       <div className="ds-workspace">
         <aside className="ds-toolbox" aria-label="Repair toolbox">
           <p className="ds-panel-label">Repair toolbox</p>
           <button type="button" className={`ds-component-card${stage !== 'broken' ? ' is-used' : ''}`} onClick={advanceRepair} disabled={stage !== 'broken'}>
             <span className="ds-component-icon" aria-hidden="true"><span /><span /></span>
-            <span><strong>JPanel</strong><small>A container with its own layout</small></span>
+            <span><strong>{mission.tool.name}</strong><small>{mission.tool.detail}</small></span>
           </button>
 
           <div className="ds-build-steps">
             <p className="ds-panel-label">Build the repair</p>
             <ol>
-              <li className={stage !== 'broken' ? 'is-complete' : 'is-current'}><span>1</span><div><strong>Place a JPanel</strong><small>Give SOUTH one direct container.</small></div></li>
-              <li className={stage === 'repaired' ? 'is-complete' : stage === 'panel-ready' ? 'is-current' : ''}><span>2</span><div><strong>Group the buttons</strong><small>Let FlowLayout arrange both children.</small></div></li>
+              <li className={stage !== 'broken' ? 'is-complete' : 'is-current'}><span>1</span><div><strong>{mission.steps[0].title}</strong><small>{mission.steps[0].detail}</small></div></li>
+              <li className={stage === 'repaired' ? 'is-complete' : stage === 'tool-ready' ? 'is-current' : ''}><span>2</span><div><strong>{mission.steps[1].title}</strong><small>{mission.steps[1].detail}</small></div></li>
             </ol>
           </div>
 
-          {stage === 'panel-ready' && <button type="button" className="cl-btn cl-btn-primary ds-group-btn" onClick={advanceRepair}>Move Save + Cancel into the panel</button>}
-          {stage === 'repaired' && <div className="ds-success" role="status"><span aria-hidden="true">✓</span><div><strong>Repair verified</strong><small>The engine found one direct component in SOUTH.</small></div></div>}
+          {stage === 'tool-ready' && <button type="button" className="cl-btn cl-btn-primary ds-group-btn" onClick={advanceRepair}>{mission.steps[1].title}</button>}
+          {stage === 'repaired' && <div className="ds-success" role="status"><span aria-hidden="true">✓</span><div><strong>Repair verified</strong><small>The deterministic grader matched the target structure.</small></div></div>}
         </aside>
 
         <main className="ds-stage">
@@ -158,22 +165,22 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
             <SwingFrame
               root={root}
               size={{ width: 420, height: 250 }}
-              title="Button row"
+              title={mission.title}
               measure={measure}
               overlays={<>
-                <span className="ds-south-outline" aria-hidden="true"><em>SOUTH</em></span>
-                {stage === 'broken' && <span className="ds-ghost-button" aria-hidden="true">Save <em>hidden</em></span>}
-                {stage === 'broken' && <span className="ds-add-trace ds-add-trace-save" aria-hidden="true">1 · Save</span>}
-                {stage === 'broken' && <span className="ds-add-trace ds-add-trace-cancel" aria-hidden="true">2 · Cancel</span>}
-                {stage === 'panel-ready' && <span className="ds-empty-panel" aria-hidden="true">Drop both buttons into this JPanel</span>}
+                <span className={`ds-south-outline${mission.ghostLabel ? '' : ' ds-workspace-outline'}`} aria-hidden="true"><em>{mission.regionLabel}</em></span>
+                {stage === 'broken' && mission.ghostLabel && <span className="ds-ghost-button" aria-hidden="true">{mission.ghostLabel} <em>hidden</em></span>}
+                {stage === 'broken' && mission.ghostLabel && <span className="ds-add-trace ds-add-trace-save" aria-hidden="true">1 · first</span>}
+                {stage === 'broken' && mission.ghostLabel && <span className="ds-add-trace ds-add-trace-cancel" aria-hidden="true">2 · last</span>}
+                {stage === 'tool-ready' && mission.tool.name === 'JPanel' && <span className="ds-empty-panel" aria-hidden="true">The container is ready for its children</span>}
               </>}
             />
           </div>
 
           <section className="ds-prediction" aria-label="Prediction">
-            <div className="ds-section-heading"><span>Predict before the hint</span><small>Why is Save invisible?</small></div>
+            <div className="ds-section-heading"><span>Predict before the hint</span><small>What caused this result?</small></div>
             <div className="ds-prediction-options">
-              {PREDICTIONS.map((option) => {
+              {mission.predictions.map((option) => {
                 const chosen = prediction === option.id
                 return <button key={option.id} type="button" className={`ds-prediction-option${chosen ? option.correct ? ' is-correct' : ' is-wrong' : ''}`} aria-pressed={chosen} onClick={() => choosePrediction(option.id)} disabled={stage === 'repaired'}>
                   {option.label}{chosen && <span>{option.correct ? 'Engine agrees' : 'Test another idea'}</span>}
@@ -183,11 +190,11 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
           </section>
 
           <section className={`ds-inspector${focus === 'conflict' ? ' is-focused' : ''}`} aria-label="SOUTH region inspector">
-            <div className="ds-inspector-title"><span>SOUTH inspector</span><code>BL-SOUTH-COLLISION</code></div>
+            <div className="ds-inspector-title"><span>{mission.regionLabel} inspector</span><code>{mission.diagnosis.code}</code></div>
             <dl>
               <div><dt>Direct occupants</dt><dd>{inspector.direct}</dd></div>
               <div><dt>Visible occupant</dt><dd>{inspector.visible}</dd></div>
-              <div><dt>Rule</dt><dd>One direct component per BorderLayout region</dd></div>
+              <div><dt>Rule</dt><dd>{inspector.rule}</dd></div>
             </dl>
             <p>{inspector.explanation}</p>
           </section>
@@ -199,11 +206,11 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
             <div><strong>Layout Coach</strong><span>{configured ? 'Claude Haiku · grounded' : props.aiEnabled ? 'Backend unavailable · safe fallback' : 'Approved corpus · AI off'}</span></div>
             <span className={`ds-status-dot${configured ? ' is-online' : ''}`} title={configured ? 'coach-rag configured' : 'deterministic mode'} />
           </header>
-          <div className="ds-context-strip"><span>Active context</span><code>SOUTH · {inspector.direct} {inspector.direct === 1 ? 'occupant' : 'occupants'}</code></div>
+          <div className="ds-context-strip"><span>Active context</span><code>{mission.diagnosis.code} · {inspector.direct} nodes</code></div>
           <div className="ds-coach-body">
-            {latest ? <CoachTurn result={latest} /> : <div className="ds-coach-welcome"><p className="ds-coach-kicker">I can see the same state you see.</p><p>Save and Cancel were both sent directly to SOUTH. Make a prediction, or ask for one small hint.</p></div>}
+            {latest ? <CoachTurn result={latest} /> : <div className="ds-coach-welcome"><p className="ds-coach-kicker">I can see the same state you see.</p><p>{mission.situation} Make a prediction, or ask for one small hint.</p></div>}
             <div className="ds-quick-actions" aria-label="Visual coach actions">
-              <button type="button" onClick={() => setFocus('conflict')}>Highlight SOUTH</button>
+              <button type="button" onClick={() => setFocus('conflict')}>Highlight {mission.regionLabel}</button>
               <button type="button" onClick={replay}>Replay add order</button>
               <button type="button" onClick={() => setFocus('code')}>Explain the Java lines</button>
             </div>
@@ -215,7 +222,7 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
           <details className="ds-evidence" open={evidenceOpen} onToggle={(event) => setEvidenceOpen(event.currentTarget.open)}>
             <summary>AI evidence and safety checks <span>{history.length}</span></summary>
             <div className="ds-evidence-body">
-              <p><strong>Authority</strong>The deterministic engine diagnosed the collision before any model call.</p>
+              <p><strong>Authority</strong>The deterministic engine diagnosed this misconception before any model call.</p>
               {history.length === 0 ? <p>No hint request yet. Evidence will appear here after retrieval.</p> : history.map((result, index) => <EvidenceTurn key={index} result={result} index={index} />)}
             </div>
           </details>
@@ -225,10 +232,10 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
       <section className={`ds-code-deck${focus === 'code' ? ' is-focused' : ''}`} aria-label="Java and structure evidence">
         <div className="ds-code-head"><div><span className="ds-code-dot red" /><span className="ds-code-dot amber" /><span className="ds-code-dot green" /></div><strong>LayoutDemo.java</strong><span>Generated from the live structure</span></div>
         <div className="ds-code-grid">
-          <div className="ds-code-lines">{javaLinesForStage(stage).map((line, index) => <code key={line.text} className={line.tone ? `is-${line.tone}` : ''}><span>{index + 10}</span>{line.text}</code>)}</div>
+          <div className="ds-code-lines">{mission.java[stage].map((line, index) => <code key={`${index}-${line.text}`} className={line.tone ? `is-${line.tone}` : ''}><span>{index + 10}</span>{line.text}</code>)}</div>
           <div className="ds-structure-tree">
             <p className="ds-panel-label">Component tree</p>
-            {stage === 'repaired' ? <pre>JFrame (BorderLayout){'\n'}└─ SOUTH: JPanel (FlowLayout){'\n'}   ├─ Save{'\n'}   └─ Cancel</pre> : stage === 'panel-ready' ? <pre>JFrame (BorderLayout){'\n'}└─ SOUTH: JPanel (FlowLayout){'\n'}   └─ empty</pre> : <pre>JFrame (BorderLayout){'\n'}├─ SOUTH: Save  ← hidden{'\n'}└─ SOUTH: Cancel ← visible</pre>}
+            <pre>{mission.structure[stage]}</pre>
           </div>
         </div>
       </section>
