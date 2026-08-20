@@ -1,8 +1,9 @@
 # MagikLayout — How to Use It (Walkthrough & Demo Script)
 
 **Live:** https://magik-layout.mhdazlan.cc
-**Three surfaces, one engine:** Playground (`#/`) · Challenges (`#/challenges`) · AR Lab (`#/ar-lab`).
-Switch between them with the **Playground / Challenges / AR Lab** links in the top-left nav.
+**Four surfaces, one engine:** Playground (`#/`) · Challenges (`#/challenges`) ·
+AR Lab (`#/ar-lab`) · AI Debugging Studio (`#/classroom`). Use the top navigation
+to switch between them.
 
 This doc has two parts:
 - **Part A — Step-by-step usage** (how each surface works).
@@ -31,7 +32,26 @@ The index lists **ten exercises grouped by mode**. Pick one; each is graded by t
 
 **The AI Coach (opt-in, bilingual).** When a check **fails**, an **"Ask the AI coach for a hint"** button appears under the findings, with an **EN / BM** toggle. Tap it for one Socratic hint. The coach only *explains* the engine's findings — it never grades and never gives the answer. (It needs a backend key configured; if none is set it politely says so and nothing else changes.)
 
-### 3) AR Lab (`#/ar-lab`) — the NOSS-aligned immersive module
+### 3) AI Debugging Studio (`#/classroom`) — visual repair with grounded AI
+
+1. Choose one of the **12 missions** in the horizontal catalogue.
+2. Study the **Live Swing state** and select a prediction before requesting help.
+3. Read the mission-specific inspector: direct occupants, visible occupant, rule,
+   and deterministic misconception code.
+4. Select the repair tool, then complete the second build step. The state moves
+   from **broken → tool ready → repaired**.
+5. Ask for one hint at any time. Select **EN** or **BM**; the RAG pipeline retrieves
+   approved material and Claude Haiku may compose the response. If the model is
+   unavailable or rejected, approved corpus text is served instead.
+6. Expand **AI evidence and safety checks** to inspect retrieved sources, cited
+   sources, latency, and guard status.
+7. After **Repair verified**, inspect the generated Java and component tree, then
+   choose **Explain why this works** for the post-success explanation.
+
+Lesson Pack and Class Session are intentionally hidden from this route. The
+complete feature contract is in [MagicAI.md](MagicAI.md).
+
+### 4) AR Lab (`#/ar-lab`) — the NOSS-aligned immersive module
 > **Needs a phone with a camera and a printed (or on-screen) target.** Works in **iOS Safari** and Android Chrome. The page must be served over **HTTPS** (the live URL is).
 
 **Prepare:** print or open `public/ar/layoutlab-target.png` on a second screen. Good, even lighting helps tracking.
@@ -95,7 +115,10 @@ The index lists **ten exercises grouped by mode**. Pick one; each is graded by t
 > "Three out of three — and the AR state generates real Swing code as evidence. No AI in the grading; it's the same deterministic engine, in augmented reality — and it runs on an ordinary iPhone."
 
 **[2:20–2:35 — Close]**
-> "One engine, four surfaces: a Playground that shows why, Challenges that grade like real Swing, a coach that retrieves the approved explanation instead of inventing one, an AR lab that makes it tangible, and a Classroom that hands the teacher the lesson and the evidence. MagikLayout — live in any browser, offline, and accessible."
+> "One engine, four surfaces: a Playground that shows why, Challenges that grade
+> like real Swing, an AI Debugging Studio with twelve visual repair missions, and
+> an AR lab that makes the rules tangible. The engine judges; retrieval grounds;
+> Haiku explains; the guard controls delivery."
 
 ---
 

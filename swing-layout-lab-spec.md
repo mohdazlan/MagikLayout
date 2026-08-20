@@ -2,6 +2,13 @@
 *A companion playground for learning Java Swing layout managers by playing with them.*
 (Historical spec. The name was later decided: the product is **MagikLayout**, and "LayoutLab" is kept only as a module and asset name.)
 
+> **Current implementation update.** The original four speculative AI prompts in
+> Section 7 have been consolidated into the visual-first, 12-mission **AI
+> Debugging Studio** at `#/classroom`. It uses deterministic structural grading,
+> metadata-first RAG, optional Claude Haiku composition, bilingual hint ladders,
+> guardrails, and visible evidence. Lesson Pack and Class Session are hidden.
+> [MagicAI.md](MagicAI.md) is authoritative where this historical spec differs.
+
 ---
 
 ## 1. One-line thesis
@@ -78,61 +85,27 @@ Per the brief's own instruction, "Apple official website" is a real pin, not a f
 - **Signature element**: the live, draggable reflow demo in the hero. That's the one moment of boldness — keep everything else quiet around it.
 - **Motion**: layout reflows should *ease*, not snap — a 150-200ms transition on component position changes turns "components jumped somewhere" into "I watched why they moved there," which is a real pedagogical function, not decoration.
 
-## 7. AI features — concrete specs
+## 7. AI features — current implementation
 
-All four call a backend endpoint (not the browser directly) that wraps the Anthropic Messages API. Never ship an API key to the client.
+The production direction is no longer four unrelated prompt buttons. It is one
+coherent **AI Debugging Studio** at `#/classroom`, with 12 visual missions and a
+repeatable learner loop:
 
-**7.1 Live Layout Coach**
-Fires after each drop/resize in the Playground. Send the current component tree + layout manager + constraints as structured JSON, not a screenshot.
+1. render a deliberately broken Swing component tree;
+2. ask the learner to predict the cause;
+3. show a mission-specific deterministic inspector;
+4. let the learner complete a two-stage structural repair;
+5. grade the repaired tree with `gradeReverse()`;
+6. retrieve approved bilingual passages for the engine's misconception code;
+7. optionally let Claude Haiku compose one Socratic hint from those passages;
+8. guard the response and expose its source/citation evidence;
+9. regenerate authoritative Java and the component tree deterministically.
 
-```
-System: You are a Java Swing layout tutor speaking to a first-year polytechnic
-student. Given a component tree, the active layout manager, and the last
-action taken, explain in 1-2 plain sentences WHY the layout looks the way it
-does after that action. Name the specific rule (e.g. "BorderLayout.CENTER
-only keeps the last component added to that region"). Never say "correct" or
-"wrong" — describe mechanics only. No code in this response.
-
-User: {layoutManager: "BorderLayout", tree: [...], lastAction: "added JButton
-to CENTER (second one)"}
-```
-
-**7.2 Diagnose My Mess**
-Student clicks "why does this look wrong" on their own canvas state.
-
-```
-System: A student's Swing layout doesn't match their intent. You will receive
-their component tree, layout manager, and their one-sentence description of
-what they expected. Identify which specific layout manager rule is producing
-the mismatch. Ask ONE clarifying question if their intent is ambiguous,
-otherwise name the rule and stop — do not fix it for them or output corrected
-code. This is diagnostic, not a solution.
-```
-
-**7.3 Reverse Challenge Grader**
-Compares the student's built component tree against a target tree (from the challenge definition), not pixels.
-
-```
-System: Compare the student's component tree/layout configuration against
-the target configuration for this challenge. Score structural equivalence
-(same layout manager family, same regions/constraints used, same nesting),
-not exact pixel position. Return: pass/fail, and if fail, ONE sentence
-pointing at the first structural difference — most specific difference first.
-```
-
-**7.4 Natural-language-to-layout Explainer**
-Student types a plain-English UI description; system proposes a layout manager choice and justifies the decision (not just builds it silently).
-
-```
-System: Given a plain-English UI description, propose which Java Swing
-layout manager (or nested combination) best fits, and explain the tradeoff
-against the next-best option in 2 sentences max. Then emit the component
-tree as structured JSON for the canvas to render. The explanation is the
-point — a student who only sees the result learns nothing that WindowBuilder
-doesn't already give them for free.
-```
-
-Keep every AI response short and mechanics-focused — the moment it starts sounding like a chatty assistant instead of a tutor naming a rule, it stops teaching and starts doing the thinking for the student, which contradicts the whole premise.
+The browser never receives the Anthropic key. It sends retrieved passages and
+engine findings to `coach-rag`; the Edge Function refuses empty passages. The
+model does not grade, select sources, generate the solution, or override engine
+truth. The full mission matrix, hint ladder, fallback rules, and implementation
+map are in [MagicAI.md](MagicAI.md).
 
 ## 8. Suggested stack
 

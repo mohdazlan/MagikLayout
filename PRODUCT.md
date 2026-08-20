@@ -16,6 +16,21 @@ MagikLayout (the product name; `LayoutLab` survives only as a module and asset n
 
 The canvas is driven by faithful JS reimplementations of the real JDK layout algorithms (BorderLayout, FlowLayout, GridLayout in Phase 1) — never CSS flexbox/grid approximation, which would teach a mental model that contradicts what happens when students compile the real code. This is the single highest-leverage engineering decision in the project.
 
+## MagicAI Product Layer
+
+The learner-facing AI experience is the **AI Debugging Studio** at
+`#/classroom`. It replaces the previous text-heavy Classroom tabs with one
+visual-first workflow: inspect a broken Swing UI, predict its cause, perform a
+two-stage structural repair, and request a bilingual grounded hint when needed.
+The catalogue contains **12 missions** across BorderLayout, FlowLayout,
+GridLayout, and nested panels.
+
+Its value is not generic chat. The deterministic engine grades the component
+tree; governed retrieval selects approved teaching knowledge; Claude Haiku may
+compose one short Socratic hint; and a guard verifies citations, language,
+leakage, length, and agreement with engine truth. Generated Java and the
+component tree remain deterministic. See [MagicAI.md](MagicAI.md).
+
 ## Brand Personality
 
 Apple-grade restraint: calm, precise, quiet. The one moment of boldness is the live reflowing canvas itself; everything around it stays out of the way. Tone of voice is a tutor naming a rule, never a chatty assistant.

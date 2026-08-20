@@ -8,7 +8,7 @@
 > beat-by-beat script skeleton.
 >
 > **Sources read:** the competition PDF (5 pp.), plus `MIPAC_TVET_2026.md`,
-> `COMPETITION.md`, `PRODUCT.md`, `HANDBOOK.md`, `RAG.md`, `AR_P0.md`, `DESIGN.md`.
+> `COMPETITION.md`, `PRODUCT.md`, `HANDBOOK.md`, `RAG.md`, `MagicAI.md`, `AR_P0.md`, `DESIGN.md`.
 > Numbers and claims below are constrained by the **claim register in
 > [RAG.md](RAG.md)** — nothing here overstates what the repository can prove.
 
@@ -141,6 +141,13 @@ the student compiles real code.
 The *same* engine renders the Playground, grades every Challenge, **and** generates
 the AR Lab's Java evidence. No screenshots, no second source of truth, no pixel
 matching.
+
+The Classroom surface is now the **AI Debugging Studio**, not a set of teacher
+tabs. Its 12 missions turn engine truth into a visible learning loop: see,
+predict, inspect, repair, verify, then explain. This is the strongest live proof
+of AI integration: Haiku appears only after retrieval and never owns the grade.
+Use one complete mission in the video, then scan the catalogue briefly. See
+[MagicAI.md](MagicAI.md) for the exact claim boundary and demonstration order.
 - Scores **Potensi Penggunaan Meluas (10%)** — new content is pure data; a new
   layout manager upgrades *every* surface at once. Growth is additive.
 - Scores **Impak/Kebolehgunaan (10%)** — a challenge can never be "correct on
@@ -207,7 +214,7 @@ Judges trust teams that name their own limits. The claim register in
 |---|---|---|
 | No classroom pilot has run | "Students learned more" / "improves outcomes" | "Formative design is complete; a pilot at Politeknik Mukah (8–15 learners, five-item pre/post) is the planned next step." |
 | AR not classroom-validated | "The AR works for everyone" | "Technical acceptance is confirmed on iPhone 13 / Safari (`AR_P0.md`); classroom validation is the next milestone." |
-| Challenges coach is **not** RAG | "The AI Coach is RAG" | "The *Challenges* coach is grounded contextual prompting. The *Classroom* coach performs runtime retrieval over a governed corpus with citations — that one is RAG." |
+| Challenges coach is **not** RAG | "Every AI Coach is RAG" | "The *Challenges* coach is grounded contextual prompting. The *AI Debugging Studio* uses `coach-rag`: runtime retrieval over a governed corpus with citations." |
 | No live-model evaluation yet | "The AI is never wrong" | "The evaluation gate proves *no* model output can reach a student unchecked (0% leakage, 0% contradiction across 138 cases)." |
 | Not market-leading | "Market-leading" | "Differentiated — the white space is faithful-engine-plus-subordinate-AI." |
 
@@ -266,7 +273,7 @@ Lead the pitch with the **one-sentence moat**, then prove command (Penguasaan,
 
 - **"Is the coach really RAG?"** (the trap)
   *Two coaches. The Challenges coach is grounded contextual prompting — we say so
-  plainly. The Classroom coach retrieves from a governed, versioned corpus at
+  plainly. The AI Debugging Studio retrieves from a governed, versioned corpus at
   request time and cites chunk ids — that one is RAG, and the gate reports 100%
   retrieval precision with zero contradictions across 138 cases.*
 

@@ -20,18 +20,30 @@ Everything the student sees on screen is what Swing actually does — pixel for
 pixel — and the Java panel shows the deterministic, compilable code that expresses
 it.
 
-**Three surfaces, one engine:**
+**Four surfaces, one engine:**
 
 | Surface | Route | What it's for |
 |---|---|---|
 | **Playground** | `#/` | Free exploration — drag, resize, switch managers, read the code. |
 | **Challenges** | `#/challenges` | Graded practice — three exercise modes, all scored by the same engine, with an opt-in bilingual **AI Coach**. |
 | **AR Lab** | `#/ar-lab` | NOSS-aligned image-tracking AR — three assessed missions on a `BorderLayout` prototype, working on iPhone/Safari. |
+| **AI Debugging Studio** | `#/classroom` | Twelve visual repair missions with prediction, deterministic structural grading, grounded EN/BM hints, and inspectable AI evidence. |
 
 The engine that lays out the Playground is the *same* engine that grades every
 challenge **and generates the AR Lab's Java evidence**. There is no second source of
 truth, no screenshots, and no LLM anywhere in the layout, grading, or AR-assessment
 path — the AI Coach only *explains* what the deterministic engine already decided.
+
+### MagicAI in one minute
+
+The Classroom route is now a single-purpose **AI Debugging Studio**; Lesson Pack
+and Class Session are hidden. A learner chooses one of 12 missions, predicts the
+cause of the broken interface, inspects the live structure, performs a two-stage
+repair, and reads the regenerated Java. If help is requested, the engine first
+diagnoses the misconception, the RAG pipeline retrieves approved bilingual
+passages, Claude Haiku optionally composes one Socratic hint, and the guard
+decides whether it may be served. The evidence drawer exposes retrieved and
+cited chunk ids plus guard status. See [MagicAI.md](MagicAI.md).
 
 ---
 
@@ -354,5 +366,7 @@ be poured into a foundation that already tells the truth about Swing."
 
 ---
 
-*Handbook last updated: covers all four surfaces — Playground, Challenges (with the AI Coach), the AR Lab, and the Classroom (lesson pack, retrieval-grounded coach, cohort evidence — see [RAG.md](RAG.md)). 192 automated tests pass; live at https://magik-layout.mhdazlan.cc.*
+*Handbook last updated: covers Playground, Challenges, the AR Lab, and the
+12-mission AI Debugging Studio. Test counts must be regenerated before a formal
+submission; see [MagicAI.md](MagicAI.md) and [RAG.md](RAG.md).*
 Engine, codegen, and grading are all first-party, deterministic, and LLM-free.*

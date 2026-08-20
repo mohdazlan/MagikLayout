@@ -14,9 +14,9 @@ before any submission. Every number here is reproducible from this repository.
 
 | Claim | Status | Use in submission |
 | --- | --- | --- |
-| Four product surfaces are built (Playground, Challenges, AR Lab, Classroom); the first three are deployed to the public URL | Current fact | Yes — "built", not "all deployed"; the Classroom's `coach-rag` backend is live on Supabase, but the Classroom surface is not yet on the public site |
-| 192 automated tests pass | Current fact | Yes — after rerunning `npm test` |
-| The Classroom coach performs runtime retrieval over a governed corpus, with source ids and logging | **Current fact** | **Yes** — the retrieval, citation and evaluation machinery is in `src/coach/` |
+| Four product surfaces are implemented; Classroom is now the 12-mission AI Debugging Studio | Current fact | Yes for the local build; verify public deployment separately |
+| Automated tests/build pass | Reproducible snapshot, not a permanent claim | Rerun `npm test` and `npm run build` before quoting a count |
+| The AI Debugging Studio performs runtime retrieval over a governed corpus, with source ids and logging | **Current fact** | **Yes** — retrieval, citation, guard, and evaluation machinery is in `src/coach/`; the visual client is in `src/classroom/` |
 | The Challenges coach is RAG | Not true | No — it is grounded contextual prompting. Say so plainly |
 | Retrieval precision ≥ 95% on the supported misconception set | Current fact | Yes — 100% on the 138-case gate, quote the gate |
 | Zero hint contradictions on the release evaluation set | Current fact | Yes — quote it as an evaluation result, not a classroom result |
@@ -35,21 +35,23 @@ would be a poor trade). Everything a judge, teacher or student reads says
 MagikLayout. `DESIGN.md`, `AR_P0.md` and `swing-layout-lab-spec.md` are
 historical documents and keep their original titles.
 
-### Two coaches, and why the distinction matters
+### Two coach paths, and why the distinction matters
 
 The repository contains two coach paths. They are not the same thing and must
 not be described as one.
 
 | | `supabase/functions/coach` | `supabase/functions/coach-rag` |
 | --- | --- | --- |
-| Used by | Challenges | Classroom |
+| Used by | Challenges | AI Debugging Studio (`#/classroom`) |
 | Receives | Engine findings | Engine findings **plus retrieved approved passages** |
 | Grounding | The prompt | A governed corpus, searched at request time |
 | Citations | None | Chunk ids, verified against the corpus |
 | Honest label | Grounded contextual prompting | Retrieval-augmented generation |
 
-The original function is unchanged and still serves the Challenges surface. If
-someone asks whether "the AI Coach" is RAG, the correct answer names which one.
+The original function remains the Challenges path. The AI Debugging Studio uses
+`coach-rag`, and this is the competition demonstration to use when explaining
+runtime retrieval. If someone asks whether “the AI Coach” is RAG, name the
+specific surface and path. See [MagicAI.md](MagicAI.md).
 
 ---
 
@@ -64,7 +66,7 @@ Observe → Diagnose → Retrieve → Compose → Guard → Log
 | Observe | `src/challenges/grade.ts`, `execute.ts` | The deterministic engine grades the attempt. Unchanged by this work. |
 | Diagnose | `src/coach/misconceptions.ts` | Maps the engine's verdict to one of **23 stable codes** in **8 families**. Decides nothing itself. |
 | Retrieve | `src/coach/retrieve.ts` | Metadata-first search over **112 chunks** (56 bilingual pairs, corpus **v1.0**). |
-| Compose | `supabase/functions/coach-rag/` | Optional. A model (`claude-haiku-4-5`) turns the retrieved passages into one hint and cites them. Deployed and smoke-tested; off by default per surface. |
+| Compose | `supabase/functions/coach-rag/` | Optional. Claude Haiku (`claude-haiku-4-5`) turns retrieved passages into one hint and cites them. The Studio requests it when configured and safely falls back otherwise. |
 | Guard | `src/coach/guard.ts` | Citations, leakage, language, length, contradiction. A failure substitutes approved text silently. |
 | Log | `src/coach/log.ts` | One record per request: code, chunk ids, model, corpus version, latency, outcome. |
 
@@ -132,8 +134,9 @@ of the retrieval code, so a scoring regression is caught rather than ratified.
 6. ✅ Every request logs code, chunk ids, model/version, response, latency and outcome.
 7. ✅ Teachers can disable AI and complete the challenge on deterministic feedback alone.
 
-Criterion 7 is not a degraded mode. It is the default, and it is what makes a
-network failure during judging a non-event.
+Criterion 7 is not a degraded mode. The Studio may enable AI by default when the
+backend is configured, but deterministic fallback is always available and makes
+a network failure during judging a non-event.
 
 ---
 
@@ -195,9 +198,8 @@ Honest gaps, in the order they block adoption:
   evaluation: the gate proves no model output can reach a student unchecked, and
   it does not measure how good a live model's phrasing is across the corpus.
   That needs a scored run with a key and a rubric.
-- **Teacher challenge authoring** does not exist. Teachers can run the lesson
-  pack and export evidence, but cannot yet author their own challenges.
-- **Cohort data is per-device.** A learner who switches machines starts a new
-  label. Adequate for a single lesson, not for multi-week progression.
-- **One lesson pack.** The BorderLayout SOUTH collision only. Expansion should
-  follow proven repeat usage, not preference.
+- **Teacher mission authoring** does not exist. The 12 Studio missions are
+  defined in code and cannot yet be created through the UI.
+- **The current route is learner-first.** Lesson Pack and Class Session are
+  hidden; cohort management and teacher dashboards are not part of the current
+  Studio experience.

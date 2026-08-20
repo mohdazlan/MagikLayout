@@ -1,5 +1,11 @@
 # LayoutLab AR — P0 Competition Build
 
+> **MagicAI relationship.** AR remains a separate, deterministic three-mission
+> transfer activity; generative AI does not grade it. The main AI learning
+> experience is the 12-mission visual **AI Debugging Studio** at `#/classroom`.
+> Both reuse the same Swing structures and Java generator. See
+> [MagicAI.md](MagicAI.md).
+
 ## Competition scope
 
 **NOSS:** IT-010-3:2016 — Pembangunan Aplikasi, Tahap 3

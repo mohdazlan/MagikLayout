@@ -43,6 +43,18 @@ The system explicitly rejects being "a skin over apple.com" (hence no Apple blue
 - Hairline borders and generous padding instead of shadows and cards
 - The tool region is dense; the frame around it is spacious
 
+### AI Debugging Studio pattern
+
+The Classroom route uses a visual-first studio, not a chat page or teacher
+dashboard. Its hierarchy is: mission rail → repair toolbox → live Swing state →
+prediction/inspector → grounded coach → Java and component-tree evidence. The
+live state receives the strongest visual weight; AI remains a supporting column.
+Lesson Pack and Class Session are not visible. Twelve missions share one
+consistent broken/tool-ready/repaired interaction grammar. The evidence drawer
+uses compact monospace source chips and explicit pass/fallback language so AI
+provenance is understandable without dominating the lesson. See
+[MagicAI.md](MagicAI.md).
+
 ## 2. Colors
 
 **The Restrained Rule.** Duke Orange appears only on interactive or active elements — selection outlines, drop highlights, active segments, focus rings, diff flashes. Never as decoration, never as a background wash.

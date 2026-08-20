@@ -6,9 +6,25 @@
 
 Unlike drag-and-drop builders that hide the why, MagikLayout shows why. It's a reference companion, not a tool that hides mechanics: students resolve layout confusion faster by understanding the rules, not by copy-pasting.
 
-MagikLayout has **four surfaces driven by one engine**: a free-exploration **Playground** (`#/`), a **Challenges** area (`#/challenges`) with three graded exercise modes (Parsons, Reflow, Reverse) plus an opt-in bilingual **AI Layout Coach**, a NOSS-aligned **AR Lab** (`#/ar-lab`) — an image-tracking augmented-reality module that runs on iPhone/Safari — and a **Classroom** (`#/classroom`) holding the teacher lesson pack, the retrieval-grounded coach, and privacy-safe cohort evidence. The same layout engine that renders the Playground also grades every challenge *and* generates the AR Lab's Java evidence — deterministically, with no screenshots and no LLM anywhere in the layout, grading, or AR-assessment path.
+MagikLayout has **four surfaces driven by one engine**: a free-exploration
+**Playground** (`#/`), a **Challenges** area (`#/challenges`) with three graded
+exercise modes, a NOSS-aligned **AR Lab** (`#/ar-lab`), and a visual-first **AI
+Debugging Studio** (`#/classroom`). The Studio replaces the former Lesson Pack
+and Class Session tabs with 12 repair missions spanning BorderLayout,
+FlowLayout, GridLayout, and nested panels. Learners see the broken UI, predict
+the cause, inspect engine evidence, repair the structure, and request a grounded
+EN/BM hint only when needed. The same layout engine renders, grades, and
+generates Java deterministically; no LLM is in the correctness path.
 
-**Status:** All four surfaces are built; the first three are deployed at **https://magik-layout.mhdazlan.cc**. The Playground scored **36/40 (Excellent)** in impeccable design review (WCAG AA, full keyboard, reduced-motion). Challenges ships **10 exercises** with deterministic graders; the AI Coach is integrated across all three modes ("the engine judges, the AI explains"). The AR Lab implements the **IT-010-3:2016** competency (Application Prototype Development) with three assessed missions on a `BorderLayout` prototype. **192 automated tests pass**; type-check and build are clean. Claim discipline for the two coach paths — which one performs retrieval, and what may be said about each — is recorded in [RAG.md](RAG.md).
+**Current implementation:** the Studio ships 12 missions, two-stage visual
+repairs, deterministic structural grading, generated Java/component-tree
+evidence, bilingual hinting, runtime retrieval, optional Claude Haiku
+composition, and visible citation/guard evidence. The architectural phrase is
+**“the engine judges; retrieval grounds; Haiku explains; the guard controls
+delivery.”** The AR Lab still implements the **IT-010-3:2016** competency with
+three assessed missions. Rerun the tests, build, and RAG evaluation immediately
+before quoting counts. The complete AI feature and claim contract is in
+[MagicAI.md](MagicAI.md) and [RAG.md](RAG.md).
 
 ---
 
@@ -22,7 +38,8 @@ MagikLayout has **four surfaces driven by one engine**: a free-exploration **Pla
 
 ### Build & Tooling
 - **Vite 8.1.3** (HMR dev server, optimized builds)
-- **Vitest 4.1.9** (192 passing tests across engine, codegen, challenges, the AI coach builder, the AR mission model, the RAG coach pipeline, and the Classroom)
+- **Vitest 4.1.9** (engine, codegen, challenges, both coach paths, AR, Classroom,
+  and AI Debugging Studio missions; run the suite for the current count)
 - **TypeScript 6.0** (strict mode, zero compilation errors)
 
 ### Layout Engine
@@ -275,7 +292,7 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 ## 6. Quality Assurance
 
 ### Testing
-- **192 passing tests** (Vitest) covering:
+- **Reproducible Vitest suite** covering:
   - Layout engine: BorderLayout region resolution, FlowLayout row wrapping, GridLayout cell sizing
   - Java code generation determinism
   - Challenges: statement execution semantics and deterministic grading (Parsons/Reflow/Reverse)
@@ -370,7 +387,7 @@ The core thesis: **CSS approximations teach a lie.** Students who learn layout o
 ### Phase 1: Complete
 - **Ship date**: 2026-07-04
 - **Final design score**: 36/40 (Excellent, no P0/P1 issues)
-- **Quality gates**: TS clean, 192 tests pass, detector clean, WCAG AA verified
+- **Quality gates**: TypeScript, Vitest, production build, RAG evaluation, and WCAG checks
 - **Surface tested**: desktop (1280px+), tablet (768px), mobile (375px)
 
 ### What's Shipped
@@ -415,7 +432,8 @@ Output: optimized static bundle in `dist/`.
 npm run test
 ```
 
-All 192 tests run under Vitest.
+All automated tests run under Vitest; quote the current count only after running
+`npm test` on the submission commit.
 
 ---
 
@@ -460,7 +478,7 @@ MagikLayout/
 | Metric | Target | Actual |
 |--------|--------|--------|
 | Design Score | ≥32/40 | **36/40** ✓ |
-| Tests | Engine + codegen + grading covered | 192 passing ✓ |
+| Tests | Engine + codegen + grading + Studio missions covered | Run `npm test` for current count |
 | TS Errors | 0 | 0 ✓ |
 | WCAG AA Contrast | 4.5:1 body / 3:1 large | All verified ✓ |
 | Keyboard Coverage | 100% UI operable | 100% ✓ |

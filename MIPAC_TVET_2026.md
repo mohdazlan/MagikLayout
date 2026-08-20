@@ -20,18 +20,29 @@
 
 ## Abstract (ready to paste)
 
-First-year polytechnic students learning Java graphical user interfaces struggle with one invisible idea: they do not position components directly — *layout managers* do — and the rules of `BorderLayout`, `FlowLayout` and `GridLayout` are not obvious from source code and appear only at run time. **MagikLayout** makes those rules visible across four browser-based surfaces driven by one deterministic engine. In the **Playground**, students drag Swing components onto a live canvas and watch faithful re-implementations of the actual JDK layout algorithms reflow the interface in real time, beside the exact, compilable Java the layout produces. **Challenges** turns this into graded practice — ten exercises in three formats (order-the-code, predict-the-reflow, rebuild-the-target) — all scored by the *same* engine that renders the canvas, so feedback is deterministic and always matches real Swing. An opt-in, bilingual (Bahasa Malaysia / English) **AI Layout Coach** turns the engine's precise findings into Socratic hints under a strict guardrail — the engine judges, the AI only explains — so the model never fabricates a grade. A **NOSS-aligned AR Lab** uses image-tracking augmented reality (working on iPhone/Safari) to let a student construct, resize and repair a `BorderLayout` prototype anchored to a printed target through three assessed missions, with bilingual spoken guidance and deterministic Java evidence generated from the same code generator — an optional transfer activity, not the headline. Finally, a **Classroom** surface gives the teacher a NOSS-mapped lesson pack, a retrieval-grounded coach that searches a governed bilingual corpus at request time and cites the approved source behind every hint, and privacy-safe cohort evidence exported without student accounts. MagikLayout runs in the browser, works offline (core), requires no installation, and meets WCAG AA.
+First-year polytechnic students learning Java graphical user interfaces struggle
+with one invisible idea: they do not position components directly—*layout
+managers* do. **MagikLayout** makes those runtime rules visible with a faithful
+deterministic engine, live compilable Java, graded Challenges, and an immersive
+AR transfer activity. Its new **AI Debugging Studio** turns debugging into a
+visual learning loop across 12 missions: see a broken Swing interface, predict
+the cause, inspect the structure, build the repair, and verify it with the same
+engine. Runtime retrieval selects approved bilingual teaching passages; Claude
+Haiku optionally composes one short Socratic hint; a guard checks citations,
+language, leakage, length, and contradiction before delivery. The model never
+grades or generates the authoritative Java. In one sentence: **the engine
+judges, retrieval grounds, Haiku explains, and the guard controls delivery.**
 
 ---
 
-## The four surfaces (all built and demonstrable today)
+## The four surfaces (implemented; verify deployment before submission)
 
 | Surface | Route | What it is |
 |---|---|---|
 | **Playground** | `#/` | Free exploration — drag/click components, switch layout managers, resize the frame, read live compilable Java. |
 | **Challenges** | `#/challenges` | Ten graded exercises across three modes (Parsons, Reflow, Reverse), each scored by the same engine, with the opt-in bilingual AI Coach. |
 | **AR Lab** | `#/ar-lab` | A NOSS-aligned image-tracking AR module: point a phone at a printed target and complete three assessed missions on a `BorderLayout` prototype. |
-| **Classroom** | `#/classroom` | The teacher's surface: the NOSS-mapped BorderLayout lesson pack, a Coach Lab that shows the retrieval pipeline rung by rung with source citations, and privacy-safe cohort evidence export. |
+| **AI Debugging Studio** | `#/classroom` | Twelve visual repair missions with prediction, mission-specific inspection, deterministic grading, grounded EN/BM hints, and inspectable retrieval/citation/guard evidence. |
 
 ---
 
@@ -48,7 +59,15 @@ First-year polytechnic students learning Java graphical user interfaces struggle
 - **Locally grounded content** — e.g. a **Mukah Airport canteen receipt** exercise — so the layout lesson rides on a familiar Sarawak context.
 
 ### 3. AI
-- **AI Layout Coach — "the engine judges, the AI explains."** Opt-in and bilingual, it turns the deterministic grader's structured findings into a short Socratic hint. The AI never decides correctness and never writes the student's layout, which structurally prevents the failure mode that makes AI risky in education: an AI confidently teaching *wrong* Swing behaviour. (Grading and AR assessment use **no generative AI** at all.)
+- **MagicAI — visual diagnosis before dialogue.** The Studio begins with the
+  broken Swing state and a learner prediction, not a blank chat box.
+- **RAG with governed evidence.** Stable engine diagnoses retrieve approved,
+  versioned bilingual chunks at request time and expose retrieved/cited ids.
+- **Claude Haiku in a narrow role.** It composes one hint only from supplied
+  passages; deterministic grading and Java generation remain outside the model.
+- **Fail-safe delivery.** Guard rejection, backend failure, or disabled AI falls
+  back to reviewed corpus text without interrupting the lesson. See
+  [MagicAI.md](MagicAI.md).
 
 ---
 
@@ -73,17 +92,25 @@ Built for the **Immersive Digital Teaching Aid** category and mapped to **NOSS I
 |---|---|
 | Playground: BorderLayout / FlowLayout / GridLayout, drag + click-to-add, nested panels, frame resize, live Java, undo/redo | ✅ Built |
 | Challenges: 10 exercises, 3 modes, deterministic graders, congratulation/teaching notes | ✅ Built |
-| AI Layout Coach (opt-in, bilingual, engine-judges/AI-explains) integrated in all three challenge modes | ✅ Built |
+| AI Debugging Studio: 12 missions, prediction, two-stage repair, deterministic grading, EN/BM RAG hints, Haiku composition, evidence drawer | ✅ Built |
 | AR Lab: NOSS-aligned, MindAR image tracking, 3 assessed missions, bilingual audio, Java evidence | ✅ Built |
 | Accessibility: WCAG AA contrast, full keyboard paths, reduced-motion support | ✅ Verified (core) |
 | Public deployment at magik-layout.mhdazlan.cc | ✅ Live |
 
-**Engineering credibility:** React 19 + TypeScript (strict) + Vite. **192 automated tests pass**; type-check and production build are clean. The **core bundle is ~84 KB gzipped**; three.js (~115 KB) and the MindAR runtime (~357 KB) are **code-split** and load only when a student opens the AR Lab, so the Playground/Challenges bundle is unaffected.
+**Engineering credibility:** React 19 + TypeScript (strict) + Vite. Automated
+tests, type-check, production build, and the RAG evaluation are reproducible
+from the repository; rerun them immediately before submission and quote the
+fresh figures. AR dependencies remain code-split from the core learning routes.
 
 ---
 
 ## Honest status statement
 
-MagikLayout's Methodology and Pedagogy surfaces (Playground + ten graded Challenges) are **built, tested, and demonstrable today** at a public URL. The **AI Layout Coach** is implemented and integrated across all three modes; one live-model round-trip against a production key should be confirmed before a recorded demonstration. The **AR Lab** is implemented and deployed with a defined on-device acceptance test; it has **not yet been classroom-validated** — a pilot at Politeknik Mukah is the planned next step. This document states current fact and does not claim any capability that is not yet running.
+MagikLayout's core learning surfaces and the 12-mission AI Debugging Studio are
+implemented locally. The `coach-rag` path has a guarded deterministic fallback;
+confirm one fresh live Haiku round-trip and the public deployment state before a
+recorded demonstration. The AR Lab has a defined on-device acceptance test but
+has **not yet been classroom-validated**. No learning-gain or adoption claim is
+made without a completed study.
 
 *Prepared for MIPAC TVET 2026 · Team Grup Nelang PMU, Politeknik Mukah.*

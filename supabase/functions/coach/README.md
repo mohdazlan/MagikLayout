@@ -1,5 +1,12 @@
 # AI Layout Coach — Supabase Edge Function
 
+> **Current role:** this is the legacy grounded-prompt path used by Challenges.
+> The 12-mission AI Debugging Studio at `#/classroom` uses the retrieval-grounded
+> `../coach-rag` function with Claude Haiku, citations, guardrails, and fallback.
+> Do not present this endpoint as RAG. See
+> [`../../../MagicAI.md`](../../../MagicAI.md) and
+> [`../../../RAG.md`](../../../RAG.md).
+
 Turns the layout engine's deterministic findings into a Socratic, bilingual hint.
 The Anthropic API key lives here as a Supabase secret and never reaches the
 browser — the web app only knows this function's URL.

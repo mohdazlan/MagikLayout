@@ -2,7 +2,7 @@
  * AI Debugging Studio - the Swing state is the primary interface and the
  * grounded coach reacts to engine truth. The model never owns correctness.
  */
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { SwingFrame, useMeasurer } from '../challenges/SwingFrame'
 import { chunkById, type CorpusLanguage } from '../coach/corpus'
 import type { LadderState } from '../coach/hintPolicy'
@@ -48,7 +48,10 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
   const [busy, setBusy] = useState(false)
   const [focus, setFocus] = useState<Focus>('conflict')
   const [replayKey, setReplayKey] = useState(0)
+  const [highlightKey, setHighlightKey] = useState(0)
+  const [codeFocusKey, setCodeFocusKey] = useState(0)
   const [evidenceOpen, setEvidenceOpen] = useState(false)
+  const codeDeckRef = useRef<HTMLElement>(null)
 
   const composer = props.aiEnabled ? ragComposer() : undefined
   const configured = props.aiEnabled && ragComposerConfigured()
@@ -66,6 +69,7 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
     setHistory([])
     setFocus('conflict')
     setReplayKey((key) => key + 1)
+    setHighlightKey((key) => key + 1)
     setEvidenceOpen(false)
   }
 
@@ -108,6 +112,22 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
   const replay = () => {
     setReplayKey((key) => key + 1)
     setFocus('order')
+  }
+
+  const highlightConflict = () => {
+    setFocus('conflict')
+    setHighlightKey((key) => key + 1)
+  }
+
+  const explainJavaLines = () => {
+    setFocus('code')
+    setCodeFocusKey((key) => key + 1)
+    window.requestAnimationFrame(() => {
+      codeDeckRef.current?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'center',
+      })
+    })
   }
 
   return (
@@ -168,7 +188,7 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
               title={mission.title}
               measure={measure}
               overlays={<>
-                <span className={`ds-south-outline${mission.ghostLabel ? '' : ' ds-workspace-outline'}`} aria-hidden="true"><em>{mission.regionLabel}</em></span>
+                <span key={`${mission.id}-${highlightKey}`} className={`ds-south-outline${mission.ghostLabel ? '' : ' ds-workspace-outline'}${focus === 'conflict' ? ' is-coach-highlight' : ''}`} aria-hidden="true"><em>{mission.regionLabel}</em></span>
                 {stage === 'broken' && mission.ghostLabel && <span className="ds-ghost-button" aria-hidden="true">{mission.ghostLabel} <em>hidden</em></span>}
                 {stage === 'broken' && mission.ghostLabel && <span className="ds-add-trace ds-add-trace-save" aria-hidden="true">1 · first</span>}
                 {stage === 'broken' && mission.ghostLabel && <span className="ds-add-trace ds-add-trace-cancel" aria-hidden="true">2 · last</span>}
@@ -210,9 +230,9 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
           <div className="ds-coach-body">
             {latest ? <CoachTurn result={latest} /> : <div className="ds-coach-welcome"><p className="ds-coach-kicker">I can see the same state you see.</p><p>{mission.situation} Make a prediction, or ask for one small hint.</p></div>}
             <div className="ds-quick-actions" aria-label="Visual coach actions">
-              <button type="button" onClick={() => setFocus('conflict')}>Highlight {mission.regionLabel}</button>
+              <button type="button" onClick={highlightConflict}>Highlight {mission.regionLabel}</button>
               <button type="button" onClick={replay}>Replay add order</button>
-              <button type="button" onClick={() => setFocus('code')}>Explain the Java lines</button>
+              <button type="button" onClick={explainJavaLines}>Explain the Java lines</button>
             </div>
           </div>
           <div className="ds-coach-ask">
@@ -229,10 +249,10 @@ export function CoachLabPanel(props: { sessionId: string; learnerLabel: string; 
         </aside>
       </div>
 
-      <section className={`ds-code-deck${focus === 'code' ? ' is-focused' : ''}`} aria-label="Java and structure evidence">
+      <section key={codeFocusKey} ref={codeDeckRef} className={`ds-code-deck${focus === 'code' ? ' is-focused' : ''}`} aria-label="Java and structure evidence">
         <div className="ds-code-head"><div><span className="ds-code-dot red" /><span className="ds-code-dot amber" /><span className="ds-code-dot green" /></div><strong>LayoutDemo.java</strong><span>Generated from the live structure</span></div>
         <div className="ds-code-grid">
-          <div className="ds-code-lines">{mission.java[stage].map((line, index) => <code key={`${index}-${line.text}`} className={line.tone ? `is-${line.tone}` : ''}><span>{index + 10}</span>{line.text}</code>)}</div>
+          <div className="ds-code-lines">{mission.java[stage].map((line, index) => <code key={`${index}-${line.text}`} className={line.tone ? `is-${line.tone}` : ''} style={focus === 'code' ? { animationDelay: `${index * 140}ms` } : undefined}><span>{index + 10}</span>{line.text}</code>)}</div>
           <div className="ds-structure-tree">
             <p className="ds-panel-label">Component tree</p>
             <pre>{mission.structure[stage]}</pre>

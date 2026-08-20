@@ -1,4 +1,4 @@
-# Classroom Coach — retrieval-grounded Supabase Edge Function
+# MagicAI Studio — retrieval-grounded Supabase Edge Function
 
 Composes hints from the passages retrieval already selected client-side, and
 cites them by id. See [`../../../RAG.md`](../../../RAG.md) for how this differs
@@ -54,9 +54,11 @@ The deploy output prints the function URL, e.g.
 VITE_COACH_RAG_URL=https://<project-ref>.functions.supabase.co/coach-rag
 ```
 
-Rebuild (`npm run build`). Until this is set, the Classroom's "AI composer"
-toggle has nothing to call and the Coach Lab runs entirely on approved corpus
-text — a fully supported mode, not a degraded one (see RAG.md §4, criterion 7).
+Rebuild (`npm run build`). When this is configured, the AI Debugging Studio can
+send retrieved passages to Claude Haiku. When it is absent, fails, or is rejected
+by the guard, the Studio serves approved corpus text—a supported safe fallback,
+not a broken lesson. There is no learner-facing Lesson Pack or Class Session tab.
+See [`../../../MagicAI.md`](../../../MagicAI.md).
 
 ## Test the function directly
 
