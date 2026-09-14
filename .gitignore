@@ -10,3 +10,6 @@ dist-ssr
 # Editor / OS
 .DS_Store
 *.log
+
+# Local Vercel project and temporary deployment credentials
+.vercel
