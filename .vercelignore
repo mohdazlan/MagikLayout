@@ -1,0 +1,10 @@
+.env*
+!.env.example
+brand
+tmp
+output
+*.pdf
+*.docx
+.claude
+.cursor
+.impeccable

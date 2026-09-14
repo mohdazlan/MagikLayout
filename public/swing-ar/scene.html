@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Swing 3D scene</title>
+  <style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent}a-scene{position:absolute;inset:0;width:100%;height:100%}canvas{touch-action:none}#error{position:absolute;inset:0;display:grid;place-items:center;font:14px system-ui;color:#505055;text-align:center;padding:45px;pointer-events:none}.a-enter-vr,.a-enter-ar{display:none}</style>
+</head>
+<body>
+<div id="error">Loading the 3D library…</div>
+<script>
+(() => {
+  'use strict';
+  const mode = new URLSearchParams(location.search).get('mode') === 'ar' ? 'ar' : 'preview';
+  const emit = (type, detail = {}) => parent.postMessage({channel:'swing-discovery',type,mode,...detail}, location.origin);
+  let stopped = false, scene, stage, state, ready = false, tracked = false, frameEntity;
+  const streams = new Set(), pieces = new Map(), labels = new Map();
+  const stop = () => {
+    stopped = true;
+    streams.forEach(stream => stream.getTracks().forEach(track => track.stop())); streams.clear();
+    document.querySelectorAll('video').forEach(video => {
+      if (video.srcObject && video.srcObject.getTracks) video.srcObject.getTracks().forEach(track => track.stop());
+      video.srcObject = null;
+    });
+    if (scene) scene.pause();
+  };
+  addEventListener('pagehide', stop);
+  addEventListener('resize', () => { if (state && ready && !stopped) apply(state); });
+  addEventListener('camera-init', e => {
+    const stream = e.detail && e.detail.stream;
+    if (stream) { if (stopped) stream.getTracks().forEach(t => t.stop()); else streams.add(stream); }
+    if (!stopped) emit('camera-ready');
+  });
+  addEventListener('camera-error', e => {
+    const error = e.detail && (e.detail.error || e.detail);
+    emit('camera-error', {name: error && error.name}); stop();
+  });
+  function script(src) {
+    return new Promise((resolve, reject) => { const tag = document.createElement('script'); tag.src = src; tag.onload = resolve; tag.onerror = reject; document.head.append(tag); });
+  }
+  function entity(tag, attrs, parentNode) {
+    const element = document.createElement(tag);
+    Object.entries(attrs || {}).forEach(([key,value]) => element.setAttribute(key,value));
+    parentNode.appendChild(element); return element;
+  }
+  function label(key, text, x, y, z, width, height, ghost = false) {
+    const signature = JSON.stringify([text,width,height,ghost]);
+    let cached = labels.get(key);
+    if (cached && cached.signature !== signature) {
+      cached.mesh.geometry.dispose(); cached.mesh.material.map.dispose(); cached.mesh.material.dispose(); stage.object3D.remove(cached.mesh); labels.delete(key); cached = null;
+    }
+    if (!cached) {
+      const canvas = document.createElement('canvas'); canvas.width = 1024; canvas.height = 160;
+      const ctx = canvas.getContext('2d');
+      ctx.font = '100px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+      canvas.width = Math.ceil(ctx.measureText(text).width + 48);
+      ctx.fillStyle = ghost ? '#b54708' : '#25252a';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = '100px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+      ctx.fillText(text,canvas.width/2,80);
+      const texture = new AFRAME.THREE.CanvasTexture(canvas); texture.colorSpace = AFRAME.THREE.SRGBColorSpace;
+      const mesh = new AFRAME.THREE.Mesh(new AFRAME.THREE.PlaneGeometry(width,height),new AFRAME.THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false,side:AFRAME.THREE.DoubleSide}));
+      mesh.renderOrder = 5; stage.object3D.add(mesh); cached = {mesh,signature}; labels.set(key,cached);
+    }
+    cached.mesh.position.set(x,y,z);
+  }
+  function model(id,type) {
+    let item = pieces.get(id);
+    if (item && item.dataset.kind !== type) { item.remove(); pieces.delete(id); item = null; }
+    if (!item) {
+      item = entity('a-entity', {'gltf-model':`/swing-ar/models/${type}.glb`},stage);
+      item.dataset.kind = type; item.dataset.piece = id;
+      item.addEventListener('model-error', () => emit('model-error'));
+      item.addEventListener('model-loaded', () => {
+        const mesh = item.getObject3D('mesh');
+        if (mesh) mesh.traverse(child => { if (child.isMesh) { child.userData.pieceId = id; child.userData.kind = type; } });
+      });
+      pieces.set(id,item);
+    }
+    return item;
+  }
+  function apply(next) {
+    if (!ready || stopped) { state = next; return; }
+    state = next;
+    stage.object3D.rotation.set(mode === 'ar' ? -Math.PI/2 : -.14,mode === 'ar' ? 0 : next.rotation*Math.PI/180,mode === 'ar' ? next.rotation*Math.PI/180 : 0);
+    const aspect = scene.canvas.clientWidth / scene.canvas.clientHeight;
+    const fit = Math.min(next.specimen ? 1.35 : .98, aspect * 4.1 / (next.specimen ? 3.6 : next.width+.4));
+    stage.object3D.scale.setScalar(next.scale * (mode === 'ar' ? .48 : fit));
+    const keep = new Set(next.pieces.map(p => p.id)), keepLabels = new Set();
+    pieces.forEach((el,id) => { if (!keep.has(id)) { el.remove(); pieces.delete(id); } });
+    frameEntity.object3D.visible = !next.specimen;
+    frameEntity.object3D.scale.set(next.width+.2,2.75,1);
+    for (const piece of next.pieces) {
+      const el = model(piece.id,piece.type);
+      el.object3D.position.set(piece.x,piece.y,piece.depth);
+      el.object3D.scale.set(piece.w,piece.h,piece.ghost ? .4 : 1);
+      const displayText = piece.type === 'JTextField' ? (next.specimen ? 'Your name  |' : '') : piece.text;
+      if (displayText) {
+        const labelY = piece.type === 'JFrame' ? piece.y+piece.h*.4 : piece.y;
+        const textWidth = Math.min(piece.w*.85,Math.max(.35,displayText.length*.1));
+        const textHeight = next.specimen ? Math.min(.28,piece.h*.4) : Math.min(.16,piece.h*.65);
+        label(piece.id,displayText,piece.x,labelY,piece.depth+.17,textWidth,textHeight,piece.ghost); keepLabels.add(piece.id);
+      }
+    }
+    if (!next.specimen) { label('window-title','My App',0,1.28,.16,.55,.13); keepLabels.add('window-title'); }
+    regionGroup.object3D.visible = next.regions;
+    regionGroup.object3D.scale.x = next.width/3.5;
+    if (next.regions) {
+      for (const r of regionData) {
+        // Keep the region name beside its content, not on top of the learner's label.
+        const labelX = (r.name==='NORTH'||r.name==='SOUTH') ? -next.width/2+.40 : r.x*next.width/3.5;
+        label('region-'+r.name,r.name,labelX,r.y,.39,.50,.13); keepLabels.add('region-'+r.name);
+      }
+    }
+    labels.forEach((value,key) => {
+      if (!keepLabels.has(key)) { stage.object3D.remove(value.mesh); value.mesh.geometry.dispose(); value.mesh.material.map.dispose(); value.mesh.material.dispose(); labels.delete(key); }
+    });
+  }
+  const regionData = [{name:'NORTH',x:0,y:1.03,w:3.5,h:.28},{name:'WEST',x:-1.48,y:0,w:.52,h:1.72},{name:'CENTER',x:0,y:0,w:2.32,h:1.72},{name:'EAST',x:1.48,y:0,w:.52,h:1.72},{name:'SOUTH',x:0,y:-1.03,w:3.5,h:.28}];
+  let regionGroup;
+  addEventListener('message', e => {
+    if (e.source !== parent || e.origin !== location.origin || e.data?.channel !== 'swing-discovery') return;
+    if (e.data.type === 'stop') stop();
+    if (e.data.type === 'state') apply(e.data.state);
+  });
+  async function start() {
+    await script('https://aframe.io/releases/1.6.0/aframe.min.js');
+    if (stopped) return;
+    if (mode === 'ar') await script('https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.7/aframe/build/aframe-ar.js');
+    if (stopped) return;
+    const attrs = {embedded:'', 'vr-mode-ui':'enabled:false', 'device-orientation-permission-ui':'enabled:false', renderer:'antialias:true; alpha:true; colorManagement:true; precision:mediump'};
+    if (mode === 'ar') attrs.arjs = 'sourceType:webcam; debugUIEnabled:false; trackingMethod:best; videoTexture:false';
+    else attrs.background = 'color:#f0f1f3';
+    scene = entity('a-scene',attrs,document.body);
+    let anchor = scene;
+    if (mode === 'ar') {
+      anchor = entity('a-marker',{preset:'hiro',emitevents:'true',smooth:'true',smoothCount:'5',smoothTolerance:'.01',smoothThreshold:'2'},scene);
+      anchor.addEventListener('markerFound',()=>{tracked = true;emit('tracking',{found:true});});
+      anchor.addEventListener('markerLost',()=>{tracked = false;emit('tracking',{found:false});});
+      stage = entity('a-entity',{position:'0 .35 0'},anchor);
+      entity('a-entity',{camera:'', 'look-controls':'enabled:false'},scene);
+    } else {
+      stage = entity('a-entity',{},scene);
+      entity('a-entity',{camera:'fov:45',position:'0 .05 5.4','look-controls':'enabled:false'},scene);
+    }
+    entity('a-entity',{light:'type:ambient;intensity:.7;color:#ffffff'},scene);
+    entity('a-entity',{light:'type:directional;intensity:.8;color:#ffffff',position:'-2 4 5'},scene);
+    frameEntity = entity('a-entity',{'gltf-model':'/swing-ar/models/JFrame.glb',position:'0 .10 -.08'},stage);
+    frameEntity.addEventListener('model-error',()=>emit('model-error'));
+    regionGroup = entity('a-entity',{},stage);
+    regionData.forEach(r => {
+      const target = entity('a-plane',{position:`${r.x} ${r.y} .36`,width:r.w,height:r.h,material:'color:#b54708;opacity:.035;transparent:true;side:double;depthWrite:false'},regionGroup);
+      target.addEventListener('loaded',()=>{ const mesh=target.getObject3D('mesh');if(mesh)mesh.userData.region=r.name; });
+    });
+    scene.addEventListener('loaded', () => {
+      scene.renderer.toneMapping = AFRAME.THREE.ACESFilmicToneMapping;
+      scene.renderer.toneMappingExposure = .8;
+      document.getElementById('error').style.display='none'; ready=true;
+      if (state) apply(state); emit('ready'); setupPointer();
+      scene.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();emit('model-error');stop();});
+    }, {once:true});
+  }
+  function setupPointer() {
+    const canvas=scene.canvas, THREE=AFRAME.THREE, ray=new THREE.Raycaster(), point=new THREE.Vector2(), pointers=new Map();
+    let down=null,pinchStart=0,pinchScale=1;
+    function hits(e) {
+      const r=canvas.getBoundingClientRect();point.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);
+      ray.setFromCamera(point,scene.camera);return ray.intersectObject(stage.object3D,true);
+    }
+    function visibleHits(e) { return hits(e).filter(h=>{let p=h.object;while(p){if(!p.visible)return false;p=p.parent;}return true;}); }
+    canvas.addEventListener('pointerdown',e=>{
+      if(!state || (mode==='ar'&&!tracked))return;
+      pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});canvas.setPointerCapture(e.pointerId);
+      if(pointers.size===2){ const [a,b]=[...pointers.values()];pinchStart=Math.hypot(a.x-b.x,a.y-b.y);pinchScale=state.scale;down=null;return; }
+      const hit=visibleHits(e).find(h=>h.object.userData.pieceId);
+      down={x:e.clientX,y:e.clientY,rotation:state.rotation,piece:hit?.object.userData.pieceId,drag:false};
+    });
+    canvas.addEventListener('pointermove',e=>{
+      if(!pointers.has(e.pointerId))return;
+      pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+      if(pointers.size===2 && pinchStart){const[a,b]=[...pointers.values()];emit('scale',{value:pinchScale*Math.hypot(a.x-b.x,a.y-b.y)/pinchStart});return;}
+      if(!down)return;
+      const dx=e.clientX-down.x,dy=e.clientY-down.y;
+      if(Math.hypot(dx,dy)>7)down.drag=true;
+      // In the build activity, dragging a piece selects its destination region.
+      if(down.drag && state.lesson!=='build')emit('rotate',{value:Math.max(-180,Math.min(180,down.rotation+dx*.5))});
+    });
+    canvas.addEventListener('pointerup',e=>{
+      pointers.delete(e.pointerId);
+      if(!down || (mode==='ar'&&!tracked)){down=null;return;}
+      const current=down;down=null;
+      const found=visibleHits(e);
+      if(state.lesson==='build'){
+        const region=found.find(h=>h.object.userData.region)?.object.userData.region;
+        if(region)emit('place',{region});return;
+      }
+      if(state.lesson==='recognition' && current.drag && current.piece){
+        // Drag a specimen down to put it into its JFrame; a visible button is the keyboard alternative.
+        const rect=canvas.getBoundingClientRect();
+        if(e.clientY-rect.top>rect.height*.75 && e.clientY-current.y>45)emit('place',{region:'CENTER'});
+      } else if(!current.drag){
+        const hit=found.find(h=>h.object.userData.pieceId);
+        if(hit && (state.lesson!=='events'||hit.object.userData.pieceId==='event-button'))emit('tap');
+      }
+    });
+    canvas.addEventListener('pointercancel',e=>{pointers.delete(e.pointerId);down=null;});
+  }
+  start().catch(() => { document.getElementById('error').textContent='The 3D library did not load. Check your connection and retry.';emit('load-error');stop(); });
+})();
+</script>
+</body>
+</html>

@@ -187,6 +187,22 @@ export function ARLab() {
             <a href="/ar/layoutlab-target.png" target="_blank" rel="noreferrer">{copy.targetOpen}</a>
           </aside>
         </main>
+        <section className="ar-discovery-intro" aria-labelledby="ar-discovery-title">
+          <div>
+            <p className="ar-eyebrow">{language === 'ms' ? 'Makmal baharu · Bermula dengan komponen' : 'Another way to learn · Start with the components'}</p>
+            <h2 id="ar-discovery-title">Swing Discovery Lab</h2>
+            <p>{language === 'ms'
+              ? 'Lihat dan sentuh dahulu. Kenali lima komponen Swing, susun antaramuka, baiki kesilapan dan cuba peristiwa butang. Kod Java berubah bersama tindakan anda.'
+              : 'See it. Touch it. Then read the Java. Meet five Swing components, arrange an interface, repair a mistake, and make a button respond.'}</p>
+            <a className="ar-primary" href="/swing-ar.html">{language === 'ms' ? 'Buka Swing Discovery Lab' : 'Open Swing Discovery Lab'} <span aria-hidden="true">↗</span></a>
+            <p className="ar-discovery-note">{language === 'ms' ? 'Percuma · Marker Hiro · Pratonton 3D tanpa kamera tersedia' : 'Free to explore · Hiro marker · Camera-free 3D preview available'}</p>
+          </div>
+          <div className="ar-discovery-demo" aria-label="JButton inside a Java Swing window">
+            <div className="ar-discovery-titlebar"><span>My App</span><span aria-hidden="true">− &nbsp; □ &nbsp; ×</span></div>
+            <div className="ar-discovery-button">Click Me</div>
+            <code>new JButton("Click Me");</code>
+          </div>
+        </section>
       </div>
     )
   }
