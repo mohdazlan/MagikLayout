@@ -5,6 +5,7 @@ import { SurfaceNav } from '../components/SurfaceNav'
 import { ARCameraExperience } from './ARCameraExperience'
 import { applyARInteraction, buildMissionTree, type ARInteraction, type ARVisualState, type LabLanguage, type MissionId } from './arLabModel'
 import './arLab.css'
+import { RepairExercise } from './RepairExercise'
 
 const COPY = {
   en: {
@@ -80,6 +81,7 @@ const OUTCOMES = {
 }
 
 export function ARLab() {
+  const [repairOpen, setRepairOpen] = useState(false)
   const [language, setLanguage] = useState<LabLanguage>('en')
   const [started, setStarted] = useState(false)
   const [mission, setMission] = useState<MissionId>(1)
@@ -155,6 +157,7 @@ export function ARLab() {
     requestAnimationFrame(() => codeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
   }
 
+  if (repairOpen) return <RepairExercise onExit={() => setRepairOpen(false)} />
   if (!started) {
     return (
       <div className="ar-lab ar-lab-intro">
@@ -189,18 +192,18 @@ export function ARLab() {
         </main>
         <section className="ar-discovery-intro" aria-labelledby="ar-discovery-title">
           <div>
-            <p className="ar-eyebrow">{language === 'ms' ? 'Makmal baharu · Bermula dengan komponen' : 'Another way to learn · Start with the components'}</p>
-            <h2 id="ar-discovery-title">Swing Discovery Lab</h2>
+            <p className="ar-eyebrow">AR exercise 2 · Build the repair</p>
+            <h2 id="ar-discovery-title">One region. Two buttons.</h2>
             <p>{language === 'ms'
-              ? 'Lihat dan sentuh dahulu. Kenali lima komponen Swing, susun antaramuka, baiki kesilapan dan cuba peristiwa butang. Kod Java berubah bersama tindakan anda.'
-              : 'See it. Touch it. Then read the Java. Meet five Swing components, arrange an interface, repair a mistake, and make a button respond.'}</p>
-            <a className="ar-primary" href="/swing-ar.html">{language === 'ms' ? 'Buka Swing Discovery Lab' : 'Open Swing Discovery Lab'} <span aria-hidden="true">↗</span></a>
-            <p className="ar-discovery-note">{language === 'ms' ? 'Percuma · Marker Hiro · Pratonton 3D tanpa kamera tersedia' : 'Free to explore · Hiro marker · Camera-free 3D preview available'}</p>
+              ? 'Baiki butang Submit yang hilang. Bina JPanel, pilih FlowLayout dan letakkan kedua-dua butang dalam SOUTH.'
+              : 'Watch Submit disappear when Cancel takes SOUTH. Build a JPanel, choose FlowLayout, and bring both buttons back.'}</p>
+            <button className="ar-primary" onClick={() => setRepairOpen(true)}>Begin repair exercise <span aria-hidden="true">→</span></button>
+            <p className="ar-discovery-note">Hiro marker · 3D practice available · Java evidence</p>
           </div>
           <div className="ar-discovery-demo" aria-label="JButton inside a Java Swing window">
             <div className="ar-discovery-titlebar"><span>My App</span><span aria-hidden="true">− &nbsp; □ &nbsp; ×</span></div>
-            <div className="ar-discovery-button">Click Me</div>
-            <code>new JButton("Click Me");</code>
+            <div className="ar-discovery-button">Submit + Cancel</div>
+            <code>SOUTH → JPanel → two buttons</code>
           </div>
         </section>
       </div>

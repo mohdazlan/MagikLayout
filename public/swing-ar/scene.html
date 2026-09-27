@@ -12,7 +12,7 @@
   'use strict';
   const mode = new URLSearchParams(location.search).get('mode') === 'ar' ? 'ar' : 'preview';
   const emit = (type, detail = {}) => parent.postMessage({channel:'swing-discovery',type,mode,...detail}, location.origin);
-  let stopped = false, scene, stage, state, ready = false, tracked = false, frameEntity;
+  let stopped = false, scene, stage, state, ready = false, tracked = false, frameEntity, introStart = 0, introRunning = false;
   const streams = new Set(), pieces = new Map(), labels = new Map();
   const stop = () => {
     stopped = true;
@@ -73,6 +73,11 @@
       item.addEventListener('model-loaded', () => {
         const mesh = item.getObject3D('mesh');
         if (mesh) mesh.traverse(child => { if (child.isMesh) { child.userData.pieceId = id; child.userData.kind = type; } });
+        if (mesh && id === 'actions' && state?.lesson === 'repair-game') mesh.traverse(child => {
+          if (child.isMesh) for (const material of (Array.isArray(child.material) ? child.material : [child.material])) {
+            material.transparent = true; material.opacity = .35; material.depthWrite = false;
+          }
+        });
       });
       pieces.set(id,item);
     }
@@ -91,6 +96,7 @@
     frameEntity.object3D.scale.set(next.width+.2,2.75,1);
     for (const piece of next.pieces) {
       const el = model(piece.id,piece.type);
+      el.object3D.visible = true;
       el.object3D.position.set(piece.x,piece.y,piece.depth);
       el.object3D.scale.set(piece.w,piece.h,piece.ghost ? .4 : 1);
       const displayText = piece.type === 'JTextField' ? (next.specimen ? 'Your name  |' : '') : piece.text;
@@ -98,7 +104,7 @@
         const labelY = piece.type === 'JFrame' ? piece.y+piece.h*.4 : piece.y;
         const textWidth = Math.min(piece.w*.85,Math.max(.35,displayText.length*.1));
         const textHeight = next.specimen ? Math.min(.28,piece.h*.4) : Math.min(.16,piece.h*.65);
-        label(piece.id,displayText,piece.x,labelY,piece.depth+.17,textWidth,textHeight,piece.ghost); keepLabels.add(piece.id);
+        label(piece.id,displayText,piece.x,labelY,piece.depth+.17,textWidth,textHeight,piece.ghost); labels.get(piece.id).mesh.visible = true; keepLabels.add(piece.id);
       }
     }
     if (!next.specimen) { label('window-title','My App',0,1.28,.16,.55,.13); keepLabels.add('window-title'); }
@@ -114,6 +120,33 @@
     labels.forEach((value,key) => {
       if (!keepLabels.has(key)) { stage.object3D.remove(value.mesh); value.mesh.geometry.dispose(); value.mesh.material.map.dispose(); value.mesh.material.dispose(); labels.delete(key); }
     });
+    if (next.lesson === 'repair-game' && next.repairIntro && !introRunning) {
+      introRunning = true; introStart = 0;
+      requestAnimationFrame(animateBug);
+    }
+  }
+  function animateBug(now) {
+    if (stopped || !state?.repairIntro) { introRunning = false; return; }
+    if (mode === 'ar' && !tracked) { introStart = 0; requestAnimationFrame(animateBug); return; }
+    if (!introStart) introStart = now;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const t = (now - introStart) / (reduced ? 600 : 1000);
+    for (const id of ['submit','cancel']) {
+      const item = pieces.get(id), text = labels.get(id)?.mesh;
+      if (!item) continue;
+      const delay = id === 'submit' ? 0 : 1;
+      const p = Math.max(0, Math.min(1, (t - delay) / .7));
+      const y = reduced ? -1.03 : -1.03 + (1-p)*(1-p)*2.6;
+      item.object3D.position.y = y;
+      if (text) text.position.y = y;
+      const visible = t >= delay && !(id === 'submit' && t > 2.1);
+      item.object3D.visible = visible;
+      if (text) text.visible = visible;
+      if (id === 'submit' && t > 1.65 && !reduced) item.object3D.scale.y = .28 * Math.max(.06, 1-(t-1.65)*2.2);
+    }
+    stage.object3D.position.y = reduced ? 0 : Math.max(0, 1-t*2)*.6;
+    if (t < 2.7) requestAnimationFrame(animateBug);
+    else { introRunning = false; emit('bug-ready'); }
   }
   const regionData = [{name:'NORTH',x:0,y:1.03,w:3.5,h:.28},{name:'WEST',x:-1.48,y:0,w:.52,h:1.72},{name:'CENTER',x:0,y:0,w:2.32,h:1.72},{name:'EAST',x:1.48,y:0,w:.52,h:1.72},{name:'SOUTH',x:0,y:-1.03,w:3.5,h:.28}];
   let regionGroup;
@@ -189,6 +222,11 @@
       if(!down || (mode==='ar'&&!tracked)){down=null;return;}
       const current=down;down=null;
       const found=visibleHits(e);
+      if(state.lesson==='repair-game') {
+        const piece=found.find(h=>h.object.userData.pieceId)?.object.userData.pieceId;
+        const region=found.find(h=>h.object.userData.region)?.object.userData.region;
+        emit('repair-hit',{piece,region});return;
+      }
       if(state.lesson==='build'){
         const region=found.find(h=>h.object.userData.region)?.object.userData.region;
         if(region)emit('place',{region});return;

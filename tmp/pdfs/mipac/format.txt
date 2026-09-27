@@ -1,0 +1,328 @@
+                                                          Laporan Pertandingan MIPAC TVET 2026
+
+
+
+       FORMAT PENULISAN DAN KANDUNGAN LAPORAN INOVASI
+  PERTANDINGAN INNOVATION IN METHODOLOGY, PEDAGOGY AND AI FOR
+                              CREATIVE TVET (MIPAC TVET 2026)
+        PUSAT LATIHAN PENGAJAR DAN KEMAHIRAN LANJUTAN (CIAST)
+JABATAN PEMBANGUNAN KEMAHIRAN (JPK)
+              KEMENTERIAN SUMBER MANUSIA (KESUMA), MALAYSIA
+
+Objektif
+Garis panduan ini disediakan sebagai rujukan kepada peserta dalam menyediakan
+laporan inovasi yang sistematik, seragam dan berkualiti bagi tujuan penilaian
+Pertandingan Innovation in Methodology, Pedagogy and AI for Creative TVET (MIPAC
+TVET 2026).
+
+Nota:
+
+AI merujuk kepada teknologi Kecerdasan Buatan (Artificial Intelligence) termasuk AI
+Generatif (Generative AI), Machine Learning, Computer Vision, Natural Language
+Processing (NLP) dan teknologi berkaitan.
+
+1. Peserta hendaklah memastikan semua kandungan laporan adalah benar, tepat
+    dan boleh disahkan. Sebarang pemalsuan data, manipulasi keputusan, plagiat
+    atau pelanggaran hak harta intelek boleh menyebabkan penyertaan dibatalkan.
+2. Laporan inovasi hendaklah tidak melebihi 20 muka surat, tidak termasuk muka
+    hadapan, senarai kandungan, rujukan dan lampiran.
+3. Laporan inovasi boleh ditulis sama ada dalam Bahasa Melayu atau Bahasa
+    Inggeris.
+4. Wajib ditaip di atas kertas bersaiz A4 dalam jarak langkau satu (single spacing)
+    menggunakan fon Times New Roman bersaiz 12 dengan menggunakan jidar
+    (margin) 2.54 cm pada semua sisi.
+5. Tajuk dan subtajuk hendaklah menggunakan jenis dan saiz fon yang sama, ditulis
+    dalam huruf besar serta ditebalkan. Jarak antara tajuk/subtajuk dengan isi atau
+    antara perenggan setiap isi perlu dilangkau satu kali. Permulaan setiap perenggan
+    pula perlu tab satu kali.
+6. Rajah, gambar, jadual atau ilustrasi hendaklah diberikan nombor dan tajuk serta
+    dirujuk dalam teks laporan.
+7. Semua rajah, gambar dan jadual hendaklah mempunyai resolusi yang jelas serta
+    boleh dibaca oleh panel penilai.
+8. Peserta bertanggungjawab mendapatkan kebenaran penggunaan gambar, logo,
+    data atau bahan pihak ketiga yang digunakan dalam laporan.
+9. Jika menggunakan singkatan seperti AI. Peserta perlu menulis nama penuh
+    terlebih dahulu. Contoh: Artificial Intelligence (AI).
+10. Semua pautan dan kod QR hendaklah aktif dan boleh diakses sepanjang tempoh
+    penilaian. Peserta bertanggungjawab memastikan bahan yang dipautkan tidak
+    memerlukan kebenaran akses khas.
+11. Keputusan panel hakim adalah muktamad dan sebarang rayuan berkaitan
+    keputusan penilaian tidak akan dipertimbangkan.
+
+@Hak Cipta Terpelihara CIAST Shah Alam Tahun 2026
+                                                    1/6
+                                                              Laporan Pertandingan MIPAC TVET 2026
+
+
+
+12. Peserta hendaklah memastikan tiada maklumat terperingkat atau sulit
+    dimasukkan ke dalam laporan tanpa kebenaran pihak berkenaan.
+
+
+                                KANDUNGAN LAPORAN INOVASI
+
+ BAHAGIAN                                            KANDUNGAN DAN KETERANGAN
+ MUKA HADAPAN                                 Times New Roman bersaiz 14 bold
+ SENARAI KANDUNGAN                            • Senarai kandungan hendaklah menyenaraikan
+                                                 semua tajuk utama laporan berserta nombor
+                                                 muka surat.
+                                              • Peserta digalakkan menggunakan fungsi Table of
+                                                 Contents dalam Microsoft Word bagi memastikan
+                                                 nombor muka surat dikemas kini secara
+                                                 automatik.
+ MAKLUMAT KUMPULAN                            • Nama ahli kumpulan
+                                              • E-mel ahli kumpulan
+                                              • Nama institusi
+                                              • Bahagian/Jabatan
+                                              • Jawatan ahli kumpulan
+                                              • Nama dan e-mel ketua kumpulan hendaklah
+                                                 ditulis dalam huruf condong.
+                                              • Nyatakan peranan dan sumbangan setiap ahli
+                                                 dalam pembangunan inovasi.
+                                              • Maklumat kumpulan hendaklah menggunakan
+                                                 fon Times New Roman bersaiz 12.
+ ABSTRAK                                      • Abstrak hendaklah mengandungi secara ringkas
+                                                 penyataan masalah, objektif, kaedah, hasil
+                                                 inovasi dan impak utama.
+                                              • Abstrak hendaklah ditulis dalam satu perenggan
+                                                 tanpa jadual, rajah atau rujukan.
+                                              • Panjang abstrak hendaklah tidak melebihi 250
+                                                 patah perkataan.
+                                              • Menggunakan fon Times New Roman bersaiz 11,
+                                                 huruf condong dan teks dijajarkan penuh
+                                                 (justified).
+                                              • Penulisan menggunakan bahasa yang selaras
+                                                 dengan kandungan laporan
+                                              • Padat dan menyeluruh tentang ringkasan inovasi
+ PENDAHULUAN                                  • Latar belakang projek inovasi
+                                              • Tujuan/Kepentingan projek inovasi
+                                              • Objektif
+                                              • Skop inovasi
+                                              • Kumpulan sasaran (pengajar, pelajar, industri,
+                                                 orang awam)
+                                              • Kategori penyertaan inovasi
+
+
+@Hak Cipta Terpelihara CIAST Shah Alam Tahun 2026
+                                                    2/6
+                                                                   Laporan Pertandingan MIPAC TVET 2026
+
+
+
+ PENYATAAN MASALAH DAN •                            Berdasarkan data, dokumen, pemerhatian, soal
+ KEBAHARUAN (NOVELTI)                               selidik, refleksi dan sumber lain yang berkaitan
+                       •                            Penyataan masalah hendaklah disokong oleh
+                                                    bukti yang boleh disahkan.
+                                              •     Keaslian idea dan tiada unsur plagiat
+                                              •     Idea projek ini sama ada asli/baharu atau
+                                                    adaptasi dari mana-mana sumber/model
+                                              •     Idea yang unik/pendekatan di luar kotak
+
+ ANALISIS PENYELESAIAN                        •     Huraian kaedah, produk atau sistem yang
+ SEDIA ADA                                          sedang digunakan.
+                                              •     Kekangan dan kelemahan penyelesaian sedia
+                                                    ada.
+                                              •     Perbandingan antara penyelesaian sedia ada
+                                                    dengan inovasi yang dibangunkan.
+                                              •     Nilai tambah dan kelebihan inovasi.
+                                              •     Jurang (gap) yang masih belum dapat
+                                                    diselesaikan oleh penyelesaian sedia ada.
+ BAHAN DAN KAEDAH                             •     Strategi penyelesaian dan proses perancangan
+ INOVASI (TAHAP                                     yang digunakan.
+ PELAKSANAAN)                                 •     Kaedah pembangunan serta bahan inovasi.
+                                              •     Reka bentuk inovasi atau sistem.
+                                              •     Seni bina sistem (System Architecture), jika
+                                                    berkaitan.
+                                              •     Aliran kerja atau proses operasi inovasi.
+                                              •     Teknologi yang digunakan.
+                                              •     Model AI yang digunakan, contohnya ChatGPT,
+                                                    Gemini, Claude, Llama dan lain-lain, jika
+                                                    berkaitan.
+                                              •     Kejuruteraan prompt (Prompt Engineering), jika
+                                                    menggunakan AI.
+                                              •     Set data (Dataset) yang digunakan, jika
+                                                    berkaitan.
+                                              •     Kaedah penilaian atau pengujian inovasi.
+                                              •     Pelaksanaan uji cuba prototaip.
+                                              •     Bukti pelaksanaan seperti carta alir, carta Gantt,
+                                                    gambar, video, log prompt dan dokumen
+                                                    sokongan lain.
+                                              •     Semua bukti hendaklah jelas, relevan dan
+                                                    menyokong penerangan yang dikemukakan
+                                                    dalam laporan.
+ PENGGUNAAN AI DAN                            •     Penggunaan AI hendaklah menyokong
+ ETIKA AI (JIKA BERKAITAN)                          pembangunan inovasi dan tidak menggantikan
+                                                    sepenuhnya hasil pemikiran, analisis atau
+                                                    kreativiti peserta.
+                                              •     Jika AI digunakan, peserta hendaklah
+                                                    menyatakan:
+
+
+@Hak Cipta Terpelihara CIAST Shah Alam Tahun 2026
+                                                      3/6
+                                                                   Laporan Pertandingan MIPAC TVET 2026
+
+
+
+
+                                                    •Platform, model atau alat AI yang digunakan.
+                                                    •Tujuan dan skop penggunaan AI.
+                                                    •Data atau sumber yang digunakan.
+                                                    •Peranan manusia dalam pembangunan dan
+                                                     semakan hasil.
+                                                  • Kaedah pengesahan ketepatan kandungan.
+                                                  • Langkah menjaga privasi, keselamatan data
+                                                     dan kerahsiaan.
+                                                  • Pematuhan terhadap hak cipta, integriti
+                                                     akademik dan etika penggunaan AI.
+                                                  • Risiko, batasan dan kemungkinan bias hasil
+                                                     AI.
+ PRAKTIKAL DAN                                • Inovasi mudah digunakan (mesra pengguna).
+ KEBOLEHGUNAAN                                • Kesesuaian inovasi untuk pelaksanaan dalam
+                                                 persekitaran sebenar.
+                                              • Kesesuaian inovasi untuk digunakan dalam
+                                                 pelbagai persekitaran PdP atau industri.
+                                              • Keberkesanan inovasi.
+                                              • Berpotensi untuk dikembangkan.
+                                              • Bukti disertakan : Gambar, video, soal selidik,
+                                                 temu bual , testimoni dan lain-lain
+                                              • Tahap kebolehselenggaraan (Maintainability)
+                                                 inovasi.
+                                              • Tahap penerimaan pengguna (user acceptance)
+                                              • Pengesahan pengguna melalui kaedah yang
+                                                 bersesuaian seperti ujian penerimaan pengguna,
+                                                 ujian kebolehgunaan, soal selidik, pemerhatian,
+                                                 temu bual, penilaian pakar atau maklum balas
+                                                 pengguna.
+                                              • Tahap kebolehcapaian (accessibility) inovasi,
+                                                 contohnya kesesuaian untuk pengguna orang
+                                                 kurang upaya (OKU), telefon pintar, komputer
+                                                 dan pelbagai jenis peranti.
+ IMPAK INOVASI                                a. Keberkesanan dan kecekapan
+
+                                                    •   Penjimatan masa.
+                                                    •   Penjimatan kos.
+                                                    •   Peningkatan produktiviti.
+                                                    •   Peningkatan kualiti, ketepatan atau hasil
+                                                        pembelajaran.
+                                                    •   Kepuasan pengguna.
+                                                    •   Impak kepada pembangunan kompetensi
+                                                        atau kemahiran pengguna.
+
+                                              b. Tahap keluasan impak
+
+
+
+
+@Hak Cipta Terpelihara CIAST Shah Alam Tahun 2026
+                                                        4/6
+                                                                    Laporan Pertandingan MIPAC TVET 2026
+
+
+
+
+                                                    •   Tinggi: impak kepada masyarakat atau
+                                                        merentasi institusi dan sektor.
+                                                    •   Sederhana: impak kepada perkhidmatan
+                                                        pendidikan atau beberapa institusi.
+                                                    •   Rendah: impak kepada unit atau organisasi
+                                                        sendiri.
+
+                                              c. Bukti impak
+
+                                                    •   Perbandingan sebelum dan selepas
+                                                        pelaksanaan inovasi menggunakan data, graf,
+                                                        jadual atau analisis statistik (jika berkaitan).
+                                                    • Data masa, kos, ketepatan dan produktiviti.
+                                                    • Bilangan pengguna atau institusi.
+                                                    • Pencapaian hasil pembelajaran.
+                                                    • Pulangan pelaburan (ROI), (jika berkaitan).
+ PERLUASAN,                                   •     Usaha penyebarluasan dan potensi
+ PENGKOMERSIALAN,                                   pengkomersialan projek.
+ KELESTARIAN DAN                              •     Potensi pemindahan teknologi atau amalan
+ KEBOLEHSKALAAN                                     terbaik kepada institusi TVET, industri atau
+                                                    agensi berkaitan.
+                                              •     Potensi kerjasama strategik bersama industri,
+                                                    agensi kerajaan atau institusi pendidikan.
+                                              •     Bukti sokongan boleh merangkumi surat, sijil,
+                                                    anugerah, pendaftaran harta intelek, ISBN dan
+                                                    dokumen lain yang berkaitan.
+
+                                              Kelestarian
+                                                • Perancangan penyelenggaraan dan
+                                                   pembangunan masa hadapan.
+                                                • Keperluan kos, tenaga kerja dan sokongan
+                                                   teknikal.
+                                                • Penambahbaikan berterusan.
+                                                • Integrasi dengan sistem atau program lain.
+                                              Kebolehskalaan
+                                                • Potensi digunakan oleh kumpulan pengguna
+                                                    yang lebih besar.
+                                                • Potensi diperluas ke institusi lain.
+                                                • Potensi digunakan dalam industri atau sektor
+                                                    berkaitan.
+                                                • Potensi pelaksanaan pada peringkat negeri,
+                                                    kebangsaan atau antarabangsa.
+ KESIMPULAN                                   • Rumuskan pencapaian objektif, kelebihan
+                                                 inovasi, impak kepada TVET serta cadangan
+                                                 pembangunan pada masa hadapan.
+
+
+
+@Hak Cipta Terpelihara CIAST Shah Alam Tahun 2026
+                                                        5/6
+                                                                  Laporan Pertandingan MIPAC TVET 2026
+
+
+
+ PENGAKUAN KEASLIAN                           •     Peserta mengesahkan bahawa inovasi dan
+                                                    laporan yang dikemukakan merupakan hasil
+                                                    karya sendiri atau kumpulan serta tidak
+                                                    melanggar hak cipta, hak harta intelek, privasi
+                                                    atau kerahsiaan mana-mana pihak.
+ TAHAP KESIAPSEDIAAN                          •     Peserta digalakkan menyatakan tahap TRL
+ TEKNOLOGI (TECHNOLOGY                              inovasi bagi membantu panel hakim menilai
+ READINESS LEVEL - TRL)                             tahap kematangan inovasi.
+ (JIKA BERKAITAN)                             •     Peserta boleh menyatakan tahap kesiapsediaan
+                                                    inovasi seperti berikut:
+
+                                                    •   TRL 1–3 : Idea / Konsep
+                                                    •   TRL 4–6 : Pembangunan dan pengujian
+                                                        prototaip.
+                                                    • TRL 7–9 : Sedia dilaksanakan, diperluas atau
+                                                        dikomersialkan.
+ RUJUKAN                                      •     Semua sumber rujukan hendaklah dinyatakan
+                                                    secara konsisten mengikut mana-mana gaya
+                                                    sitasi yang diiktiraf seperti APA, IEEE atau
+                                                    Harvard.
+                                              •     Semua rujukan yang dinyatakan hendaklah
+                                                    dirujuk dalam teks laporan.
+ LAMPIRAN                                     •     Lampiran adalah pilihan dan hanya perlu
+                                                    disertakan jika berkaitan dengan inovasi yang
+                                                    dibangunkan.
+                                              •     Lampiran tidak termasuk dalam had maksimum
+                                                    20 muka surat dan tidak dinilai secara
+                                                    berasingan, namun boleh digunakan sebagai
+                                                    bukti sokongan kepada kandungan laporan.
+                                              •     Contoh lampiran yang boleh disertakan adalah
+                                                    seperti berikut:
+                                                    • Manual pengguna (jika berkaitan).
+                                                    • Carta Gantt.
+                                                    • Soal selidik.
+                                                    • Tangkapan skrin sistem (screenshot).
+                                                    • Kod QR demonstrasi inovasi.
+                                                    • Kod QR video.
+                                                    • Surat pengesahan.
+                                                    • Testimoni pengguna.
+                                                    • Dokumen pendaftaran harta intelek seperti
+                                                        MyIPO (jika berkaitan).
+                                                    • Data sokongan atau analisis statistik (jika
+                                                        berkaitan).
+                                                    • Dokumen sokongan lain yang berkaitan.
+
+
+
+
+@Hak Cipta Terpelihara CIAST Shah Alam Tahun 2026
+                                                        6/6
+
