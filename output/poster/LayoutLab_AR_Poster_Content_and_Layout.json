@@ -1,0 +1,530 @@
+[
+  {
+    "text": "LayoutLab AR",
+    "x": 20,
+    "y": 96.52499999999999,
+    "w": 450,
+    "h": 32,
+    "font_size": 29
+  },
+  {
+    "text": "Make invisible Java layout rules visible.",
+    "x": 21,
+    "y": 131.625,
+    "w": 525,
+    "h": 16,
+    "font_size": 13
+  },
+  {
+    "text": "Immersive Digital Teaching Aid  |  Grup Nelang PMU  |  Politeknik Mukah",
+    "x": 21,
+    "y": 153.075,
+    "w": 549,
+    "h": 10,
+    "font_size": 8.4
+  },
+  {
+    "text": "Mohd Azlan bin Ab Aziz &amp; Hasnah binti Ngah  \u2022  azlan@pmu.edu.my",
+    "x": 21,
+    "y": 165.75,
+    "w": 549,
+    "h": 10,
+    "font_size": 8.4
+  },
+  {
+    "text": "01",
+    "x": 20,
+    "y": 194.025,
+    "w": 21,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "BACKGROUND / PROBLEM",
+    "x": 44,
+    "y": 194.025,
+    "w": 244.3,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "Novice diploma students in DFP50463 Java Based Application Development at Politeknik Mukah struggle to predict resizing, hidden components and nested panels. Slides explain rules; GUI builders can conceal them. Learners need to see, test and repair the behaviour. [1]",
+    "x": 20,
+    "y": 216.45,
+    "w": 268.3,
+    "h": 42.312,
+    "font_size": 8.6
+  },
+  {
+    "text": "02",
+    "x": 20,
+    "y": 284.7,
+    "w": 21,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "INNOVATION OBJECTIVES",
+    "x": 44,
+    "y": 284.7,
+    "w": 244.3,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": " Construct  a BorderLayout prototype in tracked AR.",
+    "x": 28,
+    "y": 307.125,
+    "w": 260.3,
+    "h": 10.578,
+    "font_size": 8.6
+  },
+  {
+    "text": " Test and diagnose  resizing and region collisions.",
+    "x": 28,
+    "y": 319.38854999999995,
+    "w": 260.3,
+    "h": 10.578,
+    "font_size": 8.6
+  },
+  {
+    "text": " Repair and explain  the structure using verifiable Java evidence.",
+    "x": 28,
+    "y": 331.65209999999996,
+    "w": 260.3,
+    "h": 10.578,
+    "font_size": 8.6
+  },
+  {
+    "text": "NOSS IT-010-3:2016-C01 \u00b7 Application Prototype Development",
+    "x": 26,
+    "y": 364.65,
+    "w": 256.3,
+    "h": 9,
+    "font_size": 7.35
+  },
+  {
+    "text": "03",
+    "x": 307,
+    "y": 194.025,
+    "w": 21,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "THE INNOVATION",
+    "x": 331,
+    "y": 194.025,
+    "w": 244.3,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "A browser-based AR teaching aid that turns a virtual JFrame into a tracked model, touch surface and assessed task. Visual, audio and code feedback connect each action to a Java rule.",
+    "x": 307,
+    "y": 216.45,
+    "w": 268.3,
+    "h": 31.733999999999998,
+    "font_size": 8.6
+  },
+  {
+    "text": "CONSTRUCT",
+    "x": 448,
+    "y": 268.125,
+    "w": 126,
+    "h": 11,
+    "font_size": 8.5
+  },
+  {
+    "text": "Place a title in NORTH.",
+    "x": 448,
+    "y": 281.775,
+    "w": 126,
+    "h": 10,
+    "font_size": 8.2
+  },
+  {
+    "text": "TEST",
+    "x": 448,
+    "y": 304.2,
+    "w": 126,
+    "h": 11,
+    "font_size": 8.5
+  },
+  {
+    "text": "Predict how CENTER resizes.",
+    "x": 448,
+    "y": 317.84999999999997,
+    "w": 126,
+    "h": 10,
+    "font_size": 8.2
+  },
+  {
+    "text": "REPAIR",
+    "x": 448,
+    "y": 340.275,
+    "w": 126,
+    "h": 11,
+    "font_size": 8.5
+  },
+  {
+    "text": "Nest Save + Cancel in one JPanel; inspect the Java.",
+    "x": 448,
+    "y": 353.925,
+    "w": 126,
+    "h": 20,
+    "font_size": 8.2
+  },
+  {
+    "text": "Figure 1. Actual AR use and generated Java after structural repair.",
+    "x": 307,
+    "y": 381.22499999999997,
+    "w": 268.3,
+    "h": 8.5,
+    "font_size": 7
+  },
+  {
+    "text": "04",
+    "x": 20,
+    "y": 409.5,
+    "w": 21,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "DEVELOPMENT PROCESS",
+    "x": 44,
+    "y": 409.5,
+    "w": 244.3,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "1",
+    "x": 20,
+    "y": 433.875,
+    "w": 15,
+    "h": 10,
+    "font_size": 8
+  },
+  {
+    "text": " Identify   Initial student feedback (n=11) established the need.",
+    "x": 42,
+    "y": 431.925,
+    "w": 246.3,
+    "h": 10,
+    "font_size": 8.05
+  },
+  {
+    "text": "2",
+    "x": 20,
+    "y": 457.275,
+    "w": 15,
+    "h": 10,
+    "font_size": 8
+  },
+  {
+    "text": " Design   Map construct\u2013test\u2013diagnose\u2013repair to NOSS tasks.",
+    "x": 42,
+    "y": 455.325,
+    "w": 246.3,
+    "h": 10,
+    "font_size": 8.05
+  },
+  {
+    "text": "3",
+    "x": 20,
+    "y": 480.675,
+    "w": 15,
+    "h": 10,
+    "font_size": 8
+  },
+  {
+    "text": " Develop   React, Three.js and MindAR; shared Java generator.",
+    "x": 42,
+    "y": 478.72499999999997,
+    "w": 246.3,
+    "h": 10,
+    "font_size": 8.05
+  },
+  {
+    "text": "4",
+    "x": 20,
+    "y": 504.075,
+    "w": 15,
+    "h": 10,
+    "font_size": 8
+  },
+  {
+    "text": " Test   Automated checks, follow-up users (n=6), device acceptance.",
+    "x": 42,
+    "y": 502.125,
+    "w": 246.3,
+    "h": 10,
+    "font_size": 8.05
+  },
+  {
+    "text": "5",
+    "x": 20,
+    "y": 527.475,
+    "w": 15,
+    "h": 10,
+    "font_size": 8
+  },
+  {
+    "text": " Refine   Improve onboarding, touch targets and resizing feedback.",
+    "x": 42,
+    "y": 525.525,
+    "w": 246.3,
+    "h": 10,
+    "font_size": 8.05
+  },
+  {
+    "text": "05",
+    "x": 307,
+    "y": 409.5,
+    "w": 21,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "VALUE & ADVANTAGES",
+    "x": 331,
+    "y": 409.5,
+    "w": 244.3,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": " Novelty.  AR interaction links behaviour, repair and code.",
+    "x": 307,
+    "y": 431.925,
+    "w": 268.3,
+    "h": 10,
+    "font_size": 7.9
+  },
+  {
+    "text": " Usefulness.  Makes layout rules observable and assessable.",
+    "x": 307,
+    "y": 447.525,
+    "w": 268.3,
+    "h": 10,
+    "font_size": 7.9
+  },
+  {
+    "text": " Replicability.  Reusable tasks for other courses and institutions.",
+    "x": 307,
+    "y": 463.125,
+    "w": 268.3,
+    "h": 10,
+    "font_size": 7.9
+  },
+  {
+    "text": " Cost effectiveness.  Browser delivery avoids native installation.",
+    "x": 307,
+    "y": 478.72499999999997,
+    "w": 268.3,
+    "h": 10,
+    "font_size": 7.9
+  },
+  {
+    "text": " Sustainability.  Reusable engine and tests support maintenance.",
+    "x": 307,
+    "y": 494.325,
+    "w": 268.3,
+    "h": 10,
+    "font_size": 7.9
+  },
+  {
+    "text": " Scalability.  Further NOSS modules and institutional packs.",
+    "x": 307,
+    "y": 509.925,
+    "w": 268.3,
+    "h": 10,
+    "font_size": 7.9
+  },
+  {
+    "text": "06",
+    "x": 307,
+    "y": 533.3249999999999,
+    "w": 21,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "AI USE & ETHICS",
+    "x": 331,
+    "y": 533.3249999999999,
+    "w": 244.3,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "OpenAI Codex assisted development and writing. Authors verify outputs against code, tests and device evidence. AR scores and assessed Java come from deterministic rules; generative AI does not decide correctness.",
+    "x": 307,
+    "y": 555.75,
+    "w": 268.3,
+    "h": 30,
+    "font_size": 8.05
+  },
+  {
+    "text": "07",
+    "x": 20,
+    "y": 618.15,
+    "w": 21,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "VALIDATION & EVIDENCE",
+    "x": 44,
+    "y": 618.15,
+    "w": 244.3,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "81.8%",
+    "x": 20,
+    "y": 640.5749999999999,
+    "w": 120,
+    "h": 28,
+    "font_size": 25
+  },
+  {
+    "text": "6/6",
+    "x": 165,
+    "y": 640.5749999999999,
+    "w": 120,
+    "h": 28,
+    "font_size": 25
+  },
+  {
+    "text": "valued visual clarification\n  Initial feedback \u00b7 n=11 ",
+    "x": 20,
+    "y": 671.775,
+    "w": 122,
+    "h": 20,
+    "font_size": 7.8
+  },
+  {
+    "text": "reported layout insights\n  Follow-up feedback \u00b7 n=6 ",
+    "x": 165,
+    "y": 671.775,
+    "w": 123,
+    "h": 20,
+    "font_size": 7.8
+  },
+  {
+    "text": " AR acceptance:  iPhone 13 demonstration documented tracking, touch, audio, 3/3 missions and Java evidence.",
+    "x": 20,
+    "y": 700.05,
+    "w": 268.3,
+    "h": 20,
+    "font_size": 8.05
+  },
+  {
+    "text": "Formative self-reports; no controlled AR learning gain measured. Source: project extended abstract.",
+    "x": 20,
+    "y": 725.4,
+    "w": 268.3,
+    "h": 18,
+    "font_size": 7.3
+  },
+  {
+    "text": "08",
+    "x": 20,
+    "y": 754.65,
+    "w": 21,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "EXPECTED IMPACT",
+    "x": 44,
+    "y": 754.65,
+    "w": 244.3,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": " Learning:  practise diagnosis and explain repairs.  Institution:  repeatable browser demonstrations.  Industry/community:  prototype skills.  Commercialisation:  future challenge packs.  TVET:  competency-based digital practice.",
+    "x": 20,
+    "y": 777.0749999999999,
+    "w": 268.3,
+    "h": 37.2,
+    "font_size": 7.5
+  },
+  {
+    "text": "09",
+    "x": 307,
+    "y": 618.15,
+    "w": 21,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "CONCLUSION",
+    "x": 331,
+    "y": 618.15,
+    "w": 244.3,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "LayoutLab AR connects spatial action, tested behaviour, structural repair and verifiable code. The prototype is ready for demonstration. Next: a classroom pilot measuring completion time, errors and learning performance.",
+    "x": 307,
+    "y": 640.5749999999999,
+    "w": 268.3,
+    "h": 42.4,
+    "font_size": 8.6
+  },
+  {
+    "text": "10",
+    "x": 307,
+    "y": 697.125,
+    "w": 21,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "REFERENCES & SUPPORT",
+    "x": 331,
+    "y": 697.125,
+    "w": 244.3,
+    "h": 11.6,
+    "font_size": 9.6
+  },
+  {
+    "text": "[1] Qian, Y., &amp; Lehman, J. (2017). Students\u2019 misconceptions and other difficulties in introductory programming: A literature review.  ACM Transactions on Computing Education, 18 (1), Article 1. https://doi.org/10.1145/3077618",
+    "x": 307,
+    "y": 719.55,
+    "w": 268.3,
+    "h": 24.299999999999997,
+    "font_size": 6.7
+  },
+  {
+    "text": "[2] Keuning, H., Jeuring, J., &amp; Heeren, B. (2018). A systematic literature review of automated feedback generation for programming exercises.  ACM Transactions on Computing Education, 19 (1), Article 3. https://doi.org/10.1145/3231711",
+    "x": 307,
+    "y": 754.65,
+    "w": 203,
+    "h": 30.8,
+    "font_size": 6.4
+  },
+  {
+    "text": "TRY THE AR MODULE",
+    "x": 307,
+    "y": 796.5749999999999,
+    "w": 210,
+    "h": 8.6,
+    "font_size": 7.2
+  },
+  {
+    "text": "magik-layout.mhdazlan.cc/#/ar-lab",
+    "x": 307,
+    "y": 807.3,
+    "w": 215,
+    "h": 8.5,
+    "font_size": 7.0
+  }
+]
